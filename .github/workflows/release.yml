@@ -26,4 +26,8 @@ jobs:
           KEY_JKS: ${{ secrets.SLIIT_EATS_KEY_JKS }}
           KEY_PASSWORD: ${{ secrets.SLIIT_EATS_ALIAS_PASSWORD }}
           ALIAS_PASSWORD: ${{ secrets.SLIIT_EATS_KEY_PASSWORD }}
-          run: echo $SLIIT_EATS_KEY_JKS > key.jks && flutter pub get && flutter test && ./gradlew assembleRelease
+          run: echo $SLIIT_EATS_KEY_JKS > key.jks && flutter pub get && flutter test && ./gradlew app:bundleRelease
+      - uses: actions/upload-artifact@v1
+        with:
+          name: release-apk
+          path: app/build/outputs/
