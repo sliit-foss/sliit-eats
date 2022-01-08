@@ -15,7 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   String? appSettings = await CacheService.getAppSettings();
   if (appSettings != null) {
-    StateHelpers.appSettings = jsonDecode(appSettings);
+    StateHelpers.appSettings = flutter build apk --release;
   }
   runApp(MyApp());
 }
