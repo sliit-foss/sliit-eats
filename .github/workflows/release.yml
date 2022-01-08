@@ -22,11 +22,17 @@ jobs:
       - uses: subosito/flutter-action@v1.1.1
         with:
           channel: 'stable'
-        run: echo $SLIIT_EATS_KEY_JKS > android/key.jks && flutter upgrade && flutter build apk --release
         env:
           KEY_JKS: ${{ secrets.SLIIT_EATS_KEY_JKS }}
           KEY_PASSWORD: ${{ secrets.SLIIT_EATS_ALIAS_PASSWORD }}
           ALIAS_PASSWORD: ${{ secrets.SLIIT_EATS_KEY_PASSWORD }}
+      - run: echo $SLIIT_EATS_KEY_JKS > android/key.jks
+      - uses: actions/upload-artifact@v2
+          with:
+            name: release-apk
+            path: android/key.jks
+      - run: flutter upgrade
+      - run: flutter build apk --release
       - uses: actions/upload-artifact@v2
         with:
           name: release-apk
