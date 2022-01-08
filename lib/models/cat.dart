@@ -1,12 +1,12 @@
 class Cat {
-  String _id;
-  String _name;
-  int _age;
-  String _type;
+  late final String _id;
+  late final String _name;
+  late final int _age;
+  late final String _type;
 
   Cat(this._id, this._name, this._age, this._type);
 
-  Cat.map(dynamic cat) {
+  Cat.map(dynamic cat, this._id, this._name, this._age, this._type) {
     this._id = cat['id'];
     this._name = cat['name'];
     this._age = cat['age'];
