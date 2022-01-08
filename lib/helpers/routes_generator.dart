@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-
-import 'screens/home_screen.dart';
+import 'package:sliit_eats/screens/login_screen.dart';
+import '../screens/home_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => HomeScreen());
+      case '/login':
+        return MaterialPageRoute(builder: (_) => Login());
       default:
         return _errorRoute();
     }
