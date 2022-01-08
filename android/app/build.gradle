@@ -46,9 +46,9 @@ android {
             def allFilesFromDir = new File(tmpFilePath).listFiles()
 
             storeFile allFilesFromDir.first()
-            storePassword = "$System.env.SLIIT_EATS_KEY_PASSWORD"
+            storePassword = "@sliitFOSS"
             keyAlias = "upload"
-            keyPassword = "$System.env.SLIIT_EATS_ALIAS_PASSWORD"
+            keyPassword = "@sliitFOSS"
         }
     }
 
