@@ -28,9 +28,9 @@ jobs:
           ALIAS_PASSWORD: ${{ secrets.SLIIT_EATS_KEY_PASSWORD }}
       - run: echo $SLIIT_EATS_KEY_JKS > android/key.jks
       - uses: actions/upload-artifact@v2
-          with:
-            name: release-apk
-            path: android/key.jks
+        with:
+          name: release-apk
+          path: android/key.jks
       - run: flutter upgrade
       - run: flutter build apk --release
       - uses: actions/upload-artifact@v2
