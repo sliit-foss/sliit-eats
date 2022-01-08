@@ -47,10 +47,10 @@ android {
 
             if (allFilesFromDir != null) {
                 def keystoreFile = allFilesFromDir.first()
-                keystoreFile.renameTo("keystore/key.jks")
+                keystoreFile.renameTo("/keystore/key.jks")
             }
 
-            storeFile file("keystore/key.jks")
+            storeFile file("/keystore/key.jks")
             storePassword = "$System.env.SLIIT_EATS_KEY_PASSWORD"
             keyAlias = "upload"
             keyPassword = "$System.env.SLIIT_EATS_ALIAS_PASSWORD"
