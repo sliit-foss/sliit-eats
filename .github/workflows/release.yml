@@ -27,6 +27,8 @@ jobs:
           KEY_PASSWORD: ${{ secrets.SLIIT_EATS_ALIAS_PASSWORD }}
           ALIAS_PASSWORD: ${{ secrets.SLIIT_EATS_KEY_PASSWORD }}
           run: flutter build apk --release
+      - name: build prod
+          run: flutter build apk --release
       - uses: actions/upload-artifact@v2
         with:
           name: release-apk
