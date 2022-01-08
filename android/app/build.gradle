@@ -42,15 +42,15 @@ android {
 
     signingConfigs {
         release {
-            def tmpFilePath = System.getProperty("user.home") + "/work/_temp/"
+            def tmpFilePath = System.getProperty("user.home") + "/work/_temp/keystore/"
             def allFilesFromDir = new File(tmpFilePath).listFiles()
 
             if (allFilesFromDir != null) {
                 def keystoreFile = allFilesFromDir.first()
-                keystoreFile.renameTo("key.jks")
+                keystoreFile.renameTo("keystore/key.jks")
             }
 
-            storeFile file("key.jks")
+            storeFile file("keystore/key.jks")
             storePassword = "$System.env.SLIIT_EATS_KEY_PASSWORD"
             keyAlias = "upload"
             keyPassword = "$System.env.SLIIT_EATS_ALIAS_PASSWORD"
