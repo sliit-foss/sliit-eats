@@ -27,7 +27,7 @@ jobs:
           KEY_PASSWORD: ${{ secrets.SLIIT_EATS_ALIAS_PASSWORD }}
           ALIAS_PASSWORD: ${{ secrets.SLIIT_EATS_KEY_PASSWORD }}
           run: echo $SLIIT_EATS_KEY_JKS > key.jks && flutter pub get && flutter test && flutter build apk --release
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v2
         with:
           name: release-apk
-          path: build/app/outputs/
+          path: /build/app/outputs/
