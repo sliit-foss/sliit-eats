@@ -7,31 +7,27 @@ on:
   pull_request:
     branches:
       - main
+
 jobs:
   build:
+
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
     steps:
-      - name: Decode Keystore
-        id: decode_keystore
-        uses: timheuer/base64-to-file@v1
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
         with:
-          fileName: 'keystore/your_signing_keystore.jks'
-          encodedString: ${{ secrets.SLIIT_EATS_KEY_JKS }}
-      - uses: actions/checkout@v2
-      - name: set up JDK 1.8
-        uses: actions/setup-java@v1
+          java-version: '12.x'
+      - uses: subosito/flutter-action@v1.1.1
         with:
-          java-version: 1.8
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
-      - name: build prod
-        run: ./gradlew app:bundleRelease
+          channel: 'dev'
         env:
-          SIGNING_KEY_ALIAS: ${{ secrets.SLIIT_EATS_ALIAS_PASSWORD }}
-          SIGNING_KEY_PASSWORD: ${{ secrets.SLIIT_EATS_KEY_PASSWORD }}
-          SIGNING_STORE_PASSWORD: ${{ secrets.SLIIT_EATS_KEY_PASSWORD }}
-      - name: Upload
-        uses: actions/upload-artifact@v2
+          KEY_JKS: ${{ secrets.SLIIT_EATS_KEY_JKS }}
+          KEY_PASSWORD: ${{ secrets.SLIIT_EATS_ALIAS_PASSWORD }}
+          ALIAS_PASSWORD: ${{ secrets.SLIIT_EATS_KEY_PASSWORD }}
+          run: echo $SLIIT_EATS_KEY_JKS > key.jks && flutter pub get && flutter test && flutter build apk --release
+      - uses: actions/upload-artifact@v1
         with:
-          name: Build Artifacts
-          path: app/build/outputs/
+          name: release-apk
+          path: build/app/outputs/
