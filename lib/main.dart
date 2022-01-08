@@ -15,7 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   String? appSettings = await CacheService.getAppSettings();
   if (appSettings != null) {
-    StateHelpers.appSettings = ;
+    StateHelpers.appSettings = jsonDecode(appSettings);
   }
   runApp(MyApp());
 }
