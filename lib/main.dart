@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:sliit_eats/screens/login_screen.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 import 'package:sliit_eats/services/auth/impl/authentication.dart';
@@ -15,6 +16,7 @@ import 'dart:io';
 void main() async {
   HttpOverrides.global = new AppHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
+  await FlutterConfig.loadEnvVariables();
   await Firebase.initializeApp( options: DefaultFirebaseOptions.currentPlatform );
   String? appSettings = await CacheService.getAppSettings();
   if (appSettings != null)

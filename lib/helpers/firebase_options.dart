@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
+import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+
 
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
@@ -28,20 +30,20 @@ class DefaultFirebaseOptions {
     );
   }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD9O7prvAYSWJ7F3PAASdEheHZ_G8oh0tk',
-    appId: '1:867257560155:android:6e7d41a2e9bcecef67637e',
-    messagingSenderId: '867257560155',
-    projectId: 'sliit-eats',
-    storageBucket: 'sliit-eats.appspot.com',
+  static final FirebaseOptions android = FirebaseOptions(
+    apiKey: FlutterConfig.get('SLIIT_EATS_FIREBASE_API_KEY'),
+    appId: FlutterConfig.get('SLIIT_EATS_FIREBASE_APP_ID'),
+    messagingSenderId: FlutterConfig.get('SLIIT_EATS_FCM_SENDER_ID'),
+    projectId: FlutterConfig.get('SLIIT_EATS_FIREBASE_PROJECT_ID'),
+    storageBucket: FlutterConfig.get('SLIIT_EATS_FIREBASE_BUCKET'),
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBAE_djCP3WudOllCIObwTK7PDpvZIIE4g',
-    appId: '1:867257560155:ios:733f46fd5711c0a067637e',
-    messagingSenderId: '867257560155',
-    projectId: 'sliit-eats',
-    storageBucket: 'sliit-eats.appspot.com',
+  static final FirebaseOptions ios = FirebaseOptions(
+    apiKey: FlutterConfig.get('SLIIT_EATS_FIREBASE_API_KEY'),
+    appId: FlutterConfig.get('SLIIT_EATS_FIREBASE_APP_ID'),
+    messagingSenderId: FlutterConfig.get('SLIIT_EATS_FCM_SENDER_ID'),
+    projectId: FlutterConfig.get('SLIIT_EATS_FIREBASE_PROJECT_ID'),
+    storageBucket: FlutterConfig.get('SLIIT_EATS_FIREBASE_BUCKET'),
     iosClientId: '867257560155-2qf101m57t3anp5thggdlth3ie03hole.apps.googleusercontent.com',
     iosBundleId: 'com.example.sliitEats',
   );
