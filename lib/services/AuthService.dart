@@ -3,6 +3,7 @@ import 'package:sliit_eats/helpers/cache_service.dart';
 import 'package:sliit_eats/helpers/constants.dart';
 import 'package:sliit_eats/models/error_message.dart';
 import 'package:sliit_eats/models/sucess_message.dart';
+import 'package:sliit_eats/models/user.dart';
 import 'package:sliit_eats/services/firebase_services/FirestoreService.dart';
 
 class AuthService {
@@ -11,9 +12,11 @@ class AuthService {
     return null;
   }
 
-  static Future<dynamic>? getCurrentUserDetails() async {
-    // implement getCurrentUser
-    return null;
+  static Future<UserModel>? getCurrentUserDetails() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    List<dynamic> filters = [{'name': 'user_id', 'value' : user!.uid}];
+    final responseJson = await FirestoreService.read('users', filters, limit: 1);
+    return UserModel.fromJson(responseJson);
   }
 
   static Future<dynamic>? signIn(String email, String password) async {
@@ -45,7 +48,7 @@ class AuthService {
       User? user = userCredential.user;
       await user!.updateDisplayName(name);
       await sendVerificationMail();
-      return await FirestoreService.write('users', { 'user_i d': user.uid, 'username': name, 'email': email, 'user_type': userType, 'user_role' : 'user' }, 'Signed up successfully. Please verify your email to activate your account');
+      return await FirestoreService.write('users', { 'user_id': user.uid, 'username': name, 'email': email, 'user_type': userType, 'user_role' : 'user' }, 'Signed up successfully. Please verify your email to activate your account');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password')
         return ErrorMessage('The password provided is too weak');

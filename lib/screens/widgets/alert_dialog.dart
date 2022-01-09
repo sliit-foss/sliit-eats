@@ -7,7 +7,7 @@ Future showCoolAlert(BuildContext context, bool success, String alertMessage, {b
       context: context,
       text: alertMessage,
       title: "",
-      autoCloseDuration: noAutoClose ? Duration(milliseconds: success ? 1900 : 1800) : null,
+      autoCloseDuration: noAutoClose ? null : Duration(milliseconds: success ? 1900 : 1800),
       backgroundColor: Colors.transparent,
       lottieAsset: "assets/animations/modals/${success ? "success" : "error"}.json",
       iconHeight: success ? 140 : 120,

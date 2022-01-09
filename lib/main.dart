@@ -27,15 +27,15 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   Future<bool> checkLoginStatus() async {
-    // User? user = FirebaseAuth.instance.currentUser;
-    // if (user != null && user.emailVerified)
-    //   return true;
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null && user.emailVerified)
+      return true;
     return false;
   }
 
   void toHome(context) async{
     await Future.delayed(Duration(seconds: 1));
-    Navigator.pushReplacementNamed(context, '/home');
+    Navigator.pushReplacementNamed(context, '/home', arguments: {'selectedTabIndex': 0});
   }
 
   @override
