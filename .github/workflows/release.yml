@@ -27,12 +27,11 @@ jobs:
       - uses: subosito/flutter-action@v1.1.1
         with:
           channel: 'stable'
-        env:
-          KEY_JKS: ${{ secrets.SLIIT_EATS_KEY_JKS }}
-          KEY_PASSWORD: ${{ secrets.SLIIT_EATS_KEY_PASSWORD }}
-          ALIAS_PASSWORD: ${{ secrets.SLIIT_EATS_ALIAS_PASSWORD }}
       - run: flutter upgrade
       - run: flutter build apk --release
+        env:
+          KEY_PASSWORD: ${{ secrets.SLIIT_EATS_KEY_PASSWORD }}
+          ALIAS_PASSWORD: ${{ secrets.SLIIT_EATS_ALIAS_PASSWORD }}
       - uses: actions/upload-artifact@v2
         with:
           name: release-apk
