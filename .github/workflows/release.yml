@@ -29,8 +29,8 @@ jobs:
           channel: 'stable'
         env:
           KEY_JKS: ${{ secrets.SLIIT_EATS_KEY_JKS }}
-          KEY_PASSWORD: ${{ secrets.SLIIT_EATS_ALIAS_PASSWORD }}
-          ALIAS_PASSWORD: ${{ secrets.SLIIT_EATS_KEY_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.SLIIT_EATS_KEY_PASSWORD }}
+          ALIAS_PASSWORD: ${{ secrets.SLIIT_EATS_ALIAS_PASSWORD }}
       - run: flutter upgrade
       - run: flutter build apk --release
       - uses: actions/upload-artifact@v2
