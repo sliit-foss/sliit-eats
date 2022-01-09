@@ -1,7 +1,8 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+
 
 
 class DefaultFirebaseOptions {
@@ -31,19 +32,19 @@ class DefaultFirebaseOptions {
   }
 
   static final FirebaseOptions android = FirebaseOptions(
-    apiKey: FlutterConfig.get('SLIIT_EATS_FIREBASE_API_KEY'),
-    appId: FlutterConfig.get('SLIIT_EATS_FIREBASE_APP_ID'),
-    messagingSenderId: FlutterConfig.get('SLIIT_EATS_FCM_SENDER_ID'),
-    projectId: FlutterConfig.get('SLIIT_EATS_FIREBASE_PROJECT_ID'),
-    storageBucket: FlutterConfig.get('SLIIT_EATS_FIREBASE_BUCKET'),
+    apiKey: dotenv.env['SLIIT_EATS_FIREBASE_API_KEY']!,
+    appId: dotenv.env['SLIIT_EATS_FIREBASE_APP_ID']!,
+    messagingSenderId: dotenv.env['SLIIT_EATS_FCM_SENDER_ID']!,
+    projectId: dotenv.env['SLIIT_EATS_FIREBASE_PROJECT_ID']!,
+    storageBucket: dotenv.env['SLIIT_EATS_FIREBASE_BUCKET']!,
   );
 
   static final FirebaseOptions ios = FirebaseOptions(
-    apiKey: FlutterConfig.get('SLIIT_EATS_FIREBASE_API_KEY'),
-    appId: FlutterConfig.get('SLIIT_EATS_FIREBASE_APP_ID'),
-    messagingSenderId: FlutterConfig.get('SLIIT_EATS_FCM_SENDER_ID'),
-    projectId: FlutterConfig.get('SLIIT_EATS_FIREBASE_PROJECT_ID'),
-    storageBucket: FlutterConfig.get('SLIIT_EATS_FIREBASE_BUCKET'),
+    apiKey: dotenv.env['SLIIT_EATS_FIREBASE_API_KEY']!,
+    appId: dotenv.env['SLIIT_EATS_FIREBASE_APP_ID']!,
+    messagingSenderId: dotenv.env['SLIIT_EATS_FCM_SENDER_ID']!,
+    projectId: dotenv.env['SLIIT_EATS_FIREBASE_PROJECT_ID']!,
+    storageBucket: dotenv.env['SLIIT_EATS_FIREBASE_BUCKET']!,
     iosClientId: '867257560155-2qf101m57t3anp5thggdlth3ie03hole.apps.googleusercontent.com',
     iosBundleId: 'com.example.sliitEats',
   );

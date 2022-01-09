@@ -7,6 +7,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final args = ModalRoute.of(context)!.settings.arguments as dynamic;
+    return Container(
+      color: Colors.white,
+    );
   }
 }

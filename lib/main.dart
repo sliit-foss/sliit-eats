@@ -1,9 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_config/flutter_config.dart';
-import 'package:sliit_eats/screens/login_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:sliit_eats/screens/welcome_screen/welcome_screen.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
-import 'package:sliit_eats/services/auth/impl/authentication.dart';
 import 'helpers/app_http_overrides.dart';
 import 'helpers/cache_service.dart';
 import 'helpers/colors.dart';
@@ -14,35 +15,27 @@ import 'dart:convert';
 import 'dart:io';
 
 void main() async {
+  Paint.enableDithering = true;
   HttpOverrides.global = new AppHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
-  await FlutterConfig.loadEnvVariables();
-  await Firebase.initializeApp( options: DefaultFirebaseOptions.currentPlatform );
+  await dotenv.load(fileName: ".env");
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   String? appSettings = await CacheService.getAppSettings();
-  if (appSettings != null)
-    StateHelpers.appSettings = jsonDecode(appSettings);
+  if (appSettings != null) StateHelpers.appSettings = jsonDecode(appSettings);
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   Future<bool> checkLoginStatus() async {
-    await CacheService.checkFirstRun();
-    bool status = await CacheService.getLoggedInStatus();
-    if (status != true) {
-      status = false;
-    }
-    return status;
+    // User? user = FirebaseAuth.instance.currentUser;
+    // if (user != null && user.emailVerified)
+    //   return true;
+    return false;
   }
 
-  loginProcedure(BuildContext context) async {
-    String? userData = await CacheService.getUserData();
-    String email = jsonDecode(userData!)['email'];
-    String? password = await CacheService.getUserPassword();
-    Authentication auth = Authentication();
-    bool? loginState = await auth.signIn(email, password!);
-    if (loginState!) {
-      Navigator.pushReplacementNamed(context, '/');
-    }
+  void toHome(context) async{
+    await Future.delayed(Duration(seconds: 1));
+    Navigator.pushReplacementNamed(context, '/home');
   }
 
   @override
@@ -53,17 +46,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         primaryColor: AppColors.primary,
+        textTheme: GoogleFonts.poppinsTextTheme(),
       ),
-      onGenerateRoute: RouteGenerator.generateRoute,
+      routes: RouteGenerator.getRoutes(),
       home: FutureBuilder<bool>(
         future: checkLoginStatus(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data == true) {
-              loginProcedure(context);
+              toHome(context);
               return LoadingIndicator();
             } else {
-              return Login();
+              return WelcomeScreen();
             }
           } else {
             return LoadingIndicator();
@@ -73,4 +67,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
