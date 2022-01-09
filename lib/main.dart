@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sliit_eats/screens/login_screen.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
@@ -5,6 +6,7 @@ import 'package:sliit_eats/services/auth/impl/authentication.dart';
 import 'helpers/app_http_overrides.dart';
 import 'helpers/cache_service.dart';
 import 'helpers/colors.dart';
+import 'helpers/firebase_options.dart';
 import 'helpers/state_helpers.dart';
 import 'helpers/routes_generator.dart';
 import 'dart:convert';
@@ -13,10 +15,10 @@ import 'dart:io';
 void main() async {
   HttpOverrides.global = new AppHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp( options: DefaultFirebaseOptions.currentPlatform );
   String? appSettings = await CacheService.getAppSettings();
-  if (appSettings != null) {
+  if (appSettings != null)
     StateHelpers.appSettings = jsonDecode(appSettings);
-  }
   runApp(MyApp());
 }
 

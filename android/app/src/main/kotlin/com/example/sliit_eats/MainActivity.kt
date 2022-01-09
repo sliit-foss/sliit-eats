@@ -1,4 +1,4 @@
-package com.example.sliit_eats
+package com.sliit_foss.sliit_eats
 
 import io.flutter.embedding.android.FlutterActivity
 
