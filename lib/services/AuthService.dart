@@ -12,11 +12,11 @@ class AuthService {
     return null;
   }
 
-  static Future<UserModel>? getCurrentUserDetails() async {
+  static Future<dynamic>? getCurrentUserDetails() async {
     User? user = FirebaseAuth.instance.currentUser;
-    List<dynamic> filters = [{'name': 'user_id', 'value' : user!.uid}];
-    final responseJson = await FirestoreService.read('users', filters, limit: 1);
-    return UserModel.fromJson(responseJson);
+    List<dynamic> filters = [{'name': 'id', 'value' : user!.uid}];
+    final responseDoc = await FirestoreService.read('users', filters, limit: 1);
+    return UserModel.fromDocumentSnapshot(responseDoc);
   }
 
   static Future<dynamic>? signIn(String email, String password) async {
@@ -42,13 +42,13 @@ class AuthService {
     await FirebaseAuth.instance.signOut();
   }
 
-  static Future<dynamic>? signUp(String email, String password, String name, String userType) async {
+  static Future<dynamic>? signUp(String email, String password, String name, bool isAdmin, String userType) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
       User? user = userCredential.user;
       await user!.updateDisplayName(name);
       await sendVerificationMail();
-      return await FirestoreService.write('users', { 'user_id': user.uid, 'username': name, 'email': email, 'user_type': userType, 'user_role' : 'user' }, 'Signed up successfully. Please verify your email to activate your account');
+      return await FirestoreService.write('users', { 'id': user.uid, 'username': name, 'email': email, 'user_type': userType, 'is_admin' : isAdmin }, 'Signed up successfully. Please verify your email to activate your account');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password')
         return ErrorMessage('The password provided is too weak');

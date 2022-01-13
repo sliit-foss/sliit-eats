@@ -2,18 +2,20 @@ class UserModel {
   final String userId;
   final String username;
   final String email;
-  final String userRole;
-  final String userType;
+  final bool isAdmin;
+  final String? userType;
+  final String? canteenId;
 
-  UserModel({required this.userId, required this.username, required this.email, required this.userRole, required this.userType});
+  UserModel({required this.userId, required this.username, required this.email, required this.isAdmin, required this.userType, required this.canteenId});
 
-  factory UserModel.fromJson(dynamic json) {
+  factory UserModel.fromDocumentSnapshot(dynamic doc) {
     return UserModel(
-      userId: json['user_id'],
-      username: json['username'],
-      email: json['email'],
-      userRole: json['user_role'],
-      userType: json['user_type'] != null ? json['user_type'] : '',
+      userId: doc.data()['id'],
+      username: doc.data()['username'],
+      email: doc.data()['email'],
+      isAdmin: doc.data()['is_admin'],
+      userType: doc.data()['user_type'] != null ? doc.data()['user_type'] : null,
+      canteenId: doc.data()['canteen_id'] != null ? doc.data()['canteen_id'] : null,
     );
   }
 }

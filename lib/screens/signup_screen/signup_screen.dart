@@ -130,7 +130,7 @@ class _SignUpState extends State<SignUp> {
                                   if (password != "") {
                                     if (userType != null) {
                                       progress!.show();
-                                      dynamic res = await AuthService.signUp(email, password, name, userType);
+                                      dynamic res = await AuthService.signUp(email, password, name, false, userType);
                                       progress.dismiss();
                                       if (res.runtimeType == SuccessMessage) {
                                         Navigator.pushReplacementNamed(context, '/login');
