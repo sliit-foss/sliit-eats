@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sliit_eats/constants.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -12,6 +13,13 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
+      child: Column(
+        children: [
+          ElevatedButton(
+              onPressed: () => Navigator.pushNamed(context, AppRoutes.SIGNUP),
+              child: Text('Don\'t have an account? Sign up'))
+        ],
+      ),
     );
   }
 }
