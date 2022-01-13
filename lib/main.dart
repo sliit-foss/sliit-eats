@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sliit_eats/screens/login_screen.dart';
+import 'package:sliit_eats/constants.dart';
+import 'package:sliit_eats/screens/user/login_screen.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 import 'package:sliit_eats/services/auth/impl/authentication.dart';
 import 'helpers/app_http_overrides.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
     Authentication auth = Authentication();
     bool? loginState = await auth.signIn(email, password!);
     if (loginState!) {
-      Navigator.pushReplacementNamed(context, '/');
+      Navigator.pushReplacementNamed(context, AppRoutes.HOME);
     }
   }
 
@@ -69,4 +70,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
