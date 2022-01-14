@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sliit_eats/constants.dart';
+import 'package:sliit_eats/routes/app_routes.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
