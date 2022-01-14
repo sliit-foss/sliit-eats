@@ -31,6 +31,7 @@
 .pub/
 /build/
 /android/key.jks
+/android/key.properties
 
 # Web related
 lib/generated_plugin_registrant.dart
@@ -45,3 +46,5 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+.env

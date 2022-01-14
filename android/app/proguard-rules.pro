@@ -1,0 +1,1 @@
+-keep class com.sliit_foss.sliit_eats.BuildConfig { *; }

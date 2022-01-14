@@ -30,10 +30,17 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_secure_storage:
   shared_preferences:
+  firebase_core: ^1.11.0
+  firebase_auth: ^3.3.5
+  cloud_firestore: ^3.1.6
+  firebase_storage: ^10.2.5
   flutter_progress_hud: ^2.0.0
   flutter_spinkit: ^5.1.0
+  google_fonts: ^2.0.0
+  font_awesome_flutter: ^9.1.0
   lottie: ^1.2.1
   page_transition: ^2.0.4
+  flutter_dotenv: ^5.0.2
   url_launcher:
   cool_alert:
     path: ./packages/flutter_cool_alert-master/
@@ -54,9 +61,13 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/
+    - assets/animations/
+    - assets/animations/modals/
+    - assets/animations/welcome_screen/
+    - assets/animations/home_screen/
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

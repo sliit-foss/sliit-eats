@@ -33,8 +33,8 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.sliit_eats"
-        minSdkVersion 18
+        applicationId "com.sliit_foss.sliit_eats"
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -44,8 +44,8 @@ android {
         release {
             def tmpFilePath = System.getProperty("user.home") + "/work/_temp/keystore/"
             def allFilesFromDir = new File(tmpFilePath).listFiles()
-
-            storeFile allFilesFromDir.first()
+            if(allFilesFromDir != null)
+                storeFile allFilesFromDir.first()
             storePassword = System.getenv("SLIIT_EATS_ALIAS_PASSWORD")
             keyAlias = "upload"
             keyPassword = System.getenv("SLIIT_EATS_KEY_PASSWORD")
