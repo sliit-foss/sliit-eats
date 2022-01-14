@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sliit_eats/helpers/colors.dart';
+import 'package:sliit_eats/routes/app_routes.dart';
 
 class ButtonArea extends StatefulWidget {
   const ButtonArea({Key? key}) : super(key: key);
@@ -16,16 +17,24 @@ class _ButtonAreaState extends State<ButtonArea> {
         padding: const EdgeInsets.fromLTRB(0, 50, 0, 10),
         child: GestureDetector(
           onTap: () {
-            Navigator.pushReplacementNamed(context, '/signup');
+            Navigator.pushReplacementNamed(context, AppRoutes.SIGNUP);
           },
           child: Container(
-            width: MediaQuery.of(context).orientation == Orientation.portrait ? MediaQuery.of(context).size.width * 0.6 : MediaQuery.of(context).size.width * 0.3,
-            height: MediaQuery.of(context).orientation == Orientation.portrait ? MediaQuery.of(context).size.height * 0.07 : MediaQuery.of(context).size.height * 0.14,
+            width: MediaQuery.of(context).orientation == Orientation.portrait
+                ? MediaQuery.of(context).size.width * 0.6
+                : MediaQuery.of(context).size.width * 0.3,
+            height: MediaQuery.of(context).orientation == Orientation.portrait
+                ? MediaQuery.of(context).size.height * 0.07
+                : MediaQuery.of(context).size.height * 0.14,
             decoration: BoxDecoration(
               color: AppColors.primary,
               borderRadius: BorderRadius.circular(10),
               boxShadow: <BoxShadow>[
-                BoxShadow(color: AppColors.primary.withAlpha(100), offset: Offset(2, 4), blurRadius: 8, spreadRadius: 2),
+                BoxShadow(
+                    color: AppColors.primary.withAlpha(100),
+                    offset: Offset(2, 4),
+                    blurRadius: 8,
+                    spreadRadius: 2),
               ],
             ),
             child: Center(
@@ -61,7 +70,7 @@ class _ButtonAreaState extends State<ButtonArea> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushReplacementNamed(context, '/login');
+                Navigator.pushReplacementNamed(context, AppRoutes.LOGIN);
               },
               child: Text(
                 'Sign In',

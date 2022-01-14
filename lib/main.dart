@@ -10,7 +10,7 @@ import 'helpers/cache_service.dart';
 import 'helpers/colors.dart';
 import 'helpers/firebase_options.dart';
 import 'helpers/state_helpers.dart';
-import 'helpers/routes_generator.dart';
+import 'routes/routes_generator.dart';
 import 'dart:convert';
 import 'dart:io';
 
