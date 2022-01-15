@@ -6,7 +6,7 @@ import 'package:sliit_eats/models/general/sucess_message.dart';
 class FirestoreService {
   static Future<dynamic> write(String collection, dynamic payload, String successMessage) async {
     dynamic res;
-    CollectionReference collectionRef = FirebaseFirestore.instance.collection('users');
+    CollectionReference collectionRef = FirebaseFirestore.instance.collection(collection);
     await collectionRef.add(payload).then((value) {
       res = SuccessMessage(successMessage);
     }).catchError((error) {

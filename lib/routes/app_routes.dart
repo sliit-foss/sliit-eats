@@ -4,4 +4,5 @@ class AppRoutes {
   static const LOGIN = '/login';
   static const WELCOME = '/welcome';
   static const USER_MANAGEMENT = '/management/users';
+  static const CATEGORY_MANAGEMENT = '/management/category';
 }

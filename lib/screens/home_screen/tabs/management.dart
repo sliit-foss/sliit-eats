@@ -55,9 +55,14 @@ class _ManagementTabState extends State<ManagementTab> {
                             width: MediaQuery.of(context).size.width * 0.42,
                             child: OptionCard(title: "", subtitle: "Product Management", icon: Icons.emoji_food_beverage, iconSize: 30),
                           ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.42,
-                            child: OptionCard(title: "", subtitle: "Category Management", icon: Icons.category, iconSize: 30),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, AppRoutes.CATEGORY_MANAGEMENT);
+                            },
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.42,
+                              child: OptionCard(title: "", subtitle: "Category Management", icon: Icons.category, iconSize: 30),
+                            ),
                           ),
                         ],
                       ),
