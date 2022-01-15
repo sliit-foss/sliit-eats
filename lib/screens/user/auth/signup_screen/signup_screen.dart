@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliit_eats/helpers/colors.dart';
-<<<<<<< HEAD:lib/screens/signup_screen/signup_screen.dart
-import 'package:sliit_eats/models/sucess_message.dart';
-=======
 import 'package:sliit_eats/models/general/sucess_message.dart';
->>>>>>> fe8a0190ced1317ad4ec6f9baffa67d2d61c295e:lib/screens/user/auth/signup_screen/signup_screen.dart
 import 'package:sliit_eats/routes/app_routes.dart';
 import 'package:sliit_eats/screens/widgets/alert_dialog.dart';
 import 'package:sliit_eats/screens/widgets/dropdown.dart';
@@ -67,38 +63,26 @@ class _SignUpState extends State<SignUp> {
               child: Center(
                 child: SingleChildScrollView(
                   child: Container(
-<<<<<<< HEAD:lib/screens/signup_screen/signup_screen.dart
                     padding: EdgeInsets.symmetric(
                         horizontal: MediaQuery.of(context).size.width * 0.06),
-=======
-                    padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.06),
->>>>>>> fe8a0190ced1317ad4ec6f9baffa67d2d61c295e:lib/screens/user/auth/signup_screen/signup_screen.dart
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         SizedBox(
-<<<<<<< HEAD:lib/screens/signup_screen/signup_screen.dart
                           height: MediaQuery.of(context).orientation ==
                                   Orientation.portrait
                               ? MediaQuery.of(context).size.height * 0.1
                               : MediaQuery.of(context).size.height * 0.2,
-=======
-                          height: MediaQuery.of(context).orientation == Orientation.portrait ? MediaQuery.of(context).size.height * 0.1 : MediaQuery.of(context).size.height * 0.2,
->>>>>>> fe8a0190ced1317ad4ec6f9baffa67d2d61c295e:lib/screens/user/auth/signup_screen/signup_screen.dart
                         ),
                         _title(),
                         SizedBox(
                           height: 30,
                         ),
                         Padding(
-<<<<<<< HEAD:lib/screens/signup_screen/signup_screen.dart
                           padding: EdgeInsets.symmetric(
                               horizontal:
                                   MediaQuery.of(context).size.width * 0.05),
-=======
-                          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
->>>>>>> fe8a0190ced1317ad4ec6f9baffa67d2d61c295e:lib/screens/user/auth/signup_screen/signup_screen.dart
                           child: Column(
                             children: <Widget>[
                               EntryField(
@@ -126,13 +110,9 @@ class _SignUpState extends State<SignUp> {
                           height: 20,
                         ),
                         Padding(
-<<<<<<< HEAD:lib/screens/signup_screen/signup_screen.dart
                           padding: EdgeInsets.symmetric(
                               horizontal:
                                   MediaQuery.of(context).size.width * 0.05),
-=======
-                          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
->>>>>>> fe8a0190ced1317ad4ec6f9baffa67d2d61c295e:lib/screens/user/auth/signup_screen/signup_screen.dart
                           child: CustomDropdown(
                               selectedValue: userType,
                               itemList: ['Lecturer', 'Student'],
@@ -147,20 +127,15 @@ class _SignUpState extends State<SignUp> {
                           height: 30,
                         ),
                         Padding(
-<<<<<<< HEAD:lib/screens/signup_screen/signup_screen.dart
                           padding: EdgeInsets.symmetric(
                               horizontal:
                                   MediaQuery.of(context).size.width * 0.05),
-=======
-                          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
->>>>>>> fe8a0190ced1317ad4ec6f9baffa67d2d61c295e:lib/screens/user/auth/signup_screen/signup_screen.dart
                           child: GestureDetector(
                             onTap: () async {
                               String name = _nameController.text;
                               String email = _emailController.text;
                               String password = _passwordController.text;
                               if (name != "") {
-<<<<<<< HEAD:lib/screens/signup_screen/signup_screen.dart
                                 if (RegExp(
                                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                     .hasMatch(email)) {
@@ -176,7 +151,7 @@ class _SignUpState extends State<SignUp> {
                                       progress.dismiss();
                                       if (res.runtimeType == SuccessMessage) {
                                         Navigator.pushReplacementNamed(
-                                            context, AppRoutes.LOGIN);
+                                            context, '/login');
                                         await showCoolAlert(
                                             context, true, res.message,
                                             noAutoClose: true);
@@ -199,31 +174,6 @@ class _SignUpState extends State<SignUp> {
                               } else {
                                 await showCoolAlert(
                                     context, false, "Please enter a username");
-=======
-                                if (RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)) {
-                                  if (password != "") {
-                                    if (userType != null) {
-                                      progress!.show();
-                                      dynamic res = await AuthService.signUp(email, password, name, false, userType);
-                                      progress.dismiss();
-                                      if (res.runtimeType == SuccessMessage) {
-                                        Navigator.pushReplacementNamed(context, '/login');
-                                        await showCoolAlert(context, true, res.message, noAutoClose: true);
-                                      } else {
-                                        await showCoolAlert(context, false, res.message);
-                                      }
-                                    } else {
-                                      await showCoolAlert(context, false, "Please select a user role");
-                                    }
-                                  } else {
-                                    await showCoolAlert(context, false, "Please enter a password");
-                                  }
-                                } else {
-                                  await showCoolAlert(context, false, "Please enter a valid email");
-                                }
-                              } else {
-                                await showCoolAlert(context, false, "Please enter a username");
->>>>>>> fe8a0190ced1317ad4ec6f9baffa67d2d61c295e:lib/screens/user/auth/signup_screen/signup_screen.dart
                               }
                             },
                             child: Container(
@@ -232,7 +182,6 @@ class _SignUpState extends State<SignUp> {
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 color: AppColors.primary,
-<<<<<<< HEAD:lib/screens/signup_screen/signup_screen.dart
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)),
                                 boxShadow: <BoxShadow>[
@@ -242,10 +191,6 @@ class _SignUpState extends State<SignUp> {
                                       blurRadius: 8,
                                       spreadRadius: 2)
                                 ],
-=======
-                                borderRadius: BorderRadius.all(Radius.circular(10)),
-                                boxShadow: <BoxShadow>[BoxShadow(color: AppColors.primary.withAlpha(100), offset: Offset(2, 4), blurRadius: 8, spreadRadius: 2)],
->>>>>>> fe8a0190ced1317ad4ec6f9baffa67d2d61c295e:lib/screens/user/auth/signup_screen/signup_screen.dart
                               ),
                               child: Text(
                                 'Register Now',
