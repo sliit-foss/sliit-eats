@@ -16,9 +16,9 @@ class FirestoreService {
     return res;
   }
 
-  static Future<dynamic> read(String collection, List<dynamic> filters, {limit}) async {
+  static Future<dynamic> read(String collection, List<dynamic> filters, {limit, sorts}) async {
     List<dynamic> data = [];
-    dynamic collectionRef = _filteredCollectionRef(collection, filters);
+    dynamic collectionRef = _filteredCollectionRef(collection, filters, sorts: sorts);
     if (limit != null) collectionRef = collectionRef.limit(limit);
     await collectionRef.get().then((QuerySnapshot querySnapshot) {
       if (querySnapshot.docs.length > 0) data = querySnapshot.docs;
@@ -64,10 +64,14 @@ class FirestoreService {
     return res;
   }
 
-  static dynamic _filteredCollectionRef(String collection, List<dynamic> filters) {
+  static dynamic _filteredCollectionRef(String collection, List<dynamic> filters, { sorts }) {
+    if(sorts == null) sorts = [];
     dynamic collectionRef = FirebaseFirestore.instance.collection(collection);
     filters.forEach((filter) {
       collectionRef = collectionRef.where(filter['name'], isEqualTo: filter['value']);
+    });
+    sorts.forEach((sort) {
+      collectionRef = collectionRef.orderBy(sort['name'], descending: sort['descending']);
     });
     return collectionRef;
   }

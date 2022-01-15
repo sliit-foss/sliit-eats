@@ -6,7 +6,8 @@ class UserService {
   static Future<List<UserModel>>? getAllUsers() async {
     UserModel? currentUser = await AuthService.getCurrentUserDetails();
     List<dynamic> filters = [{'name': 'canteen_id', 'value': currentUser!.canteenId}];
-    final responseDocs = await FirestoreService.read('users', filters);
+    List<dynamic> sorts = [{'name': 'is_active', 'descending': true}];
+    final responseDocs = await FirestoreService.read('users', filters, sorts: sorts);
     return (responseDocs as List).map((responseDoc) => UserModel.fromDocumentSnapshot(responseDoc)).toList();
   }
 
