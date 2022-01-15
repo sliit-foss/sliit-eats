@@ -26,37 +26,37 @@ class EntryField extends StatelessWidget {
               hintStyle: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: Colors.black45,
+                color: Colors.white54,
               ),
               isDense: true,
-              contentPadding: EdgeInsets.all(20),
+              contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
               enabledBorder: new OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide(
                   color: Colors.transparent,
                   width: 0,
                 ),
               ),
               focusedBorder: new OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide(
                   color: AppColors.primary,
                   width: 0,
                 ),
               ),
-              fillColor: Color(0xFFfdfdff),
+              fillColor: AppColors.cardColor,
               filled: true,
               prefixIcon: prefixIcon != null
                   ? Icon(
                       prefixIcon,
-                      color: Colors.black,
+                      color: Colors.white,
                     )
                   : null,
             ),
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
-              color: Colors.black.withOpacity(0.75),
+              color: Colors.white,
             ),
           )
         ],
