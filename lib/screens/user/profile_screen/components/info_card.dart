@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/routes/app_routes.dart';
-import 'package:sliit_eats/services/AuthService.dart';
+import 'package:sliit_eats/services/auth_service.dart';
 
 class InfoCard extends StatelessWidget {
   const InfoCard(

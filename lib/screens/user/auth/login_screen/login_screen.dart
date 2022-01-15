@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliit_eats/helpers/colors.dart';
-import 'package:sliit_eats/models/sucess_message.dart';
+import 'package:sliit_eats/models/general/sucess_message.dart';
 import 'package:sliit_eats/routes/app_routes.dart';
 import 'package:sliit_eats/screens/widgets/alert_dialog.dart';
 import 'package:sliit_eats/screens/widgets/entry_field.dart';
-import 'package:sliit_eats/services/AuthService.dart';
+import 'package:sliit_eats/services/auth_service.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);

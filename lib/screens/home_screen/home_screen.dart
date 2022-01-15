@@ -10,7 +10,7 @@ import 'package:sliit_eats/screens/home_screen/tabs/browse.dart';
 import 'package:sliit_eats/screens/home_screen/tabs/management.dart';
 import 'package:sliit_eats/screens/user/profile_screen/profile_screen.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
-import 'package:sliit_eats/services/AuthService.dart';
+import 'package:sliit_eats/services/auth_service.dart';
 import 'dart:math' as math;
 
 class HomeScreen extends StatefulWidget {
@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     List<Widget> tabs = [];
     tabs.add(CustomTab(icon: FontAwesomeIcons.home, size: 20, name: "Home"));
     if (user!.isAdmin) tabs.add(CustomTab(icon: FontAwesomeIcons.plusCircle, size: 20, name: "Management"));
-    tabs.add(CustomTab(icon: FontAwesomeIcons.solidCalendar, size: 20, name: "Active Orders"));
+    tabs.add(CustomTab(icon: FontAwesomeIcons.solidCalendar, size: 20, name: "My Orders"));
     return tabs;
   }
 
@@ -98,11 +98,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(5, 0, 0, 10 ),
+                              padding: const EdgeInsets.fromLTRB(5, 0, 0, 10),
                               child: Transform(
                                 transform: Matrix4.rotationY(math.pi),
                                 child: Container(
-                                  height:  40,
+                                  height: 40,
                                   width: 40,
                                   child: Lottie.asset(
                                     "assets/animations/home_screen/burger.json",
