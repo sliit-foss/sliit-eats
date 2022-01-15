@@ -4,7 +4,7 @@ import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sliit_eats/helpers/colors.dart';
-import 'package:sliit_eats/screens/profile_screen/components/info_card.dart';
+import 'components/info_card.dart';
 
 class ProfileSettings extends StatefulWidget {
   const ProfileSettings();

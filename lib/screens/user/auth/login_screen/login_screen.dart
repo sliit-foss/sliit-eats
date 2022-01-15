@@ -97,7 +97,7 @@ class _LoginState extends State<Login> {
                             progress.dismiss();
                             if (res.runtimeType == SuccessMessage) {
                               print('sdf');
-                              Navigator.pushReplacementNamed(context, '/home', arguments: {'selectedTabIndex': 0});
+                              Navigator.pushReplacementNamed(context, AppRoutes.HOME, arguments: {'selectedTabIndex': 0});
                             } else {
                               await showCoolAlert(context, false, res.message);
                             }

@@ -8,7 +8,7 @@ import 'package:sliit_eats/screens/home_screen/components/custom_tab.dart';
 import 'package:sliit_eats/screens/home_screen/tabs/active_orders.dart';
 import 'package:sliit_eats/screens/home_screen/tabs/browse.dart';
 import 'package:sliit_eats/screens/home_screen/tabs/management.dart';
-import 'package:sliit_eats/screens/profile_screen/profile_screen.dart';
+import 'package:sliit_eats/screens/user/profile_screen/profile_screen.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 import 'package:sliit_eats/services/AuthService.dart';
 import 'dart:math' as math;
