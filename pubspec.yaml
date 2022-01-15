@@ -65,6 +65,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/browse/
+    - assets/images/browse/products/
     - assets/animations/
     - assets/animations/modals/
     - assets/animations/welcome_screen/

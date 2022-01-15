@@ -18,7 +18,7 @@ class _CategorySelectorState extends State<CategorySelector> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 20, 0, 40),
+      padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(

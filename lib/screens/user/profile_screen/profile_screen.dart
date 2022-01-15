@@ -2,8 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:sliit_eats/helpers/colors.dart';
+import 'package:sliit_eats/routes/app_routes.dart';
+import 'package:sliit_eats/services/auth_service.dart';
 import 'components/info_card.dart';
 
 class ProfileSettings extends StatefulWidget {
@@ -58,6 +59,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                           onTap: () => Navigator.of(context).pop(),
                           child: Icon(
                             FontAwesomeIcons.arrowLeft,
+                            color: Colors.white,
                           ),
                         ),
                       ],
@@ -88,22 +90,18 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                           children: [
                             Text(
                               user.displayName!,
-                              style: GoogleFonts.poppins(
-                                textStyle: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
-                                ),
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
                               ),
                             ),
                             Text(
                               user.email!,
-                              style: GoogleFonts.poppins(
-                                textStyle: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                ),
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
                               ),
                             ),
                           ],
@@ -116,7 +114,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.cardColor,
                         borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
                       ),
                       child: Padding(
@@ -131,12 +129,10 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                               padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
                               child: Text(
                                 "Notifications",
-                                style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                  ),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
@@ -160,59 +156,13 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     SizedBox(
                       height: 4,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.zero,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Row(
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Notification Settings",
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  "Manage Notifications",
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Spacer(),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                              child: Icon(
-                                FontAwesomeIcons.arrowRight,
-                                color: AppColors.primary,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    InfoCard(title: "Terms & Conditions", borderRadius: BorderRadius.zero, showArrow: true),
                     SizedBox(
                       height: 4,
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: AppColors.cardColor,
                         borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
                       ),
                       child: Padding(
@@ -225,22 +175,18 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                               children: [
                                 Text(
                                   "Updates",
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                    ),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
                                   ),
                                 ),
                                 Text(
                                   "App fixes and new features",
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                    ),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ],
@@ -260,20 +206,18 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     SizedBox(
                       height: 15,
                     ),
-                    InfoCard(
-                      title: "Terms & Conditions",
-                      borderRadius: BorderRadius.zero,
-                      showArrow: true,
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    InfoCard(
-                      title: "Sign Out",
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      showArrow: false,
-                      icon: FontAwesomeIcons.signOutAlt,
-                      iconColor: Colors.red,
+                    GestureDetector(
+                      onTap: () async {
+                        await AuthService.signOut();
+                        Navigator.pushReplacementNamed(context, AppRoutes.LOGIN);
+                      },
+                      child: InfoCard(
+                        title: "Sign Out",
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        showArrow: false,
+                        icon: FontAwesomeIcons.signOutAlt,
+                        iconColor: Colors.red,
+                      ),
                     ),
                     SizedBox(
                       height: 35,

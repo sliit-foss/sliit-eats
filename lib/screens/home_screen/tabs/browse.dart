@@ -7,6 +7,7 @@ import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/models/canteen.dart';
 import 'package:sliit_eats/models/category.dart';
 import 'package:sliit_eats/screens/home_screen/components/category_selector.dart';
+import 'package:sliit_eats/screens/home_screen/components/product_card.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 import 'package:sliit_eats/services/canteen_service.dart';
 import 'package:sliit_eats/services/category_service.dart';
@@ -21,7 +22,9 @@ class BrowseTab extends StatefulWidget {
 class _BrowseTabState extends State<BrowseTab> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
   String selectedCategory = 'all';
+  String selectedCanteen = '';
   dynamic progress;
+  bool firstLoad = true;
 
   void setSelectedCategory(String id) {
     setState(() {
@@ -68,7 +71,7 @@ class _BrowseTabState extends State<BrowseTab> {
                     );
                   },
                   options: CarouselOptions(
-                    height: MediaQuery.of(context).size.height * 0.2,
+                    height: MediaQuery.of(context).size.height * 0.18,
                     aspectRatio: 2 / 1,
                     reverse: false,
                     autoPlay: true,
@@ -80,31 +83,97 @@ class _BrowseTabState extends State<BrowseTab> {
                     pauseAutoPlayOnManualNavigate: true,
                     enlargeCenterPage: false,
                     onPageChanged: (index, reason) {},
-                    viewportFraction: 0.8,
+                    viewportFraction: 0.72,
                   ),
                 ),
                 Expanded(
                   child: FutureBuilder(
                     future: CanteenService.getCanteens(),
-                    builder: (BuildContext context, AsyncSnapshot<List<Canteen>> snapshot) {
-                      if (snapshot.hasData) {
-                        print(snapshot.data);
-                        if (snapshot.data!.isNotEmpty) {
+                    builder: (BuildContext context, AsyncSnapshot<List<Canteen>> canteenSnapshot) {
+                      if (canteenSnapshot.hasData) {
+                        if (canteenSnapshot.data!.isNotEmpty) {
+                          if (firstLoad) {
+                            firstLoad = false;
+                            selectedCanteen = canteenSnapshot.data![0].id;
+                          }
                           return FutureBuilder(
                             future: CategoryService.getCategories(),
-                            builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
-                              if (snapshot.hasData) {
-                                if (snapshot.data!.isNotEmpty) {
-                                  if (snapshot.data![0].id != 'all') {
-                                    snapshot.data!.insert(0, Category(id: 'all', name: 'All', canteenId: ''));
+                            builder: (BuildContext context, AsyncSnapshot<List<Category>> categorySnapshot) {
+                              if (categorySnapshot.hasData) {
+                                if (categorySnapshot.data!.isNotEmpty) {
+                                  if (categorySnapshot.data![0].id != 'all') {
+                                    categorySnapshot.data!.insert(0, Category(id: 'all', name: 'All', canteenId: ''));
                                   }
                                   return Column(
                                     children: [
                                       CategorySelector(
-                                        categories: snapshot.data,
+                                        categories: categorySnapshot.data,
                                         selectedCategory: selectedCategory,
                                         onCategoryTap: (String id) {
                                           setSelectedCategory(id);
+                                        },
+                                      ),
+                                      Expanded(
+                                        child: SingleChildScrollView(
+                                          child: Wrap(
+                                            spacing: 15.0, // gap between adjacent chips
+                                            runSpacing: 12.0, // gap between lines
+                                            children: [
+                                              ProductCard(),
+                                              ProductCard(),
+                                              ProductCard(),
+                                              ProductCard(),
+                                              ProductCard(),
+                                              ProductCard(),
+                                              ProductCard(),
+                                              ProductCard(),
+                                              ProductCard(),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      FormField<String>(
+                                        builder: (FormFieldState<String> state) {
+                                          return InputDecorator(
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: Colors.white.withOpacity(0.1),
+                                              contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                                              errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
+                                              hintText: "Select Canteen",
+                                              hintStyle: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            isEmpty: selectedCanteen == "",
+                                            child: DropdownButtonHideUnderline(
+                                              child: DropdownButton<String>(
+                                                value: selectedCanteen,
+                                                isDense: true,
+                                                onChanged: (canteen) {
+                                                  setState(() {
+                                                    selectedCanteen = canteen!;
+                                                  });
+                                                },
+                                                dropdownColor: AppColors.cardColor,
+                                                items: canteenSnapshot.data!.map<DropdownMenuItem<String>>((Canteen canteen) {
+                                                  return DropdownMenuItem<String>(
+                                                    value: canteen.id,
+                                                    child: Text(
+                                                      canteen.name,
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight: FontWeight.w500,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  );
+                                                }).toList(),
+                                              ),
+                                            ),
+                                          );
                                         },
                                       ),
                                     ],
