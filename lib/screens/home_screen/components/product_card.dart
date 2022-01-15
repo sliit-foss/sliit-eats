@@ -55,7 +55,7 @@ class ProductCard extends StatelessWidget {
                   width: 35,
                   decoration: BoxDecoration(
                     color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(5),
                   ),
                   child: Icon(
                     FontAwesomeIcons.plus,

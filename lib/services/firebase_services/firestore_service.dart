@@ -18,14 +18,57 @@ class FirestoreService {
 
   static Future<dynamic> read(String collection, List<dynamic> filters, {limit}) async {
     List<dynamic> data = [];
-    dynamic collectionRef = FirebaseFirestore.instance.collection(collection);
-    filters.forEach((filter) {
-      collectionRef = collectionRef.where(filter['name'], isEqualTo: filter['value']);
-    });
+    dynamic collectionRef = _filteredCollectionRef(collection, filters);
     if (limit != null) collectionRef = collectionRef.limit(limit);
     await collectionRef.get().then((QuerySnapshot querySnapshot) {
       if (querySnapshot.docs.length > 0) data = querySnapshot.docs;
     });
     return limit == 1 ? data[0] : data;
+  }
+
+  static Future<dynamic> update(String collection, List<dynamic> filters, dynamic payload) async {
+    dynamic res;
+    dynamic collectionRef = _filteredCollectionRef(collection, filters);
+    await collectionRef.get().then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((element) {
+        FirebaseFirestore.instance.collection(collection).doc(element.id).update(payload).catchError((error) {
+          res = ErrorMessage(Constants.errorMessages['default']!);
+        });
+      });
+      if(res.runtimeType != ErrorMessage) {
+        res = SuccessMessage('Deleted successfully');
+      }
+    }).catchError((error) {
+      print(error);
+      res = ErrorMessage(Constants.errorMessages['default']!);
+    });
+    return res;
+  }
+
+  static Future<dynamic> delete(String collection, List<dynamic> filters) async {
+    dynamic res;
+    dynamic collectionRef = _filteredCollectionRef(collection, filters);
+    await collectionRef.get().then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((element) {
+        FirebaseFirestore.instance.collection(collection).doc(element.id).delete().catchError((error) {
+          res = ErrorMessage(Constants.errorMessages['default']!);
+        });
+      });
+      if(res.runtimeType != ErrorMessage) {
+        res = SuccessMessage('Deleted successfully');
+      }
+    }).catchError((error) {
+      print(error);
+      res = ErrorMessage(Constants.errorMessages['default']!);
+    });
+    return res;
+  }
+
+  static dynamic _filteredCollectionRef(String collection, List<dynamic> filters) {
+    dynamic collectionRef = FirebaseFirestore.instance.collection(collection);
+    filters.forEach((filter) {
+      collectionRef = collectionRef.where(filter['name'], isEqualTo: filter['value']);
+    });
+    return collectionRef;
   }
 }

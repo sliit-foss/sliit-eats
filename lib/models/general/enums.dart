@@ -1,0 +1,4 @@
+enum ModalPurpose {
+  ADD,
+  EDIT
+}

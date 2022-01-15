@@ -21,6 +21,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(name: 'temporaryregister', options: DefaultFirebaseOptions.currentPlatform);
   String? appSettings = await CacheService.getAppSettings();
   if (appSettings != null) StateHelpers.appSettings = jsonDecode(appSettings);
   runApp(MyApp());

@@ -35,10 +35,10 @@ class _SignUpState extends State<SignUp> {
 
   @override
   void dispose() {
-    super.dispose();
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -153,7 +153,7 @@ class _SignUpState extends State<SignUp> {
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width,
-                              padding: EdgeInsets.symmetric(vertical: 15),
+                              padding: EdgeInsets.symmetric(vertical: 5),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 color: AppColors.primary,

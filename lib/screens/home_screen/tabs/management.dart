@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliit_eats/helpers/colors.dart';
+import 'package:sliit_eats/routes/app_routes.dart';
 import 'package:sliit_eats/screens/home_screen/components/option_card.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 
@@ -51,19 +52,24 @@ class _ManagementTabState extends State<ManagementTab> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            width: MediaQuery.of(context).size.width*0.42,
-                            child: OptionCard(title: "", subtitle: "Product Management", icon: Icons.emoji_food_beverage, iconSize:30),
+                            width: MediaQuery.of(context).size.width * 0.42,
+                            child: OptionCard(title: "", subtitle: "Product Management", icon: Icons.emoji_food_beverage, iconSize: 30),
                           ),
                           Container(
-                            width: MediaQuery.of(context).size.width*0.42,
-                            child: OptionCard(title: "", subtitle: "Category Management", icon: Icons.category, iconSize:30),
+                            width: MediaQuery.of(context).size.width * 0.42,
+                            child: OptionCard(title: "", subtitle: "Category Management", icon: Icons.category, iconSize: 30),
                           ),
                         ],
                       ),
                       SizedBox(height: 20),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: OptionCard(title: "", subtitle: "User Management", icon: FontAwesomeIcons.users),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, AppRoutes.USER_MANAGEMENT);
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: OptionCard(title: "", subtitle: "User Management", icon: FontAwesomeIcons.users),
+                        ),
                       ),
                       SizedBox(height: 20),
                       Container(
