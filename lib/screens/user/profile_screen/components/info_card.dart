@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliit_eats/helpers/colors.dart';
+import 'package:sliit_eats/routes/app_routes.dart';
 import 'package:sliit_eats/services/AuthService.dart';
 
 class InfoCard extends StatelessWidget {
-  const InfoCard({Key? key, required this.title, this.progress, required this.borderRadius, required this.showArrow, this.icon = null, this.iconColor = null}) : super(key: key);
+  const InfoCard(
+      {Key? key,
+      required this.title,
+      this.progress,
+      required this.borderRadius,
+      required this.showArrow,
+      this.icon = null,
+      this.iconColor = null})
+      : super(key: key);
   final String title;
   final dynamic progress;
   final BorderRadius borderRadius;
@@ -20,7 +29,7 @@ class InfoCard extends StatelessWidget {
           progress.show();
           await AuthService.signOut();
           progress.dismiss();
-          Navigator.pushReplacementNamed(context, '/login');
+          Navigator.pushReplacementNamed(context, AppRoutes.LOGIN);
         }
       },
       child: Container(

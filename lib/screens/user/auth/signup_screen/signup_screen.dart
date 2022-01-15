@@ -191,7 +191,8 @@ class _SignUpState extends State<SignUp> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.pushReplacementNamed(context, '/login');
+                                  Navigator.pushReplacementNamed(
+                                      context, AppRoutes.LOGIN);
                                 },
                                 child: Text(
                                   'Sign In',

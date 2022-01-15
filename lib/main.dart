@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sliit_eats/routes/app_routes.dart';
 import 'package:sliit_eats/screens/welcome_screen/welcome_screen.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 import 'helpers/app_http_overrides.dart';
@@ -10,7 +11,7 @@ import 'helpers/cache_service.dart';
 import 'helpers/colors.dart';
 import 'helpers/firebase_options.dart';
 import 'helpers/state_helpers.dart';
-import 'helpers/routes_generator.dart';
+import 'routes/routes_generator.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
 
   void toHome(context) async{
     await Future.delayed(Duration(seconds: 1));
-    Navigator.pushReplacementNamed(context, '/home', arguments: {'selectedTabIndex': 0});
+    Navigator.pushReplacementNamed(context, AppRoutes.HOME, arguments: {'selectedTabIndex': 0});
   }
 
   @override
