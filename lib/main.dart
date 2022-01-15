@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sliit_eats/routes/app_routes.dart';
 import 'package:sliit_eats/screens/welcome_screen/welcome_screen.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 import 'helpers/app_http_overrides.dart';
@@ -28,14 +29,14 @@ void main() async {
 class MyApp extends StatelessWidget {
   Future<bool> checkLoginStatus() async {
     User? user = FirebaseAuth.instance.currentUser;
-    if (user != null && user.emailVerified) return true;
+    if (user != null && user.emailVerified)
+      return true;
     return false;
   }
 
-  void toHome(context) async {
+  void toHome(context) async{
     await Future.delayed(Duration(seconds: 1));
-    Navigator.pushReplacementNamed(context, '/home',
-        arguments: {'selectedTabIndex': 0});
+    Navigator.pushReplacementNamed(context, AppRoutes.HOME, arguments: {'selectedTabIndex': 0});
   }
 
   @override

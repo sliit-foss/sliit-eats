@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliit_eats/helpers/colors.dart';
-import 'package:sliit_eats/models/sucess_message.dart';
+import 'package:sliit_eats/models/general/sucess_message.dart';
 import 'package:sliit_eats/routes/app_routes.dart';
 import 'package:sliit_eats/screens/widgets/alert_dialog.dart';
 import 'package:sliit_eats/screens/widgets/entry_field.dart';
-import 'package:sliit_eats/services/AuthService.dart';
+import 'package:sliit_eats/services/auth_service.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -63,17 +63,12 @@ class _LoginState extends State<Login> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(
-                        height: MediaQuery.of(context).orientation ==
-                                Orientation.portrait
-                            ? MediaQuery.of(context).size.height * 0.1
-                            : MediaQuery.of(context).size.height * 0.2,
+                        height: MediaQuery.of(context).orientation == Orientation.portrait ? MediaQuery.of(context).size.height * 0.1 : MediaQuery.of(context).size.height * 0.2,
                       ),
                       _title(),
                       SizedBox(height: 30),
                       Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal:
-                                MediaQuery.of(context).size.width * 0.05),
+                        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
                         child: Column(
                           children: <Widget>[
                             EntryField(
@@ -98,45 +93,34 @@ class _LoginState extends State<Login> {
                           String password = _passwordController.text;
                           if (email != "" && password != "") {
                             progress!.show();
-                            dynamic res =
-                                await AuthService.signIn(email, password);
+                            dynamic res = await AuthService.signIn(email, password);
                             progress.dismiss();
                             if (res.runtimeType == SuccessMessage) {
                               print('sdf');
-                              Navigator.pushReplacementNamed(context, '/home',
-                                  arguments: {'selectedTabIndex': 0});
+                              Navigator.pushReplacementNamed(context, AppRoutes.HOME, arguments: {'selectedTabIndex': 0});
                             } else {
                               await showCoolAlert(context, false, res.message);
                             }
                           } else {
-                            await showCoolAlert(context, false,
-                                "Please enter a valid email and password");
+                            await showCoolAlert(context, false, "Please enter a valid email and password");
                           }
                         },
                         child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  MediaQuery.of(context).size.width * 0.05),
+                          padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             padding: EdgeInsets.symmetric(vertical: 15),
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: AppColors.primary,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
                               boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: AppColors.primary.withAlpha(100),
-                                    offset: Offset(2, 4),
-                                    blurRadius: 8,
-                                    spreadRadius: 2),
+                                BoxShadow(color: AppColors.primary.withAlpha(100), offset: Offset(2, 4), blurRadius: 8, spreadRadius: 2),
                               ],
                             ),
                             child: Text(
                               'Login',
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.white),
+                              style: TextStyle(fontSize: 20, color: Colors.white),
                             ),
                           ),
                         ),

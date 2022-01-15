@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sliit_eats/helpers/constants.dart';
-import 'package:sliit_eats/models/error_message.dart';
-import 'package:sliit_eats/models/sucess_message.dart';
+import 'package:sliit_eats/models/general/error_message.dart';
+import 'package:sliit_eats/models/general/sucess_message.dart';
 
 class FirestoreService {
   static Future<dynamic> write(String collection, dynamic payload, String successMessage) async {
