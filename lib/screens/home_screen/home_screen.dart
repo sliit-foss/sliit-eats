@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(3, 0, 40, 0),
                               child: Text(
-                                "Hi ${snapshot.data!.username}",
+                                "What's Cooking ?",
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(5, 0, 0, 0 ),
+                              padding: const EdgeInsets.fromLTRB(5, 0, 0, 10 ),
                               child: Transform(
                                 transform: Matrix4.rotationY(math.pi),
                                 child: Container(
