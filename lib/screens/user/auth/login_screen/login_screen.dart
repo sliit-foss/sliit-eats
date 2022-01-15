@@ -109,11 +109,11 @@ class _LoginState extends State<Login> {
                           padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
                           child: Container(
                             width: MediaQuery.of(context).size.width,
-                            padding: EdgeInsets.symmetric(vertical: 15),
+                            padding: EdgeInsets.symmetric(vertical: 10),
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: AppColors.primary,
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderRadius: BorderRadius.all(Radius.circular(5)),
                               boxShadow: <BoxShadow>[
                                 BoxShadow(color: AppColors.primary.withAlpha(100), offset: Offset(2, 4), blurRadius: 8, spreadRadius: 2),
                               ],

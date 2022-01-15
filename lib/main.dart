@@ -6,11 +6,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sliit_eats/routes/app_routes.dart';
 import 'package:sliit_eats/screens/welcome_screen/welcome_screen.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
+import 'package:sliit_eats/services/auth_service.dart';
 import 'helpers/app_http_overrides.dart';
 import 'helpers/cache_service.dart';
 import 'helpers/colors.dart';
 import 'helpers/firebase_options.dart';
 import 'helpers/state_helpers.dart';
+import 'models/user.dart';
 import 'routes/routes_generator.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -21,6 +23,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(name: 'temporaryregister', options: DefaultFirebaseOptions.currentPlatform);
   String? appSettings = await CacheService.getAppSettings();
   if (appSettings != null) StateHelpers.appSettings = jsonDecode(appSettings);
   runApp(MyApp());
@@ -29,8 +32,11 @@ void main() async {
 class MyApp extends StatelessWidget {
   Future<bool> checkLoginStatus() async {
     User? user = FirebaseAuth.instance.currentUser;
-    if (user != null && user.emailVerified)
-      return true;
+    if (user != null && user.emailVerified) {
+      UserModel? currentUser = await AuthService.getCurrentUserDetails();
+      if(currentUser!.isActive)
+        return true;
+    }
     return false;
   }
 
