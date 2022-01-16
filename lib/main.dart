@@ -7,6 +7,7 @@ import 'package:sliit_eats/routes/app_routes.dart';
 import 'package:sliit_eats/screens/welcome_screen/welcome_screen.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 import 'package:sliit_eats/services/auth_service.dart';
+import 'package:sliit_eats/services/firebase_services/fcm_service.dart';
 import 'helpers/app_http_overrides.dart';
 import 'helpers/cache_service.dart';
 import 'helpers/colors.dart';
@@ -24,6 +25,7 @@ void main() async {
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Firebase.initializeApp(name: 'temporaryregister', options: DefaultFirebaseOptions.currentPlatform);
+  await FCMService.initialize();
   String? appSettings = await CacheService.getAppSettings();
   if (appSettings != null) StateHelpers.appSettings = jsonDecode(appSettings);
   runApp(MyApp());

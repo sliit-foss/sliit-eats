@@ -15,4 +15,10 @@ class UserService {
       List<dynamic> filters = [{'name': 'id', 'value': userId}];
       return await FirestoreService.update('users', filters, {'is_active' : activeStatus});
   }
+
+  static Future<dynamic>? updateFCMToken(String userId, String token) async {
+    List<dynamic> filters = [{'name': 'id', 'value': userId}];
+    return await FirestoreService.update('users', filters, {'fcm_token' : token});
+  }
+
 }
