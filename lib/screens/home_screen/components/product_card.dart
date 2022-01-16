@@ -18,7 +18,7 @@ class ProductCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(5),
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.4,
-                height: 100,
+                height: 90,
                 child: Image(
                   image: AssetImage("assets/images/browse/products/photo.jpg"),
                   fit: BoxFit.cover,
@@ -34,7 +34,7 @@ class ProductCard extends StatelessWidget {
                     Text(
                       " Coffee",
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                       ),
@@ -42,7 +42,7 @@ class ProductCard extends StatelessWidget {
                     Text(
                       '\$ 2.00',
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                       ),

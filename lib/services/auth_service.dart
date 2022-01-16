@@ -7,16 +7,10 @@ import 'package:sliit_eats/models/user.dart';
 import 'package:sliit_eats/services/firebase_services/firestore_service.dart';
 
 class AuthService {
-  static Future<String>? forgotPasswordEmail(String email) {
-    // implement forgotPasswordEmail
-    return null;
-  }
 
   static Future<dynamic>? getCurrentUserDetails() async {
     User? user = FirebaseAuth.instance.currentUser;
-    List<dynamic> filters = [
-      {'name': 'id', 'value': user!.uid}
-    ];
+    List<dynamic> filters = [{'name': 'id', 'value': user!.uid}];
     final responseDoc = await FirestoreService.read('users', filters, limit: 1);
     return UserModel.fromDocumentSnapshot(responseDoc);
   }
@@ -38,10 +32,6 @@ class AuthService {
       if (e.code == 'wrong-password') return ErrorMessage('Invalid password');
       return ErrorMessage(Constants.errorMessages['default']!);
     }
-  }
-
-  static Future<void>? signOut() async {
-    await FirebaseAuth.instance.signOut();
   }
 
   static Future<dynamic>? signUp(String email, String password, String name, bool isAdmin, String userType) async {
@@ -66,6 +56,26 @@ class AuthService {
       print(e);
       return ErrorMessage(Constants.errorMessages['default']!);
     }
+  }
+
+  static Future<void>? signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
+  static Future<dynamic>? updatePassword(String password) async {
+    dynamic res;
+    User? user = FirebaseAuth.instance.currentUser;
+    await user!.updatePassword(password).then((val){
+      res = SuccessMessage('Password updated successfully');
+    }).catchError((err){
+      print(err.code);
+      if (err.code == 'weak-password') {
+        res = ErrorMessage('The password provided is too weak');
+      }else{
+        res = ErrorMessage(Constants.errorMessages['default']!);
+      }
+    });
+    return res;
   }
 
   static Future<void>? sendVerificationMail() async {

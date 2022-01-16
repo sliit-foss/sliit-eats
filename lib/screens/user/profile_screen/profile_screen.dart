@@ -4,6 +4,7 @@ import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/routes/app_routes.dart';
+import 'package:sliit_eats/screens/user/profile_screen/components/change_password_modal.dart';
 import 'package:sliit_eats/services/auth_service.dart';
 import 'components/info_card.dart';
 
@@ -153,6 +154,16 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    InfoCard(title: "Change Password", borderRadius: BorderRadius.zero, showArrow: true, onArrowTap: (){
+                      return showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                        return ChangePasswordModal();
+                      });
+                    },),
                     SizedBox(
                       height: 4,
                     ),
