@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/routes/app_routes.dart';
+import 'package:sliit_eats/screens/product/components/product_order_modal.dart';
 import 'package:sliit_eats/screens/widgets/custom_card.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   const ProductCard({Key? key}) : super(key: key);
 
+  @override
+  _ProductCardState createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -58,17 +64,26 @@ class ProductCard extends StatelessWidget {
                     ],
                   ),
                   Spacer(),
-                  Container(
-                    height: 50,
-                    width: 35,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Icon(
-                      FontAwesomeIcons.plus,
-                      color: Colors.white,
-                      size: 16,
+                  GestureDetector(
+                    onTap: () async {
+                      return showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ProductOrderModal(name: 'Coffee', price: 2.00);
+                          });
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 35,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Icon(
+                        FontAwesomeIcons.plus,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                     ),
                   ),
                 ],
@@ -80,3 +95,4 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
+

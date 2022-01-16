@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:sliit_eats/helpers/colors.dart';
+import 'package:sliit_eats/screens/product/components/product_order_modal.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 import 'package:sliit_eats/screens/widgets/rounded_button.dart';
 import 'package:sliit_eats/services/product_service.dart';
@@ -163,7 +164,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 ],
                               ),
                               Spacer(),
-                              RoundedButton(text: 'Order Now', buttonColor: AppColors.primary, onPressed: () {})
+                              RoundedButton(text: 'Order Now', buttonColor: AppColors.primary, onPressed: () {
+                                return showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return ProductOrderModal(name: 'Coffee', price: 2.00,);
+                                    });
+                              })
                             ],
                           ),
                         ],
