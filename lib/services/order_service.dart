@@ -16,7 +16,6 @@ class OrderService {
       dynamic extraData ={'username': user!.username};
       orders.add(Order.fromDocumentSnapshot(responseDoc, extraData));
     }
-    print(orders);
     return orders;
   }
 
