@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:sliit_eats/helpers/constants.dart';
 import 'package:sliit_eats/models/general/error_message.dart';
 import 'package:sliit_eats/models/general/sucess_message.dart';
 import 'package:sliit_eats/models/user.dart';
 import 'package:sliit_eats/services/firebase_services/firestore_service.dart';
+import 'package:sliit_eats/services/user_service.dart';
 
 class AuthService {
   static Future<String>? forgotPasswordEmail(String email) {
@@ -32,6 +34,8 @@ class AuthService {
         await sendVerificationMail();
         return ErrorMessage('Please verify your email');
       }
+      String? firebaseToken= await FirebaseMessaging.instance.getToken();
+      await UserService.updateFCMToken(user.uid, firebaseToken!);
       return SuccessMessage("Signed in Successfully");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') return ErrorMessage('No user found for that email');
