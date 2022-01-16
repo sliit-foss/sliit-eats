@@ -8,6 +8,7 @@ import 'package:sliit_eats/models/general/sucess_message.dart';
 import 'package:sliit_eats/screens/widgets/alert_dialog.dart';
 import 'package:sliit_eats/screens/widgets/custom_appbar.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
+import 'package:sliit_eats/screens/widgets/no_data_component.dart';
 import 'package:sliit_eats/screens/widgets/rounded_button.dart';
 import 'package:sliit_eats/services/category_service.dart';
 import 'components/add_category_modal.dart';
@@ -199,7 +200,7 @@ class _CategoryManagementState extends State<CategoryManagement> {
                         ),
                       );
                     } else {
-                      return LoadingIndicator();
+                      return NoDataComponent();
                     }
                   } else {
                     return LoadingIndicator();
