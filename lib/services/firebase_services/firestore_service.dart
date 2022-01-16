@@ -23,7 +23,7 @@ class FirestoreService {
     await collectionRef.get().then((QuerySnapshot querySnapshot) {
       if (querySnapshot.docs.length > 0) data = querySnapshot.docs;
     });
-    return limit == 1 ? data[0] : data;
+    return limit == 1 ? ( data.length > 0 ? data[0] : null ) : data;
   }
 
   static Future<dynamic> update(String collection, List<dynamic> filters, dynamic payload) async {
