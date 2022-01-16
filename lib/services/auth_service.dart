@@ -16,9 +16,7 @@ class AuthService {
 
   static Future<dynamic>? getCurrentUserDetails() async {
     User? user = FirebaseAuth.instance.currentUser;
-    List<dynamic> filters = [
-      {'name': 'id', 'value': user!.uid}
-    ];
+    List<dynamic> filters = [{'name': 'id', 'value': user!.uid}];
     final responseDoc = await FirestoreService.read('users', filters, limit: 1);
     return UserModel.fromDocumentSnapshot(responseDoc);
   }

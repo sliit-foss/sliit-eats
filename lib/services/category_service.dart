@@ -6,7 +6,7 @@ import 'auth_service.dart';
 
 class CategoryService {
 
-  static Future<List<Category>>? getCategories({dynamic filters = null}) async {
+  static Future<List<Category>>? getCategories({ dynamic filters }) async {
     final responseDocs = await FirestoreService.read('categories', filters != null ? filters : []);
     return (responseDocs as List).map((responseDoc) => Category.fromDocumentSnapshot(responseDoc)).toList();
   }

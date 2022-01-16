@@ -77,14 +77,24 @@ class _ManagementTabState extends State<ManagementTab> {
                         ),
                       ),
                       SizedBox(height: 20),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: OptionCard(title: "0", subtitle: "Active Orders", icon: null),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, AppRoutes.ORDER_MANAGEMENT, arguments: {'title': 'Active Orders','completed': false});
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: OptionCard(title: "0", subtitle: "Active Orders", icon: null),
+                        ),
                       ),
                       SizedBox(height: 20),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: OptionCard(title: "0", subtitle: "Served Orders", icon: null),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, AppRoutes.ORDER_MANAGEMENT, arguments: {'title': 'Served Orders', 'completed': true});
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: OptionCard(title: "0", subtitle: "Served Orders", icon: null),
+                        ),
                       ),
                     ],
                   ),

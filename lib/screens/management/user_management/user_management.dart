@@ -9,6 +9,7 @@ import 'package:sliit_eats/screens/management/user_management/components/add_use
 import 'package:sliit_eats/screens/widgets/alert_dialog.dart';
 import 'package:sliit_eats/screens/widgets/custom_appbar.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
+import 'package:sliit_eats/screens/widgets/no_data_component.dart';
 import 'package:sliit_eats/screens/widgets/rounded_button.dart';
 import 'package:sliit_eats/services/user_service.dart';
 
@@ -188,7 +189,7 @@ class _UserManagementState extends State<UserManagement> {
                         ),
                       );
                     } else {
-                      return LoadingIndicator();
+                      return NoDataComponent();
                     }
                   } else {
                     return LoadingIndicator();
