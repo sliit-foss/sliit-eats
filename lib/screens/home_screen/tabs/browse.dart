@@ -102,7 +102,7 @@ class _BrowseTabState extends State<BrowseTab> {
                               if (categorySnapshot.hasData) {
                                 if (categorySnapshot.data!.isNotEmpty) {
                                   if (categorySnapshot.data![0].id != 'all') {
-                                    categorySnapshot.data!.insert(0, Category(id: 'all', name: 'All', canteenId: ''));
+                                    categorySnapshot.data!.insert(0, Category(id: 'all', name: 'All'));
                                   }
                                   return Column(
                                     children: [
