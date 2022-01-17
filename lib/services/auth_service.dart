@@ -9,10 +9,6 @@ import 'package:sliit_eats/services/firebase_services/firestore_service.dart';
 import 'package:sliit_eats/services/user_service.dart';
 
 class AuthService {
-  static Future<String>? forgotPasswordEmail(String email) {
-    // implement forgotPasswordEmail
-    return null;
-  }
 
   static Future<dynamic>? getCurrentUserDetails() async {
     User? user = FirebaseAuth.instance.currentUser;
@@ -42,10 +38,6 @@ class AuthService {
     }
   }
 
-  static Future<void>? signOut() async {
-    await FirebaseAuth.instance.signOut();
-  }
-
   static Future<dynamic>? signUp(String email, String password, String name, bool isAdmin, String userType) async {
     try {
       String canteenId = '';
@@ -68,6 +60,26 @@ class AuthService {
       print(e);
       return ErrorMessage(Constants.errorMessages['default']!);
     }
+  }
+
+  static Future<void>? signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
+  static Future<dynamic>? updatePassword(String password) async {
+    dynamic res;
+    User? user = FirebaseAuth.instance.currentUser;
+    await user!.updatePassword(password).then((val){
+      res = SuccessMessage('Password updated successfully');
+    }).catchError((err){
+      print(err.code);
+      if (err.code == 'weak-password') {
+        res = ErrorMessage('The password provided is too weak');
+      }else{
+        res = ErrorMessage(Constants.errorMessages['default']!);
+      }
+    });
+    return res;
   }
 
   static Future<void>? sendVerificationMail() async {

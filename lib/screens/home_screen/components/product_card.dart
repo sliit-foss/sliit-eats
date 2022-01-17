@@ -31,7 +31,7 @@ class _ProductCardState extends State<ProductCard> {
                   tag: 'safdafafd',
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.4,
-                    height: 100,
+                    height: 90,
                     child: Image(
                       image: AssetImage("assets/images/browse/products/photo.jpg"),
                       fit: BoxFit.cover,
@@ -48,7 +48,7 @@ class _ProductCardState extends State<ProductCard> {
                       Text(
                         " Coffee",
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 14,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                         ),
@@ -56,7 +56,7 @@ class _ProductCardState extends State<ProductCard> {
                       Text(
                         '\$ 2.00',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 14,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                         ),
