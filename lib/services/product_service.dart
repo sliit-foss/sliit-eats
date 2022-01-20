@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:sliit_eats/models/general/error_message.dart';
 import 'package:sliit_eats/models/product.dart';
 import 'package:sliit_eats/services/firebase_services/firestore_service.dart';
@@ -57,7 +56,7 @@ class ProductService {
     return await FirestoreService.delete('products', filters);
   }
 
-  static Future<dynamic> filterProducts(
+  static Future<List<Product>> filterProducts(
       String canteenID, String categoryID, String productName) async {
     List<dynamic> filters = [];
 
@@ -69,6 +68,9 @@ class ProductService {
 
     if (productName != "") filters.add({'name': 'name', 'value': productName});
 
-    return await FirestoreService.read('products', filters);
+    final responsesDocs = await FirestoreService.read('products', filters);
+    return (responsesDocs as List)
+        .map((responsesDoc) => Product.fromDocumentSnapshot(responsesDoc))
+        .toList();
   }
 }

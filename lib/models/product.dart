@@ -1,12 +1,10 @@
-import 'dart:ffi';
-
 class Product {
   final String id;
   final String name;
   final String canteen;
   final String category;
   final String image;
-  final Float unitPrice;
+  final int unitPrice;
   final int servings;
   final int unitsLeft;
 

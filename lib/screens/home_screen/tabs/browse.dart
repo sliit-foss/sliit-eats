@@ -6,6 +6,7 @@ import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/models/canteen.dart';
 import 'package:sliit_eats/models/category.dart';
+import 'package:sliit_eats/models/product.dart';
 import 'package:sliit_eats/screens/home_screen/components/category_selector.dart';
 import 'package:sliit_eats/screens/home_screen/components/product_card.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
@@ -20,11 +21,33 @@ class BrowseTab extends StatefulWidget {
 }
 
 class _BrowseTabState extends State<BrowseTab> {
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      new GlobalKey<RefreshIndicatorState>();
   String selectedCategory = 'all';
   String selectedCanteen = '';
   dynamic progress;
   bool firstLoad = true;
+  Product demoProduct = Product(
+      id: 'fdhU3',
+      name: 'Coffee',
+      canteen: 'sbdbB42',
+      category: 'Beverages',
+      unitPrice: 100,
+      servings: 1,
+      image:
+          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.RLnd8nOKSbhK7-ynu6nGXgHaHa%26pid%3DApi&f=1",
+      unitsLeft: 10);
+
+  Product demoProduct2 = Product(
+      id: 'fdhU3',
+      name: 'Tea',
+      canteen: 'sbdbB42',
+      category: 'Beverages',
+      unitPrice: 90,
+      servings: 1,
+      image:
+          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.RLnd8nOKSbhK7-ynu6nGXgHaHa%26pid%3DApi&f=1",
+      unitsLeft: 0);
 
   void setSelectedCategory(String id) {
     setState(() {
@@ -65,7 +88,8 @@ class _BrowseTabState extends State<BrowseTab> {
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(5),
                       child: Image(
-                        image: AssetImage("assets/images/browse/image$index.png"),
+                        image:
+                            AssetImage("assets/images/browse/image$index.png"),
                         fit: BoxFit.cover,
                       ),
                     );
@@ -89,7 +113,8 @@ class _BrowseTabState extends State<BrowseTab> {
                 Expanded(
                   child: FutureBuilder(
                     future: CanteenService.getCanteens(),
-                    builder: (BuildContext context, AsyncSnapshot<List<Canteen>> canteenSnapshot) {
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<Canteen>> canteenSnapshot) {
                       if (canteenSnapshot.hasData) {
                         if (canteenSnapshot.data!.isNotEmpty) {
                           if (firstLoad) {
@@ -98,11 +123,14 @@ class _BrowseTabState extends State<BrowseTab> {
                           }
                           return FutureBuilder(
                             future: CategoryService.getCategories(),
-                            builder: (BuildContext context, AsyncSnapshot<List<Category>> categorySnapshot) {
+                            builder: (BuildContext context,
+                                AsyncSnapshot<List<Category>>
+                                    categorySnapshot) {
                               if (categorySnapshot.hasData) {
                                 if (categorySnapshot.data!.isNotEmpty) {
                                   if (categorySnapshot.data![0].id != 'all') {
-                                    categorySnapshot.data!.insert(0, Category(id: 'all', name: 'All'));
+                                    categorySnapshot.data!.insert(
+                                        0, Category(id: 'all', name: 'All'));
                                   }
                                   return Column(
                                     children: [
@@ -116,30 +144,56 @@ class _BrowseTabState extends State<BrowseTab> {
                                       Expanded(
                                         child: SingleChildScrollView(
                                           child: Wrap(
-                                            spacing: 15.0, // gap between adjacent chips
-                                            runSpacing: 12.0, // gap between lines
+                                            spacing:
+                                                15.0, // gap between adjacent chips
+                                            runSpacing:
+                                                12.0, // gap between lines
                                             children: [
-                                              ProductCard(),
-                                              ProductCard(),
-                                              ProductCard(),
-                                              ProductCard(),
-                                              ProductCard(),
-                                              ProductCard(),
-                                              ProductCard(),
-                                              ProductCard(),
-                                              ProductCard(),
+                                              ProductCard(
+                                                thisProduct: demoProduct,
+                                              ),
+                                              ProductCard(
+                                                thisProduct: demoProduct2,
+                                              ),
+                                              ProductCard(
+                                                thisProduct: demoProduct,
+                                              ),
+                                              ProductCard(
+                                                thisProduct: demoProduct,
+                                              ),
+                                              ProductCard(
+                                                thisProduct: demoProduct,
+                                              ),
+                                              ProductCard(
+                                                thisProduct: demoProduct,
+                                              ),
+                                              ProductCard(
+                                                thisProduct: demoProduct,
+                                              ),
+                                              ProductCard(
+                                                thisProduct: demoProduct,
+                                              ),
+                                              ProductCard(
+                                                thisProduct: demoProduct,
+                                              ),
                                             ],
                                           ),
                                         ),
                                       ),
                                       FormField<String>(
-                                        builder: (FormFieldState<String> state) {
+                                        builder:
+                                            (FormFieldState<String> state) {
                                           return InputDecorator(
                                             decoration: InputDecoration(
                                               filled: true,
-                                              fillColor: Colors.white.withOpacity(0.1),
-                                              contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                                              errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
+                                              fillColor:
+                                                  Colors.white.withOpacity(0.1),
+                                              contentPadding:
+                                                  EdgeInsets.fromLTRB(
+                                                      20, 10, 20, 10),
+                                              errorStyle: TextStyle(
+                                                  color: Colors.redAccent,
+                                                  fontSize: 16.0),
                                               hintText: "Select Canteen",
                                               hintStyle: TextStyle(
                                                 fontSize: 16,
@@ -157,15 +211,22 @@ class _BrowseTabState extends State<BrowseTab> {
                                                     selectedCanteen = canteen!;
                                                   });
                                                 },
-                                                dropdownColor: AppColors.cardColor,
-                                                items: canteenSnapshot.data!.map<DropdownMenuItem<String>>((Canteen canteen) {
-                                                  return DropdownMenuItem<String>(
+                                                dropdownColor:
+                                                    AppColors.cardColor,
+                                                items: canteenSnapshot.data!
+                                                    .map<
+                                                            DropdownMenuItem<
+                                                                String>>(
+                                                        (Canteen canteen) {
+                                                  return DropdownMenuItem<
+                                                      String>(
                                                     value: canteen.id,
                                                     child: Text(
                                                       canteen.name,
                                                       style: TextStyle(
                                                         fontSize: 16,
-                                                        fontWeight: FontWeight.w500,
+                                                        fontWeight:
+                                                            FontWeight.w500,
                                                         color: Colors.white,
                                                       ),
                                                     ),
