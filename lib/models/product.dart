@@ -4,6 +4,7 @@ class Product {
   final String canteen;
   final String category;
   final String image;
+  final String description;
   final int unitPrice;
   final int servings;
   final int unitsLeft;
@@ -16,6 +17,7 @@ class Product {
       required this.unitPrice,
       required this.servings,
       required this.image,
+      required this.description,
       required this.unitsLeft});
 
   factory Product.fromDocumentSnapshot(dynamic doc) {
@@ -27,6 +29,7 @@ class Product {
       servings: doc.data()['servings'],
       unitPrice: doc.data()['unit_price'],
       image: doc.data()['image'],
+      description: doc.data()['description'],
       unitsLeft: doc.data()['units_left'],
     );
   }

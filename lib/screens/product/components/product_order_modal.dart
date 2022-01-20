@@ -4,9 +4,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliit_eats/helpers/colors.dart';
 
 class ProductOrderModal extends StatefulWidget {
-  const ProductOrderModal({Key? key, required this.name, required this.price}) : super(key: key);
+  const ProductOrderModal(
+      {Key? key,
+      required this.name,
+      required this.price,
+      required this.unitsLeft})
+      : super(key: key);
   final String name;
   final double price;
+  final int unitsLeft;
 
   @override
   _ProductOrderModalState createState() => _ProductOrderModalState();
@@ -26,13 +32,27 @@ class _ProductOrderModalState extends State<ProductOrderModal> {
     super.dispose();
   }
 
+  void updateQuantity(bool increment) {
+    if (increment && quantity < widget.unitsLeft)
+      setState(() {
+        quantity++;
+      });
+    else if (!increment && quantity > 1)
+      setState(() {
+        quantity--;
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12.0))),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12.0))),
       contentPadding: EdgeInsets.zero,
       content: Container(
-        height: MediaQuery.of(context).orientation == Orientation.portrait ? 240 : MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).orientation == Orientation.portrait
+            ? 240
+            : MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -71,9 +91,7 @@ class _ProductOrderModalState extends State<ProductOrderModal> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              setState(() {
-                                quantity--;
-                              });
+                              updateQuantity(false);
                             },
                             child: Icon(
                               FontAwesomeIcons.minusCircle,
@@ -92,9 +110,7 @@ class _ProductOrderModalState extends State<ProductOrderModal> {
                           SizedBox(width: 20),
                           GestureDetector(
                             onTap: () {
-                              setState(() {
-                                quantity++;
-                              });
+                              updateQuantity(true);
                             },
                             child: Icon(
                               FontAwesomeIcons.plusCircle,
@@ -113,7 +129,13 @@ class _ProductOrderModalState extends State<ProductOrderModal> {
                           decoration: BoxDecoration(
                             color: AppColors.primary,
                             borderRadius: BorderRadius.all(Radius.circular(5)),
-                            boxShadow: <BoxShadow>[BoxShadow(color: AppColors.primary.withAlpha(100), offset: Offset(2, 4), blurRadius: 8, spreadRadius: 2)],
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                  color: AppColors.primary.withAlpha(100),
+                                  offset: Offset(2, 4),
+                                  blurRadius: 8,
+                                  spreadRadius: 2)
+                            ],
                           ),
                           child: Text(
                             'Place Order',

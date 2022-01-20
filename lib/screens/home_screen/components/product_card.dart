@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/models/product.dart';
 import 'package:sliit_eats/routes/app_routes.dart';
@@ -98,7 +97,7 @@ class _ProductCardState extends State<ProductCard> {
                               ),
                             ),
                             Text(
-                              'in stock',
+                              'left',
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
@@ -116,8 +115,10 @@ class _ProductCardState extends State<ProductCard> {
                         context: context,
                         builder: (BuildContext context) {
                           return ProductOrderModal(
-                              name: widget.thisProduct.name,
-                              price: widget.thisProduct.unitPrice.toDouble());
+                            name: widget.thisProduct.name,
+                            price: widget.thisProduct.unitPrice.toDouble(),
+                            unitsLeft: widget.thisProduct.unitsLeft,
+                          );
                         });
                 },
                 child: Container(

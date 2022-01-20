@@ -28,26 +28,32 @@ class _BrowseTabState extends State<BrowseTab> {
   dynamic progress;
   bool firstLoad = true;
   Product demoProduct = Product(
-      id: 'fdhU3',
-      name: 'Coffee',
-      canteen: 'sbdbB42',
-      category: 'Beverages',
-      unitPrice: 100,
-      servings: 1,
-      image:
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.RLnd8nOKSbhK7-ynu6nGXgHaHa%26pid%3DApi&f=1",
-      unitsLeft: 10);
+    id: 'C1tmkRb2QwD3Pu8TQZD5',
+    name: 'Coffee',
+    canteen: 'sbdbB42',
+    category: 'Beverages',
+    unitPrice: 100,
+    servings: 1,
+    image:
+        "https://platformmagazine.org/wp-content/uploads/2021/04/guy-basabose-FzdEbrA3Qj0-unsplash-scaled.jpg",
+    unitsLeft: 10,
+    description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  );
 
   Product demoProduct2 = Product(
-      id: 'fdhU3',
-      name: 'Tea',
-      canteen: 'sbdbB42',
-      category: 'Beverages',
-      unitPrice: 90,
-      servings: 1,
-      image:
-          "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.RLnd8nOKSbhK7-ynu6nGXgHaHa%26pid%3DApi&f=1",
-      unitsLeft: 0);
+    id: 'dweFERhiud64',
+    name: 'Milk Tea',
+    canteen: 'sbdbB42',
+    category: 'Beverages',
+    unitPrice: 120,
+    servings: 1,
+    image:
+        "https://platformmagazine.org/wp-content/uploads/2021/04/guy-basabose-FzdEbrA3Qj0-unsplash-scaled.jpg",
+    unitsLeft: 0,
+    description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  );
 
   void setSelectedCategory(String id) {
     setState(() {

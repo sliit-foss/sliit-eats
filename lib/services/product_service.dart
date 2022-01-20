@@ -4,13 +4,14 @@ import 'package:sliit_eats/models/product.dart';
 import 'package:sliit_eats/services/firebase_services/firestore_service.dart';
 
 class ProductService {
-  static Future<dynamic>? getProductById(String id) async {
+  static Future<Product?> getProductById(String id) async {
     List<dynamic> filters = [
       {'name': 'id', 'value': id}
     ];
     final responseDoc =
         await FirestoreService.read('products', filters, limit: 1);
-    return Product.fromDocumentSnapshot(responseDoc);
+    if (responseDoc != null) return Product.fromDocumentSnapshot(responseDoc);
+    return null;
   }
 
   static Future<dynamic>? addNewProduct(
