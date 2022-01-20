@@ -1,22 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:sliit_eats/helpers/constants.dart';
 import 'package:sliit_eats/models/general/error_message.dart';
 import 'package:sliit_eats/models/general/sucess_message.dart';
 import 'package:sliit_eats/models/user.dart';
 import 'package:sliit_eats/services/firebase_services/firestore_service.dart';
+import 'package:sliit_eats/services/user_service.dart';
 
 class AuthService {
-  static Future<String>? forgotPasswordEmail(String email) {
-    // implement forgotPasswordEmail
-    return null;
-  }
 
   static Future<dynamic>? getCurrentUserDetails() async {
     User? user = FirebaseAuth.instance.currentUser;
-    List<dynamic> filters = [
-      {'name': 'id', 'value': user!.uid}
-    ];
+    List<dynamic> filters = [{'name': 'id', 'value': user!.uid}];
     final responseDoc = await FirestoreService.read('users', filters, limit: 1);
     return UserModel.fromDocumentSnapshot(responseDoc);
   }
@@ -32,16 +28,14 @@ class AuthService {
         await sendVerificationMail();
         return ErrorMessage('Please verify your email');
       }
+      String? firebaseToken= await FirebaseMessaging.instance.getToken();
+      await UserService.updateFCMToken(user.uid, firebaseToken!);
       return SuccessMessage("Signed in Successfully");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') return ErrorMessage('No user found for that email');
       if (e.code == 'wrong-password') return ErrorMessage('Invalid password');
       return ErrorMessage(Constants.errorMessages['default']!);
     }
-  }
-
-  static Future<void>? signOut() async {
-    await FirebaseAuth.instance.signOut();
   }
 
   static Future<dynamic>? signUp(String email, String password, String name, bool isAdmin, String userType) async {
@@ -66,6 +60,26 @@ class AuthService {
       print(e);
       return ErrorMessage(Constants.errorMessages['default']!);
     }
+  }
+
+  static Future<void>? signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
+  static Future<dynamic>? updatePassword(String password) async {
+    dynamic res;
+    User? user = FirebaseAuth.instance.currentUser;
+    await user!.updatePassword(password).then((val){
+      res = SuccessMessage('Password updated successfully');
+    }).catchError((err){
+      print(err.code);
+      if (err.code == 'weak-password') {
+        res = ErrorMessage('The password provided is too weak');
+      }else{
+        res = ErrorMessage(Constants.errorMessages['default']!);
+      }
+    });
+    return res;
   }
 
   static Future<void>? sendVerificationMail() async {

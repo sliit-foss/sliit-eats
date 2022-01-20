@@ -14,14 +14,15 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      ENCODED_STRING: ${{ secrets.SLIIT_EATS_KEY_JKS }}
+      SLIIT_EATS_KEY_PASSWORD: ${{ secrets.SLIIT_EATS_KEY_PASSWORD }}
+      SLIIT_EATS_ALIAS_PASSWORD: ${{ secrets.SLIIT_EATS_ALIAS_PASSWORD }}
     steps:
       - name: Decode Key
         run: |
           TMP_KEYSTORE_FILE_PATH="${RUNNER_TEMP}"/keystore
           mkdir "${TMP_KEYSTORE_FILE_PATH}"
           echo $ENCODED_STRING | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"/key.jks
-        env:
-          ENCODED_STRING: ${{ secrets.SLIIT_EATS_KEY_JKS }}
       - uses: actions/checkout@v1
       - uses: actions/setup-java@v1
         with:
@@ -31,9 +32,6 @@ jobs:
           channel: 'stable'
       - run: flutter upgrade
       - run: flutter build apk --release
-        env:
-          SLIIT_EATS_KEY_PASSWORD: ${{ secrets.SLIIT_EATS_KEY_PASSWORD }}
-          SLIIT_EATS_ALIAS_PASSWORD: ${{ secrets.SLIIT_EATS_ALIAS_PASSWORD }}
       - uses: actions/upload-artifact@v2
         with:
           name: release-apk
