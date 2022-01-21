@@ -1,21 +1,15 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/main.dart';
 import 'package:sliit_eats/models/general/enums.dart';
-import 'package:sliit_eats/models/general/sucess_message.dart';
 import 'package:sliit_eats/models/product.dart';
-import 'package:sliit_eats/models/user.dart';
-import 'package:sliit_eats/screens/home_screen/components/product_card.dart';
-import 'package:sliit_eats/screens/widgets/alert_dialog.dart';
+import 'package:sliit_eats/screens/product/components/manage_product_card.dart';
 import 'package:sliit_eats/screens/widgets/custom_appbar.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 import 'package:sliit_eats/screens/widgets/no_data_component.dart';
 import 'package:sliit_eats/screens/widgets/rounded_button.dart';
-import 'package:sliit_eats/services/auth_service.dart';
 import 'package:sliit_eats/services/product_service.dart';
 
 import 'components/add_product_modal.dart';
@@ -106,6 +100,19 @@ class _ProductManagementState extends State<ProductManagement> {
                                 ],
                               );
                             } else {
+                              // return Expanded(
+                              //   child: SingleChildScrollView(
+                              //     child: Wrap(
+                              //       spacing: 15.0, // gap between adjacent chips
+                              //       runSpacing: 12.0, // gap between lines
+                              //       children: snapshot.data!
+                              //           .map((product) => ManageProductCard(
+                              //               thisProduct: product))
+                              //           .toList()
+                              //           .cast<Widget>(),
+                              //     ),
+                              //   ),
+                              // );
                               return AnimatedContainer(
                                 duration: Duration(milliseconds: 200),
                                 width: MediaQuery.of(context).size.width,
@@ -113,7 +120,7 @@ class _ProductManagementState extends State<ProductManagement> {
                                   margin: EdgeInsets.only(
                                       left: 20, top: 10, right: 20, bottom: 10),
                                   width: double.infinity,
-                                  height: 60,
+                                  height: 130,
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [
@@ -133,9 +140,8 @@ class _ProductManagementState extends State<ProductManagement> {
                                     ],
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: ProductCard(
-                                      thisProduct: snapshot.data![index - 1],
-                                      toManage: true),
+                                  child: ManageProductCard(
+                                      thisProduct: snapshot.data![index - 1]),
                                 ),
                               );
                             }

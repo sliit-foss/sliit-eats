@@ -6,11 +6,8 @@ import 'package:sliit_eats/screens/product/components/product_order_modal.dart';
 import 'package:sliit_eats/screens/widgets/custom_card.dart';
 
 class ProductCard extends StatefulWidget {
-  const ProductCard(
-      {Key? key, required this.thisProduct, required this.toManage})
-      : super(key: key);
+  const ProductCard({Key? key, required this.thisProduct}) : super(key: key);
   final Product thisProduct;
-  final bool toManage;
 
   @override
   _ProductCardState createState() => _ProductCardState();
@@ -21,10 +18,8 @@ class _ProductCardState extends State<ProductCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, AppRoutes.PRODUCT_DETAIL, arguments: {
-          'product_id': widget.thisProduct.id,
-          'toManage': widget.toManage
-        });
+        Navigator.pushNamed(context, AppRoutes.PRODUCT_DETAIL,
+            arguments: {'product_id': widget.thisProduct.id});
       },
       child: CustomCard(
         color: AppColors.cardColor,
@@ -115,24 +110,16 @@ class _ProductCardState extends State<ProductCard> {
               ),
               GestureDetector(
                 onTap: () async {
-                  if (widget.toManage) {
-                    Navigator.pushNamed(context, AppRoutes.PRODUCT_DETAIL,
-                        arguments: {
-                          'product_id': widget.thisProduct.id,
-                          'toManage': widget.toManage
+                  if (widget.thisProduct.unitsLeft != 0)
+                    return showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ProductOrderModal(
+                            name: widget.thisProduct.name,
+                            price: widget.thisProduct.unitPrice.toDouble(),
+                            unitsLeft: widget.thisProduct.unitsLeft,
+                          );
                         });
-                  } else {
-                    if (widget.thisProduct.unitsLeft != 0)
-                      return showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return ProductOrderModal(
-                              name: widget.thisProduct.name,
-                              price: widget.thisProduct.unitPrice.toDouble(),
-                              unitsLeft: widget.thisProduct.unitsLeft,
-                            );
-                          });
-                  }
                 },
                 child: Container(
                   height: 30,
@@ -145,7 +132,7 @@ class _ProductCardState extends State<ProductCard> {
                   ),
                   child: Center(
                     child: Text(
-                      widget.toManage ? 'Update' : 'Reserve',
+                      'Reserve',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,

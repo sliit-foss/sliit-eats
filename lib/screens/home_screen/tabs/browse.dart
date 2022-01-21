@@ -140,8 +140,6 @@ class _BrowseTabState extends State<BrowseTab> {
                                         selectedCategory: selectedCategory,
                                         onCategoryTap: (String id) {
                                           setSelectedCategory(id);
-                                          debugPrint(
-                                              "SELECTED CATEGORY : " + id);
                                         },
                                       ),
                                       StreamBuilder(
@@ -162,9 +160,7 @@ class _BrowseTabState extends State<BrowseTab> {
                                                           .map((product) =>
                                                               ProductCard(
                                                                   thisProduct:
-                                                                      product,
-                                                                  toManage:
-                                                                      false))
+                                                                      product))
                                                           .toList()
                                                           .cast<Widget>(),
                                                     ),
