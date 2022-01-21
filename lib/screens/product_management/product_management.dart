@@ -68,7 +68,7 @@ class _ProductManagementState extends State<ProductManagement> {
             child: Builder(builder: (context) {
               progress = ProgressHUD.of(context);
               return FutureBuilder(
-                future: ProductService.filterProducts(canteenID, "", ""),
+                future: ProductService.filterProducts(canteenID, "all", ""),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<Product>> snapshot) {
                   if (snapshot.hasData) {

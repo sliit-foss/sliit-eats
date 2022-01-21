@@ -118,7 +118,6 @@ class _BrowseTabState extends State<BrowseTab> {
                                 0, Canteen(id: 'all', name: 'All Canteens'));
                           }
                           if (firstLoad) {
-                            // MAKE INITIAL PICK ALL CANTEENS
                             firstLoad = false;
                             selectedCanteen = canteenSnapshot.data![0].id;
                             _filterProducts();
@@ -141,6 +140,8 @@ class _BrowseTabState extends State<BrowseTab> {
                                         selectedCategory: selectedCategory,
                                         onCategoryTap: (String id) {
                                           setSelectedCategory(id);
+                                          debugPrint(
+                                              "SELECTED CATEGORY : " + id);
                                         },
                                       ),
                                       StreamBuilder(
@@ -170,10 +171,12 @@ class _BrowseTabState extends State<BrowseTab> {
                                                   ),
                                                 );
                                               } else {
-                                                return NoDataComponent();
+                                                return Expanded(
+                                                    child: NoDataComponent());
                                               }
                                             } else {
-                                              return LoadingIndicator();
+                                              return Expanded(
+                                                  child: LoadingIndicator());
                                             }
                                           }),
                                       FormField<String>(
