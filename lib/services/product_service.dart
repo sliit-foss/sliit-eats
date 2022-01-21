@@ -61,10 +61,10 @@ class ProductService {
       String canteenID, String categoryID, String productName) async {
     List<dynamic> filters = [];
 
-    if (categoryID != "")
+    if (categoryID != "all")
       filters.add({'name': 'category_id', 'value': categoryID});
 
-    if (canteenID != "")
+    if (canteenID != "all")
       filters.add({'name': 'canteen_id', 'value': canteenID});
 
     if (productName != "") filters.add({'name': 'name', 'value': productName});

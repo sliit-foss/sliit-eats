@@ -9,6 +9,7 @@ import 'package:sliit_eats/models/general/enums.dart';
 import 'package:sliit_eats/models/general/sucess_message.dart';
 import 'package:sliit_eats/models/product.dart';
 import 'package:sliit_eats/models/user.dart';
+import 'package:sliit_eats/screens/home_screen/components/product_card.dart';
 import 'package:sliit_eats/screens/widgets/alert_dialog.dart';
 import 'package:sliit_eats/screens/widgets/custom_appbar.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
@@ -85,7 +86,7 @@ class _ProductManagementState extends State<ProductManagement> {
                                   Container(
                                     margin: EdgeInsets.fromLTRB(0, 0, 20, 10),
                                     child: RoundedButton(
-                                      text: "Add New Category",
+                                      text: "Add New Product",
                                       buttonColor: AppColors.primary,
                                       horizontalPadding: 30,
                                       paddingTop: 10,
@@ -132,97 +133,9 @@ class _ProductManagementState extends State<ProductManagement> {
                                     ],
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      SizedBox(width: 15),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            snapshot.data![index - 1].name,
-                                            textAlign: TextAlign.start,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15),
-                                          ),
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      GestureDetector(
-                                        onTap: () async {
-                                          return showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AddProductModal(
-                                                modalPurpose: ModalPurpose.EDIT,
-                                                refresh: _refresh,
-                                                id: snapshot
-                                                    .data![index - 1].id,
-                                                name: snapshot
-                                                    .data![index - 1].name,
-                                              );
-                                            },
-                                          );
-                                        },
-                                        child: Container(
-                                          color: Colors.greenAccent,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: Center(
-                                                child: Icon(
-                                              FontAwesomeIcons.edit,
-                                              color: Colors.white,
-                                              size: 20,
-                                            )),
-                                          ),
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () async {
-                                          progress!.show();
-                                          dynamic res = await ProductService
-                                              .deleteProduct(
-                                                  snapshot.data![index - 1].id);
-                                          progress.dismiss();
-                                          if (res.runtimeType ==
-                                              SuccessMessage) {
-                                            await showCoolAlert(context, true,
-                                                "Product deleted successfully");
-                                            _refresh();
-                                          } else {
-                                            await showCoolAlert(
-                                                context, false, res.message);
-                                          }
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.red,
-                                            borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(10),
-                                              bottomRight: Radius.circular(10),
-                                              topLeft: Radius.circular(0),
-                                              bottomLeft: Radius.circular(0),
-                                            ),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: Center(
-                                                child: Icon(
-                                              FontAwesomeIcons.minusCircle,
-                                              color: Colors.white,
-                                              size: 20,
-                                            )),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                  child: ProductCard(
+                                      thisProduct: snapshot.data![index - 1],
+                                      toManage: true),
                                 ),
                               );
                             }
