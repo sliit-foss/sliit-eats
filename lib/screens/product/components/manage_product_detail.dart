@@ -289,20 +289,22 @@ class _ProductDetailManagementState extends State<ProductDetailManagement> {
                                       paddingTop: 10,
                                       borderRadius: 10,
                                       onPressed: () async {
-                                        dynamic res =
-                                            ProductService.deleteProduct(
-                                                thisProduct.id);
+                                        showConfirmDialog(context, () async {
+                                          dynamic res =
+                                              ProductService.deleteProduct(
+                                                  thisProduct.id);
 
-                                        if (res is SuccessMessage) {
-                                          Navigator.popAndPushNamed(context,
-                                              AppRoutes.PRODUCT_MANAGEMENT);
-                                          await showCoolAlert(
-                                              context, true, res.message);
-                                        } else {
-                                          await showCoolAlert(
-                                              context, false, res.message,
-                                              noAutoClose: true);
-                                        }
+                                          if (res is SuccessMessage) {
+                                            Navigator.popAndPushNamed(context,
+                                                AppRoutes.PRODUCT_MANAGEMENT);
+                                            await showCoolAlert(
+                                                context, true, res.message);
+                                          } else {
+                                            await showCoolAlert(
+                                                context, false, res.message,
+                                                noAutoClose: true);
+                                          }
+                                        });
                                       },
                                     ),
                                   )
