@@ -33,6 +33,8 @@ class _ProductDetailManagementState extends State<ProductDetailManagement> {
   dynamic progress;
   final ImagePicker _imagePicker = ImagePicker();
   bool firstLoad = true;
+  final String errorText = 'This is a required field';
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = new TextEditingController();
   final TextEditingController _descriptionController =
       new TextEditingController();
@@ -106,211 +108,266 @@ class _ProductDetailManagementState extends State<ProductDetailManagement> {
                           AsyncSnapshot<List<Category>> categorySnapshot) {
                         if (categorySnapshot.hasData) {
                           if (categorySnapshot.data!.isNotEmpty) {
-                            _selectedCategory = categorySnapshot.data![0].id;
                             return SingleChildScrollView(
-                              scrollDirection: Axis.vertical,
-                              child: Column(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () async {
-                                      XFile? image =
-                                          await _imagePicker.pickImage(
-                                              source: ImageSource.gallery);
-                                      ProductService.uploadImage(
-                                          File(image!.path), thisProduct.id);
-                                    },
-                                    child: Container(
-                                      alignment: Alignment.bottomCenter,
-                                      height:
-                                          MediaQuery.of(context).size.height *
+                                scrollDirection: Axis.vertical,
+                                child: Form(
+                                  key: _formKey,
+                                  child: Column(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () async {
+                                          XFile? image =
+                                              await _imagePicker.pickImage(
+                                                  source: ImageSource.gallery);
+                                          ProductService.uploadImage(
+                                              File(image!.path),
+                                              thisProduct.id);
+                                        },
+                                        child: Container(
+                                          alignment: Alignment.bottomCenter,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
                                               0.5,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: Image.network(
-                                                thisProduct.image,
-                                              ).image)),
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        color: Colors.black.withOpacity(0.8),
-                                        height: 40,
-                                        child: Text(
-                                          "TAP to change image",
-                                          textAlign: TextAlign.center,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: Image.network(
+                                                    thisProduct.image,
+                                                  ).image)),
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            color:
+                                                Colors.black.withOpacity(0.8),
+                                            height: 40,
+                                            child: Text(
+                                              "TAP to change image",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.white,
+                                                  letterSpacing: 2),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      CategorySelector(
+                                        categories: categorySnapshot.data,
+                                        selectedCategory: _selectedCategory,
+                                        onCategoryTap: (String id) {
+                                          setSelectedCategory(id);
+                                        },
+                                      ),
+                                      TextFormField(
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return errorText;
+                                            }
+                                            return null;
+                                          },
                                           style: TextStyle(
                                               fontSize: 16,
                                               color: Colors.white,
                                               letterSpacing: 2),
+                                          controller: _nameController,
+                                          decoration: InputDecoration(
+                                              labelStyle: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.white,
+                                                  letterSpacing: 2),
+                                              icon: Icon(
+                                                  Icons.emoji_food_beverage,
+                                                  color: Colors.white),
+                                              labelText: 'Name')),
+                                      TextFormField(
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return errorText;
+                                            }
+                                            return null;
+                                          },
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                              letterSpacing: 2),
+                                          maxLines: 2,
+                                          controller: _descriptionController,
+                                          decoration: InputDecoration(
+                                              labelStyle: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.white,
+                                                  letterSpacing: 2),
+                                              icon: Icon(Icons.edit,
+                                                  color: Colors.white),
+                                              labelText: 'Description')),
+                                      TextFormField(
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return errorText;
+                                            }
+                                            return null;
+                                          },
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                              letterSpacing: 2),
+                                          keyboardType: TextInputType.number,
+                                          controller: _unitPriceController,
+                                          inputFormatters: <TextInputFormatter>[
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
+                                          ],
+                                          decoration: InputDecoration(
+                                              labelStyle: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.white,
+                                                  letterSpacing: 2),
+                                              icon: Icon(Icons.attach_money,
+                                                  color: Colors.white),
+                                              labelText: 'Unit Price (Rs.)')),
+                                      TextFormField(
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return errorText;
+                                            }
+                                            return null;
+                                          },
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                              letterSpacing: 2),
+                                          keyboardType: TextInputType.number,
+                                          controller: _unitsLeftController,
+                                          inputFormatters: <TextInputFormatter>[
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
+                                          ],
+                                          decoration: InputDecoration(
+                                              labelStyle: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.white,
+                                                  letterSpacing: 2),
+                                              icon: Icon(
+                                                  Icons
+                                                      .dashboard_customize_rounded,
+                                                  color: Colors.white),
+                                              labelText: 'Units left')),
+                                      TextFormField(
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return errorText;
+                                            }
+                                            return null;
+                                          },
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                              letterSpacing: 2),
+                                          keyboardType: TextInputType.number,
+                                          controller: _servingsController,
+                                          inputFormatters: <TextInputFormatter>[
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
+                                          ],
+                                          decoration: InputDecoration(
+                                              labelStyle: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.white,
+                                                  letterSpacing: 2),
+                                              icon: Icon(Icons.group,
+                                                  color: Colors.white),
+                                              labelText: 'Servings')),
+                                      Container(
+                                        margin:
+                                            EdgeInsets.fromLTRB(0, 0, 20, 10),
+                                        child: RoundedButton(
+                                          text: "Update Product",
+                                          buttonColor: AppColors.primary,
+                                          horizontalPadding: 30,
+                                          paddingTop: 10,
+                                          borderRadius: 10,
+                                          onPressed: () async {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              Product updatedProduct =
+                                                  Product.updatedProduct(
+                                                      id: thisProduct.id,
+                                                      name:
+                                                          _nameController.text,
+                                                      canteen:
+                                                          thisProduct.canteen,
+                                                      category:
+                                                          _selectedCategory,
+                                                      unitPrice: int.parse(
+                                                          _unitPriceController
+                                                              .text),
+                                                      servings: int.parse(
+                                                          _servingsController
+                                                              .text),
+                                                      description:
+                                                          _descriptionController
+                                                              .text,
+                                                      unitsLeft: int.parse(
+                                                          _unitsLeftController
+                                                              .text));
+                                              dynamic res = await ProductService
+                                                  .updateProduct(
+                                                      updatedProduct);
+                                              if (res is SuccessMessage) {
+                                                Navigator.popAndPushNamed(
+                                                    context,
+                                                    AppRoutes
+                                                        .PRODUCT_MANAGEMENT);
+                                                await showCoolAlert(
+                                                    context, true, res.message);
+                                              } else {
+                                                await showCoolAlert(
+                                                    context, false, res.message,
+                                                    noAutoClose: true);
+                                              }
+                                            }
+                                          },
                                         ),
                                       ),
-                                    ),
+                                      Container(
+                                        margin:
+                                            EdgeInsets.fromLTRB(0, 0, 20, 10),
+                                        child: RoundedButton(
+                                          text: "DELETE Product",
+                                          buttonColor: AppColors.fail,
+                                          horizontalPadding: 30,
+                                          paddingTop: 10,
+                                          borderRadius: 10,
+                                          onPressed: () {
+                                            showConfirmDialog(context,
+                                                () async {
+                                              dynamic res = await ProductService
+                                                  .deleteProduct(
+                                                      thisProduct.id);
+                                              if (res is SuccessMessage) {
+                                                Navigator.popAndPushNamed(
+                                                    context,
+                                                    AppRoutes
+                                                        .PRODUCT_MANAGEMENT);
+                                                await showCoolAlert(
+                                                    context, true, res.message);
+                                              } else {
+                                                await showCoolAlert(
+                                                    context, false, res.message,
+                                                    noAutoClose: true);
+                                              }
+                                            });
+                                          },
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                  CategorySelector(
-                                    categories: categorySnapshot.data,
-                                    selectedCategory: _selectedCategory,
-                                    onCategoryTap: (String id) {
-                                      setSelectedCategory(id);
-                                    },
-                                  ),
-                                  TextFormField(
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                          letterSpacing: 2),
-                                      controller: _nameController,
-                                      decoration: InputDecoration(
-                                          labelStyle: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.white,
-                                              letterSpacing: 2),
-                                          icon: Icon(Icons.emoji_food_beverage,
-                                              color: Colors.white),
-                                          labelText: 'Name')),
-                                  TextFormField(
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                          letterSpacing: 2),
-                                      maxLines: 2,
-                                      controller: _descriptionController,
-                                      decoration: InputDecoration(
-                                          labelStyle: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.white,
-                                              letterSpacing: 2),
-                                          icon: Icon(Icons.edit,
-                                              color: Colors.white),
-                                          labelText: 'Description')),
-                                  TextFormField(
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                          letterSpacing: 2),
-                                      keyboardType: TextInputType.number,
-                                      controller: _unitPriceController,
-                                      inputFormatters: <TextInputFormatter>[
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
-                                      decoration: InputDecoration(
-                                          labelStyle: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.white,
-                                              letterSpacing: 2),
-                                          icon: Icon(Icons.attach_money,
-                                              color: Colors.white),
-                                          labelText: 'Unit Price (Rs.)')),
-                                  TextFormField(
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                          letterSpacing: 2),
-                                      keyboardType: TextInputType.number,
-                                      controller: _unitsLeftController,
-                                      inputFormatters: <TextInputFormatter>[
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
-                                      decoration: InputDecoration(
-                                          labelStyle: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.white,
-                                              letterSpacing: 2),
-                                          icon: Icon(
-                                              Icons.dashboard_customize_rounded,
-                                              color: Colors.white),
-                                          labelText: 'Units left')),
-                                  TextFormField(
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                          letterSpacing: 2),
-                                      keyboardType: TextInputType.number,
-                                      controller: _servingsController,
-                                      inputFormatters: <TextInputFormatter>[
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
-                                      decoration: InputDecoration(
-                                          labelStyle: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.white,
-                                              letterSpacing: 2),
-                                          icon: Icon(Icons.group,
-                                              color: Colors.white),
-                                          labelText: 'Servings')),
-                                  Container(
-                                    margin: EdgeInsets.fromLTRB(0, 0, 20, 10),
-                                    child: RoundedButton(
-                                      text: "Update Product",
-                                      buttonColor: AppColors.primary,
-                                      horizontalPadding: 30,
-                                      paddingTop: 10,
-                                      borderRadius: 10,
-                                      onPressed: () async {
-                                        Product
-                                            updatedProduct =
-                                            Product.updatedProduct(
-                                                id: thisProduct.id,
-                                                name: _nameController.text,
-                                                canteen: thisProduct.canteen,
-                                                category: _selectedCategory,
-                                                unitPrice: int.parse(
-                                                    _unitPriceController.text),
-                                                servings: int.parse(
-                                                    _servingsController.text),
-                                                description:
-                                                    _descriptionController.text,
-                                                unitsLeft: int.parse(
-                                                    _unitsLeftController.text));
-                                        dynamic res =
-                                            await ProductService.updateProduct(
-                                                updatedProduct);
-                                        if (res is SuccessMessage) {
-                                          Navigator.popAndPushNamed(context,
-                                              AppRoutes.PRODUCT_MANAGEMENT);
-                                          await showCoolAlert(
-                                              context, true, res.message);
-                                        } else {
-                                          await showCoolAlert(
-                                              context, false, res.message,
-                                              noAutoClose: true);
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.fromLTRB(0, 0, 20, 10),
-                                    child: RoundedButton(
-                                      text: "DELETE Product",
-                                      buttonColor: AppColors.fail,
-                                      horizontalPadding: 30,
-                                      paddingTop: 10,
-                                      borderRadius: 10,
-                                      onPressed: () async {
-                                        showConfirmDialog(context, () async {
-                                          dynamic res =
-                                              ProductService.deleteProduct(
-                                                  thisProduct.id);
-
-                                          if (res is SuccessMessage) {
-                                            Navigator.popAndPushNamed(context,
-                                                AppRoutes.PRODUCT_MANAGEMENT);
-                                            await showCoolAlert(
-                                                context, true, res.message);
-                                          } else {
-                                            await showCoolAlert(
-                                                context, false, res.message,
-                                                noAutoClose: true);
-                                          }
-                                        });
-                                      },
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
+                                ));
                           } else {
                             return LoadingIndicator();
                           }
