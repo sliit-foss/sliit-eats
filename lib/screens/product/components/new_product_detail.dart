@@ -32,7 +32,8 @@ class _NewProductDetailState extends State<NewProductDetail> {
       new GlobalKey<RefreshIndicatorState>();
   dynamic progress;
   final ImagePicker _imagePicker = ImagePicker();
-  XFile? image;
+  late Future<XFile?> pickedFile = Future.value(null);
+  File imageFile = File('');
   bool firstLoad = true;
   final String errorText = 'This is a required field';
   final _formKey = GlobalKey<FormState>();
@@ -103,34 +104,82 @@ class _NewProductDetailState extends State<NewProductDetail> {
                               children: [
                                 GestureDetector(
                                   onTap: () async {
-                                    image = await _imagePicker.pickImage(
-                                        source: ImageSource.gallery);
+                                    pickedFile = _imagePicker
+                                        .pickImage(source: ImageSource.gallery)
+                                        .whenComplete(() => {setState(() {})});
                                   },
-                                  child: Container(
-                                    alignment: Alignment.bottomCenter,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.5,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        image: DecorationImage(
-                                            fit: BoxFit.contain,
-                                            image: Image.asset(
-                                                    "assets/images/uploadImage.png")
-                                                .image)),
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      width: MediaQuery.of(context).size.width,
-                                      color: Colors.black.withOpacity(0.8),
-                                      height: 40,
-                                      child: Text(
-                                        "TAP to add image",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.white,
-                                            letterSpacing: 2),
-                                      ),
-                                    ),
+                                  child: FutureBuilder<XFile?>(
+                                    future: pickedFile,
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        imageFile = File(snapshot.data!.path);
+                                        return Container(
+                                          alignment: Alignment.bottomCenter,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.5,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              image: DecorationImage(
+                                                  fit: BoxFit.contain,
+                                                  image: Image.file(File(
+                                                          snapshot.data!.path))
+                                                      .image)),
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            color:
+                                                Colors.black.withOpacity(0.8),
+                                            height: 40,
+                                            child: Text(
+                                              "TAP to add image",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.white,
+                                                  letterSpacing: 2),
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        return Container(
+                                          alignment: Alignment.bottomCenter,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.5,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              image: DecorationImage(
+                                                  fit: BoxFit.contain,
+                                                  image: Image.asset(
+                                                          "assets/images/uploadImage.png")
+                                                      .image)),
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            color:
+                                                Colors.black.withOpacity(0.8),
+                                            height: 40,
+                                            child: Text(
+                                              "TAP to add image",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.white,
+                                                  letterSpacing: 2),
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    },
                                   ),
                                 ),
                                 CategorySelector(
@@ -281,7 +330,7 @@ class _NewProductDetailState extends State<NewProductDetail> {
                                             await ProductService.addNewProduct(
                                                 currentLoggedInUser.canteenId!,
                                                 newProduct,
-                                                File(image!.path));
+                                                imageFile);
                                         if (res is SuccessMessage) {
                                           Navigator.popAndPushNamed(context,
                                               AppRoutes.PRODUCT_MANAGEMENT);
