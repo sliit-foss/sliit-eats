@@ -5,6 +5,7 @@ import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/main.dart';
 import 'package:sliit_eats/models/general/enums.dart';
 import 'package:sliit_eats/models/product.dart';
+import 'package:sliit_eats/routes/app_routes.dart';
 import 'package:sliit_eats/screens/product/components/manage_product_card.dart';
 import 'package:sliit_eats/screens/widgets/custom_appbar.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
@@ -86,14 +87,10 @@ class _ProductManagementState extends State<ProductManagement> {
                                       paddingTop: 10,
                                       borderRadius: 10,
                                       onPressed: () {
-                                        return showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AddProductModal(
-                                                  modalPurpose:
-                                                      ModalPurpose.ADD,
-                                                  refresh: _refresh);
-                                            });
+                                        Navigator.pushNamed(
+                                          context,
+                                          AppRoutes.PRODUCT_DETAIL_NEW,
+                                        );
                                       },
                                     ),
                                   ),

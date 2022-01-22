@@ -51,7 +51,7 @@ class _ProductCardState extends State<ProductCard> {
                       Text(
                         widget.thisProduct.name,
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 13,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                         ),
