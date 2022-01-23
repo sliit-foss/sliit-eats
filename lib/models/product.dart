@@ -1,12 +1,11 @@
-import 'dart:ffi';
-
 class Product {
-  final String id;
+  String id = '';
   final String name;
   final String canteen;
   final String category;
-  final String image;
-  final Float unitPrice;
+  String image = '';
+  final String description;
+  final int unitPrice;
   final int servings;
   final int unitsLeft;
 
@@ -18,6 +17,25 @@ class Product {
       required this.unitPrice,
       required this.servings,
       required this.image,
+      required this.description,
+      required this.unitsLeft});
+
+  Product.updatedProduct(
+      {required this.id,
+      required this.name,
+      required this.canteen,
+      required this.category,
+      required this.unitPrice,
+      required this.servings,
+      required this.description,
+      required this.unitsLeft});
+  Product.newProduct(
+      {required this.name,
+      required this.canteen,
+      required this.category,
+      required this.unitPrice,
+      required this.servings,
+      required this.description,
       required this.unitsLeft});
 
   factory Product.fromDocumentSnapshot(dynamic doc) {
@@ -29,7 +47,33 @@ class Product {
       servings: doc.data()['servings'],
       unitPrice: doc.data()['unit_price'],
       image: doc.data()['image'],
+      description: doc.data()['description'],
       unitsLeft: doc.data()['units_left'],
     );
+  }
+
+  static toJSONObject(Product product, bool isNewProduct) {
+    if (isNewProduct)
+
+            return {
+        'id': product.id,
+        'canteen_id': product.canteen,
+        'image': product.image,
+        'name': product.name,
+        'category_id': product.category,
+        'servings': product.servings,
+        'unit_price': product.unitPrice,
+        'description': product.description,
+        'units_left': product.unitsLeft
+      };
+    else
+      return {
+        'name': product.name,
+        'category_id': product.category,
+        'servings': product.servings,
+        'unit_price': product.unitPrice,
+        'description': product.description,
+        'units_left': product.unitsLeft
+      };
   }
 }

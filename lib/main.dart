@@ -18,6 +18,8 @@ import 'routes/routes_generator.dart';
 import 'dart:convert';
 import 'dart:io';
 
+late UserModel currentLoggedInUser;
+
 void main() async {
   Paint.enableDithering = true;
   HttpOverrides.global = new AppHttpOverrides();
@@ -37,8 +39,8 @@ class MyApp extends StatelessWidget {
   Future<bool> checkLoginStatus() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null && user.emailVerified) {
-      UserModel? currentUser = await AuthService.getCurrentUserDetails();
-      if (currentUser!.isActive) return true;
+      currentLoggedInUser = await AuthService.getCurrentUserDetails();
+      if (currentLoggedInUser.isActive) return true;
     }
     return false;
   }

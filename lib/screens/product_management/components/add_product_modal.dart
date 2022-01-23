@@ -1,46 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliit_eats/helpers/colors.dart';
+import 'package:sliit_eats/models/general/enums.dart';
+import 'package:sliit_eats/models/general/sucess_message.dart';
+import 'package:sliit_eats/screens/widgets/alert_dialog.dart';
+import 'package:sliit_eats/screens/widgets/entry_field.dart';
+import 'package:sliit_eats/services/category_service.dart';
 
-class ProductOrderModal extends StatefulWidget {
-  const ProductOrderModal(
+class AddProductModal extends StatefulWidget {
+  const AddProductModal(
       {Key? key,
-      required this.name,
-      required this.price,
-      required this.unitsLeft})
+      required this.modalPurpose,
+      required this.refresh,
+      this.id = '',
+      this.name = ''})
       : super(key: key);
+  final ModalPurpose modalPurpose;
+  final Function refresh;
+  final String id;
   final String name;
-  final double price;
-  final int unitsLeft;
 
   @override
-  _ProductOrderModalState createState() => _ProductOrderModalState();
+  _AddProductModalState createState() => _AddProductModalState();
 }
 
-class _ProductOrderModalState extends State<ProductOrderModal> {
+class _AddProductModalState extends State<AddProductModal> {
+  final TextEditingController _nameController = TextEditingController();
   dynamic progress;
-  int quantity = 1;
 
   @override
   void initState() {
     super.initState();
+    if (widget.name != '') {
+      _nameController.text = widget.name;
+    }
   }
 
   @override
   void dispose() {
+    _nameController.dispose();
     super.dispose();
-  }
-
-  void updateQuantity(bool increment) {
-    if (increment && quantity < widget.unitsLeft)
-      setState(() {
-        quantity++;
-      });
-    else if (!increment && quantity > 1)
-      setState(() {
-        quantity--;
-      });
   }
 
   @override
@@ -51,7 +50,7 @@ class _ProductOrderModalState extends State<ProductOrderModal> {
       contentPadding: EdgeInsets.zero,
       content: Container(
         height: MediaQuery.of(context).orientation == Orientation.portrait
-            ? 240
+            ? 400
             : MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
@@ -76,52 +75,37 @@ class _ProductOrderModalState extends State<ProductOrderModal> {
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: Column(
                     children: [
-                      SizedBox(height: 20),
-                      Text(
-                        widget.name,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              updateQuantity(false);
-                            },
-                            child: Icon(
-                              FontAwesomeIcons.minusCircle,
-                              color: Colors.red,
-                            ),
-                          ),
-                          SizedBox(width: 20),
-                          Text(
-                            '$quantity Item${quantity > 1 ? 's' : ''}',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(width: 20),
-                          GestureDetector(
-                            onTap: () {
-                              updateQuantity(true);
-                            },
-                            child: Icon(
-                              FontAwesomeIcons.plusCircle,
-                              color: Colors.greenAccent,
-                            ),
-                          ),
-                        ],
-                      ),
+                      EntryField(
+                          controller: _nameController,
+                          placeholder: 'Category Name',
+                          isPassword: false),
                       SizedBox(height: 20),
                       GestureDetector(
-                        onTap: () async {},
+                        onTap: () async {
+                          String name = _nameController.text;
+                          if (name != "") {
+                            progress!.show();
+                            dynamic res;
+                            if (widget.modalPurpose == ModalPurpose.ADD) {
+                              res = await CategoryService.addCategory(name);
+                            } else {
+                              res = await CategoryService.updateCategory(
+                                  widget.id, name);
+                            }
+                            progress.dismiss();
+                            if (res.runtimeType == SuccessMessage) {
+                              await showCoolAlert(context, true,
+                                  "Category ${widget.modalPurpose == ModalPurpose.ADD ? 'added' : 'updated'} successfully");
+                              Navigator.of(context).pop();
+                              widget.refresh();
+                            } else {
+                              await showCoolAlert(context, false, res.message);
+                            }
+                          } else {
+                            await showCoolAlert(
+                                context, false, "Please enter a category name");
+                          }
+                        },
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
@@ -138,7 +122,7 @@ class _ProductOrderModalState extends State<ProductOrderModal> {
                             ],
                           ),
                           child: Text(
-                            'Place Order',
+                            '${widget.modalPurpose == ModalPurpose.ADD ? 'Add' : 'Update'} Category',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
