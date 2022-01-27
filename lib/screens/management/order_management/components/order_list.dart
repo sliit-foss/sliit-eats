@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:sliit_eats/helpers/colors.dart';
+import 'package:sliit_eats/helpers/constants.dart';
+import 'package:sliit_eats/models/general/sucess_message.dart';
 import 'package:sliit_eats/models/order.dart';
+import 'package:sliit_eats/screens/widgets/alert_dialog.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 import 'package:sliit_eats/screens/widgets/no_data_component.dart';
 import 'package:sliit_eats/services/order_service.dart';
+import 'package:sliit_eats/services/product_service.dart';
 
 class OrderList extends StatefulWidget {
   const OrderList({Key? key, required this.isAdminView, required this.filters})
@@ -120,31 +124,46 @@ class _OrderListState extends State<OrderList> {
                                   ],
                                 ),
                                 Spacer(),
-                                GestureDetector(
-                                  onTap: () async {
-                                    // TODO COMPLETE ORDER
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.greenAccent[400],
-                                      borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(10),
-                                        bottomRight: Radius.circular(10),
-                                        topLeft: Radius.circular(0),
-                                        bottomLeft: Radius.circular(0),
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Center(
-                                          child: Icon(
-                                        Icons.check,
-                                        color: Colors.white,
-                                        size: 25,
-                                      )),
-                                    ),
-                                  ),
-                                )
+                                snapshot.data![index].status ==
+                                        Constants.orderStatus[1]
+                                    ? GestureDetector(
+                                        onTap: () async {
+                                          dynamic res = await OrderService
+                                              .updateOrderStatus(
+                                            snapshot.data![index].id,
+                                            snapshot.data![index].productId,
+                                            true,
+                                            snapshot.data![index].quantity,
+                                          );
+                                          if (res is SuccessMessage)
+                                            await showCoolAlert(
+                                                context, true, res.message);
+                                          else
+                                            await showCoolAlert(
+                                                context, false, res.message);
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.greenAccent[400],
+                                            borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(10),
+                                              bottomRight: Radius.circular(10),
+                                              topLeft: Radius.circular(0),
+                                              bottomLeft: Radius.circular(0),
+                                            ),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child: Center(
+                                                child: Icon(
+                                              Icons.check,
+                                              color: Colors.white,
+                                              size: 25,
+                                            )),
+                                          ),
+                                        ),
+                                      )
+                                    : SizedBox()
                               ],
                             ),
                           ),
