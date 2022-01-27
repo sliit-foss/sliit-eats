@@ -10,4 +10,7 @@ class Constants {
     2: 'COMPLETE',
     3: 'EXPIRED',
   };
+
+  //order expiration period
+  static double expirationPeriod = 60.0;
 }

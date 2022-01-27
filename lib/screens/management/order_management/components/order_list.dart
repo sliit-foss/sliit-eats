@@ -6,6 +6,7 @@ import 'package:sliit_eats/models/general/sucess_message.dart';
 import 'package:sliit_eats/models/order.dart';
 import 'package:sliit_eats/models/product.dart';
 import 'package:sliit_eats/routes/app_routes.dart';
+import 'package:sliit_eats/screens/management/order_management/components/order_expiration_display.dart';
 import 'package:sliit_eats/screens/widgets/alert_dialog.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 import 'package:sliit_eats/screens/widgets/no_data_component.dart';
@@ -133,56 +134,59 @@ class _OrderListState extends State<OrderList> {
                                   ],
                                 ),
                                 Spacer(),
-                                snapshot.data![index].status ==
-                                        Constants.orderStatus[1]
-                                    ? GestureDetector(
-                                        onTap: () {
-                                          showConfirmDialog(context, () async {
-                                            dynamic res = await OrderService
-                                                .updateOrderStatus(
-                                              snapshot.data![index].id,
-                                              snapshot.data![index].productId,
-                                              true,
-                                              snapshot.data![index].quantity,
-                                            );
-                                            if (res is SuccessMessage) {
-                                              Navigator.pop(context);
-                                              Navigator.popAndPushNamed(context,
-                                                  AppRoutes.ORDER_MANAGEMENT,
-                                                  arguments: {
-                                                    'title': 'Active Orders',
-                                                    'status':
-                                                        Constants.orderStatus[1]
-                                                  });
-                                              await showCoolAlert(
-                                                  context, true, res.message);
-                                            } else
-                                              await showCoolAlert(
-                                                  context, false, res.message);
-                                          });
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.greenAccent[400],
-                                            borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(10),
-                                              bottomRight: Radius.circular(10),
-                                              topLeft: Radius.circular(0),
-                                              bottomLeft: Radius.circular(0),
-                                            ),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: Center(
-                                                child: Icon(
-                                              Icons.check,
-                                              color: Colors.white,
-                                              size: 25,
-                                            )),
-                                          ),
-                                        ),
-                                      )
-                                    : SizedBox()
+                                // snapshot.data![index].status ==
+                                //         Constants.orderStatus[1]
+                                //     ? GestureDetector(
+                                //         onTap: () {
+                                //           showConfirmDialog(context, () async {
+                                //             dynamic res = await OrderService
+                                //                 .updateOrderStatus(
+                                //               snapshot.data![index].id,
+                                //               snapshot.data![index].productId,
+                                //               true,
+                                //               snapshot.data![index].quantity,
+                                //             );
+                                //             if (res is SuccessMessage) {
+                                //               Navigator.pop(context);
+                                //               Navigator.popAndPushNamed(context,
+                                //                   AppRoutes.ORDER_MANAGEMENT,
+                                //                   arguments: {
+                                //                     'title': 'Active Orders',
+                                //                     'status':
+                                //                         Constants.orderStatus[1]
+                                //                   });
+                                //               await showCoolAlert(
+                                //                   context, true, res.message);
+                                //             } else
+                                //               await showCoolAlert(
+                                //                   context, false, res.message);
+                                //           });
+                                //         },
+                                //         child: Container(
+                                //           decoration: BoxDecoration(
+                                //             color: Colors.greenAccent[400],
+                                //             borderRadius: BorderRadius.only(
+                                //               topRight: Radius.circular(10),
+                                //               bottomRight: Radius.circular(10),
+                                //               topLeft: Radius.circular(0),
+                                //               bottomLeft: Radius.circular(0),
+                                //             ),
+                                //           ),
+                                //           child: Padding(
+                                //             padding: const EdgeInsets.all(15.0),
+                                //             child: Center(
+                                //                 child: Icon(
+                                //               Icons.check,
+                                //               color: Colors.white,
+                                //               size: 25,
+                                //             )),
+                                //           ),
+                                //         ),
+                                //       )
+                                //     : SizedBox()
+                                OrderExpirationDisplay(
+                                    createdDateTime:
+                                        snapshot.data![index].createdAt)
                               ],
                             ),
                           ),
