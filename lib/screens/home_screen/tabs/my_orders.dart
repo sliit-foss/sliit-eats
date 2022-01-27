@@ -45,7 +45,8 @@ class _MyOrdersTabState extends State<MyOrdersTab> {
                 if (snapshot.hasData) {
                   return FutureBuilder(
                     future: OrderService.getOrders(filters: [
-                      {'name': 'user_id', 'value': snapshot.data!.userId}
+                      {'name': 'user_id', 'value': snapshot.data!.userId},
+                      {'name': 'status', 'value': Constants.orderStatus[1]}
                     ]),
                     builder: (BuildContext context,
                         AsyncSnapshot<List<Order>> snapshot) {
