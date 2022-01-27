@@ -32,11 +32,14 @@ class OrderService {
     UserModel? currentUser = await AuthService.getCurrentUserDetails();
     dynamic res = await ProductService.updateUnitsLeftOfProduct(
         productId, true, quantity);
+    String orderID = UniqueKey().toString();
+    Future.delayed(Duration(minutes: Constants.expirationPeriod.toInt()),
+        () => {updateOrderStatus(orderID, productId, false, quantity)});
     if (res is SuccessMessage)
       return await FirestoreService.write(
         'orders',
         {
-          'id': UniqueKey().toString(),
+          'id': orderID,
           'product_id': productId,
           'user_id': currentUser!.userId,
           'quantity': quantity,
@@ -55,11 +58,10 @@ class OrderService {
       {'name': 'id', 'value': orderId}
     ];
     if (isComplete) {
-      await ProductService.updateUnitsLeftOfProduct(productId, false, units);
       return await FirestoreService.update(
           'orders', filters, {'status': Constants.orderStatus[2]});
     } else {
-      await ProductService.updateUnitsLeftOfProduct(productId, true, units);
+      await ProductService.updateUnitsLeftOfProduct(productId, false, units);
       return await FirestoreService.update(
           'orders', filters, {'status': Constants.orderStatus[3]});
     }
