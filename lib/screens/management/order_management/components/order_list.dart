@@ -4,6 +4,8 @@ import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/helpers/constants.dart';
 import 'package:sliit_eats/models/general/sucess_message.dart';
 import 'package:sliit_eats/models/order.dart';
+import 'package:sliit_eats/models/product.dart';
+import 'package:sliit_eats/routes/app_routes.dart';
 import 'package:sliit_eats/screens/widgets/alert_dialog.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 import 'package:sliit_eats/screens/widgets/no_data_component.dart';
@@ -101,25 +103,32 @@ class _OrderListState extends State<OrderList> {
                                                 fontSize: 13),
                                           )
                                         : Container(),
+                                    FutureBuilder(
+                                        future: ProductService.getProductById(
+                                            snapshot.data![index].productId),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot productSnapshot) {
+                                          if (productSnapshot.hasData) {
+                                            Product thisProduct =
+                                                productSnapshot.data;
+                                            return Text(
+                                              '${thisProduct.name}    X    ${snapshot.data![index].quantity}',
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14),
+                                            );
+                                          } else
+                                            return SizedBox();
+                                        }),
                                     Text(
-                                      '${snapshot.data![index].quantity} Item${snapshot.data![index].quantity > 1 ? 's' : ''}',
+                                      '${TimeOfDay.fromDateTime(DateTime.fromMillisecondsSinceEpoch(snapshot.data![index].createdAt.millisecondsSinceEpoch)).format(context)}  |  ${snapshot.data![index].createdAt.toDate().toLocal().toString().substring(0, 10)}',
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 11),
-                                    ),
-                                    Text(
-                                      snapshot.data![index].createdAt
-                                          .toDate()
-                                          .toLocal()
-                                          .toString()
-                                          .substring(0, 10),
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 11),
+                                          fontSize: 13),
                                     ),
                                   ],
                                 ),
@@ -127,20 +136,30 @@ class _OrderListState extends State<OrderList> {
                                 snapshot.data![index].status ==
                                         Constants.orderStatus[1]
                                     ? GestureDetector(
-                                        onTap: () async {
-                                          dynamic res = await OrderService
-                                              .updateOrderStatus(
-                                            snapshot.data![index].id,
-                                            snapshot.data![index].productId,
-                                            true,
-                                            snapshot.data![index].quantity,
-                                          );
-                                          if (res is SuccessMessage)
-                                            await showCoolAlert(
-                                                context, true, res.message);
-                                          else
-                                            await showCoolAlert(
-                                                context, false, res.message);
+                                        onTap: () {
+                                          showConfirmDialog(context, () async {
+                                            dynamic res = await OrderService
+                                                .updateOrderStatus(
+                                              snapshot.data![index].id,
+                                              snapshot.data![index].productId,
+                                              true,
+                                              snapshot.data![index].quantity,
+                                            );
+                                            if (res is SuccessMessage) {
+                                              Navigator.pop(context);
+                                              Navigator.popAndPushNamed(context,
+                                                  AppRoutes.ORDER_MANAGEMENT,
+                                                  arguments: {
+                                                    'title': 'Active Orders',
+                                                    'status':
+                                                        Constants.orderStatus[1]
+                                                  });
+                                              await showCoolAlert(
+                                                  context, true, res.message);
+                                            } else
+                                              await showCoolAlert(
+                                                  context, false, res.message);
+                                          });
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(
