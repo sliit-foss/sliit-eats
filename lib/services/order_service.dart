@@ -39,6 +39,7 @@ class OrderService {
           'id': UniqueKey().toString(),
           'product_id': productId,
           'user_id': currentUser!.userId,
+          'quantity': quantity,
           'status': Constants.orderStatus[1],
           'created_at': Timestamp.now()
         },

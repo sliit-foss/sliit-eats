@@ -86,23 +86,13 @@ class _OrderListState extends State<OrderList> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      snapshot.data![index].productId,
+                                      'ID : ${snapshot.data![index].id}',
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
-                                          color: Colors.white,
+                                          color: AppColors.success,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15),
                                     ),
-                                    widget.isAdminView
-                                        ? Text(
-                                            snapshot.data![index].username,
-                                            textAlign: TextAlign.start,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 13),
-                                          )
-                                        : Container(),
                                     FutureBuilder(
                                         future: ProductService.getProductById(
                                             snapshot.data![index].productId),
@@ -117,11 +107,21 @@ class _OrderListState extends State<OrderList> {
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 14),
+                                                  fontSize: 15),
                                             );
                                           } else
                                             return SizedBox();
                                         }),
+                                    widget.isAdminView
+                                        ? Text(
+                                            snapshot.data![index].username,
+                                            textAlign: TextAlign.start,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 13),
+                                          )
+                                        : Container(),
                                     Text(
                                       '${TimeOfDay.fromDateTime(DateTime.fromMillisecondsSinceEpoch(snapshot.data![index].createdAt.millisecondsSinceEpoch)).format(context)}  |  ${snapshot.data![index].createdAt.toDate().toLocal().toString().substring(0, 10)}',
                                       textAlign: TextAlign.start,
