@@ -37,14 +37,14 @@ jobs:
           flutter-version: '2.8.1'
           channel: 'stable'
       - name: Create env file
-          run: |
-            touch .env
-            echo SLIIT_EATS_FIREBASE_API_KEY=SLIIT_EATS_FIREBASE_API_KEY >> .env
-            echo SLIIT_EATS_FIREBASE_APP_ID=SLIIT_EATS_FIREBASE_APP_ID >> .env
-            echo SLIIT_EATS_FIREBASE_PROJECT_ID=SLIIT_EATS_FIREBASE_PROJECT_ID >> .env
-            echo SLIIT_EATS_FIREBASE_BUCKET=SLIIT_EATS_FIREBASE_BUCKET >> .env
-            echo SLIIT_EATS_FCM_SENDER_ID=SLIIT_EATS_FCM_SENDER_ID >> .env
-            cat .env
+        run: |
+          touch .env
+          echo SLIIT_EATS_FIREBASE_API_KEY=SLIIT_EATS_FIREBASE_API_KEY >> .env
+          echo SLIIT_EATS_FIREBASE_APP_ID=SLIIT_EATS_FIREBASE_APP_ID >> .env
+          echo SLIIT_EATS_FIREBASE_PROJECT_ID=SLIIT_EATS_FIREBASE_PROJECT_ID >> .env
+          echo SLIIT_EATS_FIREBASE_BUCKET=SLIIT_EATS_FIREBASE_BUCKET >> .env
+          echo SLIIT_EATS_FCM_SENDER_ID=SLIIT_EATS_FCM_SENDER_ID >> .env
+          cat .env
       - run: flutter build apk --release
       - uses: actions/upload-artifact@v2
         with:
