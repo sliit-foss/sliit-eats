@@ -4,7 +4,6 @@ import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/helpers/constants.dart';
 import 'package:sliit_eats/models/order.dart';
 import 'package:sliit_eats/models/product.dart';
-import 'package:sliit_eats/models/user.dart';
 import 'package:sliit_eats/screens/management/order_management/components/order_expiration_display.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 import 'package:sliit_eats/screens/widgets/no_data_component.dart';

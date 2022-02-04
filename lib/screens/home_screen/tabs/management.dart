@@ -5,7 +5,6 @@ import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/helpers/constants.dart';
 import 'package:sliit_eats/routes/app_routes.dart';
 import 'package:sliit_eats/screens/home_screen/components/option_card.dart';
-import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 
 class ManagementTab extends StatefulWidget {
   const ManagementTab({Key? key}) : super(key: key);

@@ -4,8 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/models/product.dart';
 import 'package:sliit_eats/routes/app_routes.dart';
-import 'package:sliit_eats/screens/product/components/product_order_modal.dart';
-import 'package:sliit_eats/screens/product/product_detail_screen.dart';
 import 'package:sliit_eats/screens/widgets/custom_card.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 import 'package:sliit_eats/services/category_service.dart';

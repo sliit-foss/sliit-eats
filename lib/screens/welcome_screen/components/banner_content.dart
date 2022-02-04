@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sliit_eats/helpers/colors.dart';
 
@@ -10,7 +9,8 @@ class BannerContent extends StatefulWidget {
   _BannerContentState createState() => _BannerContentState();
 }
 
-class _BannerContentState extends State<BannerContent> with SingleTickerProviderStateMixin {
+class _BannerContentState extends State<BannerContent>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int currentPage = 0;
 
@@ -53,10 +53,22 @@ class _BannerContentState extends State<BannerContent> with SingleTickerProvider
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(8, MediaQuery.of(context).orientation == Orientation.portrait ? 40 : 8, 8, MediaQuery.of(context).orientation == Orientation.portrait ? 40 : 20),
+          padding: EdgeInsets.fromLTRB(
+              8,
+              MediaQuery.of(context).orientation == Orientation.portrait
+                  ? 40
+                  : 8,
+              8,
+              MediaQuery.of(context).orientation == Orientation.portrait
+                  ? 40
+                  : 20),
           child: Container(
-            height: MediaQuery.of(context).orientation == Orientation.portrait ? MediaQuery.of(context).size.height * 0.35 : MediaQuery.of(context).size.height * 0.40,
-            width: MediaQuery.of(context).orientation == Orientation.portrait ? MediaQuery.of(context).size.height * 0.55 : MediaQuery.of(context).size.width * 0.60,
+            height: MediaQuery.of(context).orientation == Orientation.portrait
+                ? MediaQuery.of(context).size.height * 0.35
+                : MediaQuery.of(context).size.height * 0.40,
+            width: MediaQuery.of(context).orientation == Orientation.portrait
+                ? MediaQuery.of(context).size.height * 0.55
+                : MediaQuery.of(context).size.width * 0.60,
             child: Lottie.asset(
               imagePath,
               fit: BoxFit.contain,
@@ -78,8 +90,12 @@ class _BannerContentState extends State<BannerContent> with SingleTickerProvider
     return Column(
       children: [
         Container(
-          width: MediaQuery.of(context).orientation == Orientation.portrait ? MediaQuery.of(context).size.width : MediaQuery.of(context).size.width * 0.5,
-          height: MediaQuery.of(context).orientation == Orientation.portrait ? MediaQuery.of(context).size.height * 0.45 : MediaQuery.of(context).size.height * 0.65,
+          width: MediaQuery.of(context).orientation == Orientation.portrait
+              ? MediaQuery.of(context).size.width
+              : MediaQuery.of(context).size.width * 0.5,
+          height: MediaQuery.of(context).orientation == Orientation.portrait
+              ? MediaQuery.of(context).size.height * 0.45
+              : MediaQuery.of(context).size.height * 0.65,
           child: TabBarView(
             controller: _tabController,
             children: [
