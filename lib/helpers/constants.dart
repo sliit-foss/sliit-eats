@@ -11,6 +11,6 @@ class Constants {
     3: 'EXPIRED',
   };
 
-  //order expiration period
+  //order expiration period - IN MINUTES
   static double expirationPeriod = 60.0;
 }

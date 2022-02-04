@@ -93,4 +93,18 @@ class FirestoreService {
     });
     return collectionRef;
   }
+
+  static Future<dynamic> queryTimestampAndStatus(String collection,
+      String fieldName, Duration timePeriodPassed, String status) async {
+    List<dynamic> data = [];
+    DateTime someTimeAgo = DateTime.now().subtract(timePeriodPassed);
+    dynamic collectionRef = FirebaseFirestore.instance.collection(collection);
+    collectionRef = collectionRef
+        .where('status', isEqualTo: status)
+        .where(fieldName, isLessThan: someTimeAgo);
+    await collectionRef.get().then((QuerySnapshot querySnapshot) {
+      if (querySnapshot.docs.length > 0) data = querySnapshot.docs;
+    });
+    return data;
+  }
 }

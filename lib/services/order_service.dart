@@ -12,6 +12,7 @@ import 'auth_service.dart';
 
 class OrderService {
   static Future<List<Order>>? getOrders({dynamic filters}) async {
+    dynamic res = await expireOrders();
     List<dynamic> sorts = [
       {'name': 'created_at', 'descending': true}
     ];
@@ -65,5 +66,22 @@ class OrderService {
       return await FirestoreService.update(
           'orders', filters, {'status': Constants.orderStatus[3]});
     }
+  }
+
+  static dynamic expireOrders() async {
+    final responses = await FirestoreService.queryTimestampAndStatus(
+        'orders',
+        'created_at',
+        Duration(minutes: Constants.expirationPeriod.toInt()),
+        Constants.orderStatus[1] ?? '');
+    dynamic res;
+    for (dynamic response in responses) {
+      res = await FirestoreService.update('orders', [
+        {'name': 'id', 'value': response.data()['id']}
+      ], {
+        'status': Constants.orderStatus[3]
+      });
+    }
+    return res;
   }
 }
