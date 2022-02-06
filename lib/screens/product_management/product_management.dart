@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/main.dart';
-import 'package:sliit_eats/models/general/enums.dart';
 import 'package:sliit_eats/models/product.dart';
 import 'package:sliit_eats/routes/app_routes.dart';
 import 'package:sliit_eats/screens/product/components/manage_product_card.dart';
@@ -12,8 +11,6 @@ import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 import 'package:sliit_eats/screens/widgets/no_data_component.dart';
 import 'package:sliit_eats/screens/widgets/rounded_button.dart';
 import 'package:sliit_eats/services/product_service.dart';
-
-import 'components/add_product_modal.dart';
 
 class ProductManagement extends StatefulWidget {
   const ProductManagement({Key? key}) : super(key: key);
