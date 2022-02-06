@@ -19,8 +19,7 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
   dynamic progress;
 
   @override
@@ -56,15 +55,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               progress = ProgressHUD.of(context);
               return FutureBuilder(
                 future: ProductService.getProductById(args['product_id']),
-                builder:
-                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                   if (snapshot.hasData) {
                     Product thisProduct = snapshot.data;
                     return FutureBuilder(
-                      future:
-                          CanteenService.getCanteenName(thisProduct.canteen),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<dynamic> snapshot) {
+                      future: CanteenService.getCanteenName(thisProduct.canteen),
+                      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                         if (snapshot.hasData) {
                           String canteenName = snapshot.data;
                           return Padding(
@@ -76,80 +72,42 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 Hero(
                                   tag: thisProduct.id,
                                   child: Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.55,
+                                    height: MediaQuery.of(context).size.height * 0.55,
                                     width: MediaQuery.of(context).size.width,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        image: DecorationImage(
-                                            image:
-                                                Image.network(thisProduct.image)
-                                                    .image,
-                                            fit: BoxFit.cover)),
+                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), image: DecorationImage(image: Image.network(thisProduct.image).image, fit: BoxFit.cover)),
                                     child: Column(
                                       children: [
                                         Spacer(),
                                         ClipRRect(
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(35),
-                                              topRight: Radius.circular(35),
-                                              bottomLeft: Radius.circular(15),
-                                              bottomRight: Radius.circular(15)),
+                                          borderRadius:
+                                              BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35), bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
                                           child: BackdropFilter(
-                                            filter: ImageFilter.blur(
-                                                sigmaX: 4, sigmaY: 4),
+                                            filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
                                             child: Container(
                                               height: 130,
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
+                                              width: MediaQuery.of(context).size.width,
                                               decoration: BoxDecoration(
                                                 color: Colors.black45,
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
+                                                borderRadius: BorderRadius.circular(15),
                                               ),
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(15),
+                                                padding: const EdgeInsets.all(15),
                                                 child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
                                                       thisProduct.name,
-                                                      style: TextStyle(
-                                                          fontSize: 23,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          color: Colors.white,
-                                                          letterSpacing: 2),
+                                                      style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600, color: Colors.white, letterSpacing: 2),
                                                     ),
                                                     thisProduct.unitsLeft > 0
                                                         ? Text(
                                                             "${thisProduct.unitsLeft} left",
-                                                            style: TextStyle(
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                color: Colors
-                                                                    .white,
-                                                                letterSpacing:
-                                                                    2),
+                                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white, letterSpacing: 2),
                                                           )
                                                         : Text(
                                                             "OUT of stock",
-                                                            style: TextStyle(
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                color: Colors
-                                                                    .red[600],
-                                                                letterSpacing:
-                                                                    2),
+                                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.red[600], letterSpacing: 2),
                                                           ),
                                                     SizedBox(
                                                       height: 10,
@@ -158,20 +116,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                       height: 30,
                                                       decoration: BoxDecoration(
                                                         color: Colors.grey[850],
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(100),
+                                                        borderRadius: BorderRadius.circular(100),
                                                       ),
                                                       child: Padding(
-                                                        padding:
-                                                            EdgeInsets.fromLTRB(
-                                                                10, 0, 10, 0),
+                                                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                                                         child: Text(
                                                           canteenName,
                                                           style: TextStyle(
                                                             fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight.w600,
+                                                            fontWeight: FontWeight.w600,
                                                             color: Colors.white,
                                                           ),
                                                         ),
@@ -220,8 +173,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 Row(
                                   children: [
                                     Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Price",
@@ -243,13 +195,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                               ),
                                             ),
                                             Text(
-                                              thisProduct.unitPrice
-                                                  .toStringAsFixed(2),
-                                              style: TextStyle(
-                                                  fontSize: 25,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.white,
-                                                  letterSpacing: 2),
+                                              thisProduct.unitPrice.toStringAsFixed(2),
+                                              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: Colors.white, letterSpacing: 2),
                                             ),
                                           ],
                                         ),
@@ -266,10 +213,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                 return ProductOrderModal(
                                                   productId: thisProduct.id,
                                                   name: thisProduct.name,
-                                                  price: thisProduct.unitPrice
-                                                      .toDouble(),
-                                                  unitsLeft:
-                                                      thisProduct.unitsLeft,
+                                                  price: thisProduct.unitPrice.toDouble(),
+                                                  unitsLeft: thisProduct.unitsLeft,
                                                 );
                                               });
                                         })

@@ -20,8 +20,7 @@ class ProductManagement extends StatefulWidget {
 }
 
 class _ProductManagementState extends State<ProductManagement> {
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
   dynamic progress;
   String canteenID = currentLoggedInUser.canteenId!;
 
@@ -38,10 +37,7 @@ class _ProductManagementState extends State<ProductManagement> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(
-          title: 'Product Management',
-          showBackArrow: true,
-          onBackPressed: () => Navigator.of(context).pop()),
+      appBar: customAppBar(title: 'Product Management', showBackArrow: true, onBackPressed: () => Navigator.of(context).pop()),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -61,17 +57,17 @@ class _ProductManagementState extends State<ProductManagement> {
               progress = ProgressHUD.of(context);
               return FutureBuilder(
                 future: ProductService.filterProducts(canteenID, "all", ""),
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<Product>> snapshot) {
+                builder: (BuildContext context, AsyncSnapshot<List<Product>> snapshot) {
                   if (snapshot.hasData) {
-                    if (snapshot.data!.isNotEmpty) {
-                      return Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        child: ListView.builder(
-                          itemCount: snapshot.data!.length + 1,
-                          itemBuilder: (BuildContext context, int index) {
-                            if (index == 0) {
-                              return Row(
+                    return Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: ListView.builder(
+                        itemCount: snapshot.data!.isEmpty ? 2 : (snapshot.data!.length + 1),
+                        itemBuilder: (BuildContext context, int index) {
+                          if (index == 0) {
+                            return Container(
+                              height: 80,
+                              child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Spacer(),
@@ -87,32 +83,21 @@ class _ProductManagementState extends State<ProductManagement> {
                                         Navigator.pushNamed(
                                           context,
                                           AppRoutes.PRODUCT_DETAIL_NEW,
+                                          arguments: {'refresh': _refresh},
                                         );
                                       },
                                     ),
                                   ),
                                 ],
-                              );
-                            } else {
-                              // return Expanded(
-                              //   child: SingleChildScrollView(
-                              //     child: Wrap(
-                              //       spacing: 15.0, // gap between adjacent chips
-                              //       runSpacing: 12.0, // gap between lines
-                              //       children: snapshot.data!
-                              //           .map((product) => ManageProductCard(
-                              //               thisProduct: product))
-                              //           .toList()
-                              //           .cast<Widget>(),
-                              //     ),
-                              //   ),
-                              // );
+                              ),
+                            );
+                          } else {
+                            if (snapshot.data!.isNotEmpty) {
                               return AnimatedContainer(
                                 duration: Duration(milliseconds: 200),
                                 width: MediaQuery.of(context).size.width,
                                 child: Container(
-                                  margin: EdgeInsets.only(
-                                      left: 20, top: 10, right: 20, bottom: 10),
+                                  margin: EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 10),
                                   width: double.infinity,
                                   height: 130,
                                   decoration: BoxDecoration(
@@ -126,8 +111,7 @@ class _ProductManagementState extends State<ProductManagement> {
                                     ),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: AppColors.cardColor
-                                            .withOpacity(0.2),
+                                        color: AppColors.cardColor.withOpacity(0.2),
                                         blurRadius: 12,
                                         offset: Offset(0, 2),
                                       ),
@@ -135,16 +119,21 @@ class _ProductManagementState extends State<ProductManagement> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: ManageProductCard(
-                                      thisProduct: snapshot.data![index - 1]),
+                                    thisProduct: snapshot.data![index - 1],
+                                    refresh: _refresh,
+                                  ),
                                 ),
                               );
+                            } else {
+                              return Container(
+                                height: MediaQuery.of(context).size.height - Scaffold.of(context).appBarMaxHeight! - 80,
+                                child: NoDataComponent(),
+                              );
                             }
-                          },
-                        ),
-                      );
-                    } else {
-                      return NoDataComponent();
-                    }
+                          }
+                        },
+                      ),
+                    );
                   } else {
                     return LoadingIndicator();
                   }

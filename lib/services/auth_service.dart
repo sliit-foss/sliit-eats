@@ -14,6 +14,7 @@ class AuthService {
     User? user = FirebaseAuth.instance.currentUser;
     List<dynamic> filters = [{'name': 'id', 'value': user!.uid}];
     final responseDoc = await FirestoreService.read('users', filters, limit: 1);
+    print(responseDoc);
     return UserModel.fromDocumentSnapshot(responseDoc);
   }
 
@@ -25,7 +26,7 @@ class AuthService {
       if (!currentUser!.isActive)
         return ErrorMessage('Your account has been deactivated');
       if (!user!.emailVerified) {
-        await sendVerificationMail();
+        await user.sendEmailVerification();
         return ErrorMessage('Please verify your email');
       }
       String? firebaseToken= await FirebaseMessaging.instance.getToken();
@@ -49,7 +50,7 @@ class AuthService {
       UserCredential userCredential = await FirebaseAuth.instanceFor(app: tempApp).createUserWithEmailAndPassword(email: email, password: password);
       User? user = userCredential.user;
       await user!.updateDisplayName(name);
-      await sendVerificationMail();
+      await user.sendEmailVerification();
       return await FirestoreService.write('users', {'id': user.uid, 'username': name, 'email': email, 'user_type': userType, 'is_admin': isAdmin, 'canteen_id': canteenId, 'is_active' : true },
           'Signed up successfully. Please verify your email to activate your account');
     } on FirebaseAuthException catch (e) {
@@ -80,10 +81,5 @@ class AuthService {
       }
     });
     return res;
-  }
-
-  static Future<void>? sendVerificationMail() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null && !user.emailVerified) await user.sendEmailVerification();
   }
 }

@@ -15,10 +15,7 @@ class _OrderManagementState extends State<OrderManagement> {
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as dynamic;
     return Scaffold(
-      appBar: customAppBar(
-          title: args['title'],
-          showBackArrow: true,
-          onBackPressed: () => Navigator.of(context).pop()),
+      appBar: customAppBar(title: args['title'], showBackArrow: true, onBackPressed: () => Navigator.of(context).pop()),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(

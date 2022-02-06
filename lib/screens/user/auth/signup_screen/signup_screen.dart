@@ -178,12 +178,12 @@ class _SignUpState extends State<SignUp> {
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width,
-                              padding: EdgeInsets.symmetric(vertical: 5),
+                              padding: EdgeInsets.symmetric(vertical: 8),
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 color: AppColors.primary,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
+                                    BorderRadius.all(Radius.circular(5)),
                                 boxShadow: <BoxShadow>[
                                   BoxShadow(
                                       color: AppColors.primary.withAlpha(100),

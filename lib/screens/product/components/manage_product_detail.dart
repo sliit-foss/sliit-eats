@@ -11,7 +11,6 @@ import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/models/category.dart';
 import 'package:sliit_eats/models/general/sucess_message.dart';
 import 'package:sliit_eats/models/product.dart';
-import 'package:sliit_eats/routes/app_routes.dart';
 import 'package:sliit_eats/screens/home_screen/components/category_selector.dart';
 import 'package:sliit_eats/screens/widgets/alert_dialog.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
@@ -23,13 +22,11 @@ class ProductDetailManagement extends StatefulWidget {
   const ProductDetailManagement({Key? key}) : super(key: key);
 
   @override
-  _ProductDetailManagementState createState() =>
-      _ProductDetailManagementState();
+  _ProductDetailManagementState createState() => _ProductDetailManagementState();
 }
 
 class _ProductDetailManagementState extends State<ProductDetailManagement> {
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
   dynamic progress;
   final ImagePicker _imagePicker = ImagePicker();
   late Future<XFile?> pickedFile = Future.value(null);
@@ -38,12 +35,9 @@ class _ProductDetailManagementState extends State<ProductDetailManagement> {
   final String errorText = 'This is a required field';
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = new TextEditingController();
-  final TextEditingController _descriptionController =
-      new TextEditingController();
-  final TextEditingController _unitPriceController =
-      new TextEditingController();
-  final TextEditingController _unitsLeftController =
-      new TextEditingController();
+  final TextEditingController _descriptionController = new TextEditingController();
+  final TextEditingController _unitPriceController = new TextEditingController();
+  final TextEditingController _unitsLeftController = new TextEditingController();
   final TextEditingController _servingsController = new TextEditingController();
 
   String _selectedCategory = '';
@@ -87,8 +81,7 @@ class _ProductDetailManagementState extends State<ProductDetailManagement> {
               progress = ProgressHUD.of(context);
               return FutureBuilder(
                 future: ProductService.getProductById(args['product_id']),
-                builder:
-                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                   if (snapshot.hasData) {
                     Product thisProduct = snapshot.data;
                     if (firstLoad) {
@@ -96,18 +89,14 @@ class _ProductDetailManagementState extends State<ProductDetailManagement> {
                       _selectedCategory = thisProduct.category;
                       _nameController.text = thisProduct.name;
                       _descriptionController.text = thisProduct.description;
-                      _unitPriceController.text =
-                          thisProduct.unitPrice.toString();
-                      _unitsLeftController.text =
-                          thisProduct.unitsLeft.toString();
-                      _servingsController.text =
-                          thisProduct.servings.toString();
+                      _unitPriceController.text = thisProduct.unitPrice.toString();
+                      _unitsLeftController.text = thisProduct.unitsLeft.toString();
+                      _servingsController.text = thisProduct.servings.toString();
                     }
 
                     return FutureBuilder(
                       future: CategoryService.getCategories(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<List<Category>> categorySnapshot) {
+                      builder: (BuildContext context, AsyncSnapshot<List<Category>> categorySnapshot) {
                         if (categorySnapshot.hasData) {
                           if (categorySnapshot.data!.isNotEmpty) {
                             return SingleChildScrollView(
@@ -118,70 +107,37 @@ class _ProductDetailManagementState extends State<ProductDetailManagement> {
                                     children: [
                                       GestureDetector(
                                         onTap: () async {
-                                          pickedFile = _imagePicker
-                                              .pickImage(
-                                                  source: ImageSource.gallery)
-                                              .whenComplete(
-                                                  () => {setState(() {})});
-                                          ProductService.uploadImage(
-                                              imageFile, thisProduct.id);
+                                          pickedFile = _imagePicker.pickImage(source: ImageSource.gallery).whenComplete(() => {setState(() {})});
+                                          ProductService.uploadImage(imageFile, thisProduct.id);
                                         },
                                         child: FutureBuilder<XFile?>(
                                             future: pickedFile,
                                             builder: (context, snapshot) {
                                               if (snapshot.hasData) {
-                                                imageFile =
-                                                    File(snapshot.data!.path);
+                                                imageFile = File(snapshot.data!.path);
                                                 return Container(
-                                                  alignment:
-                                                      Alignment.bottomCenter,
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.5,
+                                                  alignment: Alignment.bottomCenter,
+                                                  height: MediaQuery.of(context).size.height * 0.5,
                                                   decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      image: DecorationImage(
-                                                          fit: BoxFit.cover,
-                                                          image: Image.file(
-                                                                  File(snapshot
-                                                                      .data!
-                                                                      .path))
-                                                              .image)),
+                                                      borderRadius: BorderRadius.circular(8), image: DecorationImage(fit: BoxFit.cover, image: Image.file(File(snapshot.data!.path)).image)),
                                                   child: Container(
                                                     alignment: Alignment.center,
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width,
-                                                    color: Colors.black
-                                                        .withOpacity(0.8),
+                                                    width: MediaQuery.of(context).size.width,
+                                                    color: Colors.black.withOpacity(0.8),
                                                     height: 40,
                                                     child: Text(
                                                       "TAP to change image",
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 16,
-                                                          color: Colors.white,
-                                                          letterSpacing: 2),
+                                                      textAlign: TextAlign.center,
+                                                      style: TextStyle(fontSize: 16, color: Colors.white, letterSpacing: 2),
                                                     ),
                                                   ),
                                                 );
                                               } else {
                                                 return Container(
-                                                  alignment:
-                                                      Alignment.bottomCenter,
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.5,
+                                                  alignment: Alignment.bottomCenter,
+                                                  height: MediaQuery.of(context).size.height * 0.5,
                                                   decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
+                                                      borderRadius: BorderRadius.circular(8),
                                                       image: DecorationImage(
                                                           fit: BoxFit.cover,
                                                           image: Image.network(
@@ -189,21 +145,13 @@ class _ProductDetailManagementState extends State<ProductDetailManagement> {
                                                           ).image)),
                                                   child: Container(
                                                     alignment: Alignment.center,
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width,
-                                                    color: Colors.black
-                                                        .withOpacity(0.8),
+                                                    width: MediaQuery.of(context).size.width,
+                                                    color: Colors.black.withOpacity(0.8),
                                                     height: 40,
                                                     child: Text(
                                                       "TAP to change image",
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 16,
-                                                          color: Colors.white,
-                                                          letterSpacing: 2),
+                                                      textAlign: TextAlign.center,
+                                                      style: TextStyle(fontSize: 16, color: Colors.white, letterSpacing: 2),
                                                     ),
                                                   ),
                                                 );
@@ -224,19 +172,11 @@ class _ProductDetailManagementState extends State<ProductDetailManagement> {
                                             }
                                             return null;
                                           },
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.white,
-                                              letterSpacing: 2),
+                                          style: TextStyle(fontSize: 16, color: Colors.white, letterSpacing: 2),
                                           controller: _nameController,
                                           decoration: InputDecoration(
-                                              labelStyle: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.white,
-                                                  letterSpacing: 2),
-                                              icon: Icon(
-                                                  Icons.emoji_food_beverage,
-                                                  color: Colors.white),
+                                              labelStyle: TextStyle(fontSize: 16, color: Colors.white, letterSpacing: 2),
+                                              icon: Icon(Icons.emoji_food_beverage, color: Colors.white),
                                               labelText: 'Name')),
                                       TextFormField(
                                           validator: (value) {
@@ -245,20 +185,11 @@ class _ProductDetailManagementState extends State<ProductDetailManagement> {
                                             }
                                             return null;
                                           },
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.white,
-                                              letterSpacing: 2),
+                                          style: TextStyle(fontSize: 16, color: Colors.white, letterSpacing: 2),
                                           maxLines: 2,
                                           controller: _descriptionController,
                                           decoration: InputDecoration(
-                                              labelStyle: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.white,
-                                                  letterSpacing: 2),
-                                              icon: Icon(Icons.edit,
-                                                  color: Colors.white),
-                                              labelText: 'Description')),
+                                              labelStyle: TextStyle(fontSize: 16, color: Colors.white, letterSpacing: 2), icon: Icon(Icons.edit, color: Colors.white), labelText: 'Description')),
                                       TextFormField(
                                           validator: (value) {
                                             if (value!.isEmpty) {
@@ -266,23 +197,13 @@ class _ProductDetailManagementState extends State<ProductDetailManagement> {
                                             }
                                             return null;
                                           },
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.white,
-                                              letterSpacing: 2),
+                                          style: TextStyle(fontSize: 16, color: Colors.white, letterSpacing: 2),
                                           keyboardType: TextInputType.number,
                                           controller: _unitPriceController,
-                                          inputFormatters: <TextInputFormatter>[
-                                            FilteringTextInputFormatter
-                                                .digitsOnly
-                                          ],
+                                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                                           decoration: InputDecoration(
-                                              labelStyle: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.white,
-                                                  letterSpacing: 2),
-                                              icon: Icon(Icons.attach_money,
-                                                  color: Colors.white),
+                                              labelStyle: TextStyle(fontSize: 16, color: Colors.white, letterSpacing: 2),
+                                              icon: Icon(Icons.attach_money, color: Colors.white),
                                               labelText: 'Unit Price (Rs.)')),
                                       TextFormField(
                                           validator: (value) {
@@ -291,25 +212,13 @@ class _ProductDetailManagementState extends State<ProductDetailManagement> {
                                             }
                                             return null;
                                           },
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.white,
-                                              letterSpacing: 2),
+                                          style: TextStyle(fontSize: 16, color: Colors.white, letterSpacing: 2),
                                           keyboardType: TextInputType.number,
                                           controller: _unitsLeftController,
-                                          inputFormatters: <TextInputFormatter>[
-                                            FilteringTextInputFormatter
-                                                .digitsOnly
-                                          ],
+                                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                                           decoration: InputDecoration(
-                                              labelStyle: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.white,
-                                                  letterSpacing: 2),
-                                              icon: Icon(
-                                                  Icons
-                                                      .dashboard_customize_rounded,
-                                                  color: Colors.white),
+                                              labelStyle: TextStyle(fontSize: 16, color: Colors.white, letterSpacing: 2),
+                                              icon: Icon(Icons.dashboard_customize_rounded, color: Colors.white),
                                               labelText: 'Units left')),
                                       TextFormField(
                                           validator: (value) {
@@ -318,27 +227,14 @@ class _ProductDetailManagementState extends State<ProductDetailManagement> {
                                             }
                                             return null;
                                           },
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.white,
-                                              letterSpacing: 2),
+                                          style: TextStyle(fontSize: 16, color: Colors.white, letterSpacing: 2),
                                           keyboardType: TextInputType.number,
                                           controller: _servingsController,
-                                          inputFormatters: <TextInputFormatter>[
-                                            FilteringTextInputFormatter
-                                                .digitsOnly
-                                          ],
+                                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                                           decoration: InputDecoration(
-                                              labelStyle: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.white,
-                                                  letterSpacing: 2),
-                                              icon: Icon(Icons.group,
-                                                  color: Colors.white),
-                                              labelText: 'Servings')),
+                                              labelStyle: TextStyle(fontSize: 16, color: Colors.white, letterSpacing: 2), icon: Icon(Icons.group, color: Colors.white), labelText: 'Servings')),
                                       Container(
-                                        margin:
-                                            EdgeInsets.fromLTRB(0, 0, 20, 10),
+                                        margin: EdgeInsets.fromLTRB(0, 0, 20, 10),
                                         child: RoundedButton(
                                           text: "Update Product",
                                           buttonColor: AppColors.primary,
@@ -346,51 +242,32 @@ class _ProductDetailManagementState extends State<ProductDetailManagement> {
                                           paddingTop: 10,
                                           borderRadius: 10,
                                           onPressed: () async {
-                                            if (_formKey.currentState!
-                                                .validate()) {
-                                              Product updatedProduct =
-                                                  Product.updatedProduct(
-                                                      id: thisProduct.id,
-                                                      name:
-                                                          _nameController.text,
-                                                      canteen:
-                                                          thisProduct.canteen,
-                                                      category:
-                                                          _selectedCategory,
-                                                      unitPrice: int.parse(
-                                                          _unitPriceController
-                                                              .text),
-                                                      servings: int.parse(
-                                                          _servingsController
-                                                              .text),
-                                                      description:
-                                                          _descriptionController
-                                                              .text,
-                                                      unitsLeft: int.parse(
-                                                          _unitsLeftController
-                                                              .text));
-                                              dynamic res = await ProductService
-                                                  .updateProduct(
-                                                      updatedProduct);
+                                            if (_formKey.currentState!.validate()) {
+                                              progress.show();
+                                              Product updatedProduct = Product.updatedProduct(
+                                                  id: thisProduct.id,
+                                                  name: _nameController.text,
+                                                  canteen: thisProduct.canteen,
+                                                  category: _selectedCategory,
+                                                  unitPrice: int.parse(_unitPriceController.text),
+                                                  servings: int.parse(_servingsController.text),
+                                                  description: _descriptionController.text,
+                                                  unitsLeft: int.parse(_unitsLeftController.text));
+                                              dynamic res = await ProductService.updateProduct(updatedProduct);
+                                              progress.dismiss();
                                               if (res is SuccessMessage) {
-                                                Navigator.popAndPushNamed(
-                                                    context,
-                                                    AppRoutes
-                                                        .PRODUCT_MANAGEMENT);
-                                                await showCoolAlert(
-                                                    context, true, res.message);
+                                                await showCoolAlert(context, true, res.message);
+                                                Navigator.of(context).pop();
+                                                args['refresh']();
                                               } else {
-                                                await showCoolAlert(
-                                                    context, false, res.message,
-                                                    noAutoClose: true);
+                                                await showCoolAlert(context, false, res.message, noAutoClose: true);
                                               }
                                             }
                                           },
                                         ),
                                       ),
                                       Container(
-                                        margin:
-                                            EdgeInsets.fromLTRB(0, 0, 20, 10),
+                                        margin: EdgeInsets.fromLTRB(0, 0, 20, 10),
                                         child: RoundedButton(
                                           text: "DELETE Product",
                                           buttonColor: AppColors.fail,
@@ -398,22 +275,16 @@ class _ProductDetailManagementState extends State<ProductDetailManagement> {
                                           paddingTop: 10,
                                           borderRadius: 10,
                                           onPressed: () {
-                                            showConfirmDialog(context,
-                                                () async {
-                                              dynamic res = await ProductService
-                                                  .deleteProduct(
-                                                      thisProduct.id);
+                                            showConfirmDialog(context, () async {
+                                              progress.show();
+                                              dynamic res = await ProductService.deleteProduct(thisProduct.id);
+                                              progress.dismiss();
                                               if (res is SuccessMessage) {
-                                                Navigator.popAndPushNamed(
-                                                    context,
-                                                    AppRoutes
-                                                        .PRODUCT_MANAGEMENT);
-                                                await showCoolAlert(
-                                                    context, true, res.message);
+                                                await showCoolAlert(context, true, res.message);
+                                                Navigator.of(context).pop();
+                                                args['refresh']();
                                               } else {
-                                                await showCoolAlert(
-                                                    context, false, res.message,
-                                                    noAutoClose: true);
+                                                await showCoolAlert(context, false, res.message, noAutoClose: true);
                                               }
                                             });
                                           },

@@ -13,8 +13,7 @@ import 'package:sliit_eats/services/order_service.dart';
 import 'package:sliit_eats/services/product_service.dart';
 
 class OrderList extends StatefulWidget {
-  const OrderList({Key? key, required this.isAdminView, required this.filters})
-      : super(key: key);
+  const OrderList({Key? key, required this.isAdminView, required this.filters}) : super(key: key);
   final dynamic filters;
   final bool isAdminView;
 
@@ -23,8 +22,7 @@ class OrderList extends StatefulWidget {
 }
 
 class _OrderListState extends State<OrderList> {
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
   dynamic progress;
 
   Future<dynamic> _refresh() async {
@@ -42,8 +40,7 @@ class _OrderListState extends State<OrderList> {
           progress = ProgressHUD.of(context);
           return FutureBuilder(
             future: OrderService.getOrders(filters: widget.filters),
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Order>> snapshot) {
+            builder: (BuildContext context, AsyncSnapshot<List<Order>> snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data!.isNotEmpty) {
                   return Padding(
@@ -51,17 +48,12 @@ class _OrderListState extends State<OrderList> {
                     child: ListView.builder(
                       itemCount: snapshot.data!.length,
                       itemBuilder: (BuildContext context, int index) {
-                        Duration minutesPassed = DateTime.now().difference(
-                            DateTime.fromMillisecondsSinceEpoch(snapshot
-                                .data![index]
-                                .createdAt
-                                .millisecondsSinceEpoch));
+                        Duration minutesPassed = DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(snapshot.data![index].createdAt.millisecondsSinceEpoch));
                         return AnimatedContainer(
                           duration: Duration(milliseconds: 200),
                           width: MediaQuery.of(context).size.width,
                           child: Container(
-                            margin: EdgeInsets.only(
-                                left: 20, top: 10, right: 20, bottom: 10),
+                            margin: EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 10),
                             width: double.infinity,
                             height: 100,
                             decoration: BoxDecoration(
@@ -93,26 +85,17 @@ class _OrderListState extends State<OrderList> {
                                     Text(
                                       'ID : ${snapshot.data![index].id}',
                                       textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          color: AppColors.success,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15),
+                                      style: TextStyle(color: AppColors.success, fontWeight: FontWeight.bold, fontSize: 15),
                                     ),
                                     FutureBuilder(
-                                        future: ProductService.getProductById(
-                                            snapshot.data![index].productId),
-                                        builder: (BuildContext context,
-                                            AsyncSnapshot productSnapshot) {
+                                        future: ProductService.getProductById(snapshot.data![index].productId),
+                                        builder: (BuildContext context, AsyncSnapshot productSnapshot) {
                                           if (productSnapshot.hasData) {
-                                            Product thisProduct =
-                                                productSnapshot.data;
+                                            Product thisProduct = productSnapshot.data;
                                             return Text(
                                               '${thisProduct.name}    X    ${snapshot.data![index].quantity}',
                                               textAlign: TextAlign.start,
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15),
+                                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
                                             );
                                           } else
                                             return SizedBox();
@@ -121,19 +104,13 @@ class _OrderListState extends State<OrderList> {
                                         ? Text(
                                             snapshot.data![index].username,
                                             textAlign: TextAlign.start,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 13),
+                                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
                                           )
                                         : Container(),
                                     Text(
                                       '${TimeOfDay.fromDateTime(DateTime.fromMillisecondsSinceEpoch(snapshot.data![index].createdAt.millisecondsSinceEpoch)).format(context)}  |  ${snapshot.data![index].createdAt.toDate().toLocal().toString().substring(0, 10)}',
                                       textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13),
+                                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
                                     ),
                                     Spacer(),
                                     minutesPassed.inMinutes <= 60.0
@@ -142,22 +119,12 @@ class _OrderListState extends State<OrderList> {
                                               Container(
                                                 color: Colors.grey[600],
                                                 height: 5.0,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.7,
+                                                width: MediaQuery.of(context).size.width * 0.7,
                                               ),
                                               Container(
                                                 color: AppColors.success,
                                                 height: 5.0,
-                                                width: (minutesPassed
-                                                            .inMinutes /
-                                                        Constants
-                                                            .expirationPeriod) *
-                                                    MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.7,
+                                                width: (minutesPassed.inMinutes / Constants.expirationPeriod) * MediaQuery.of(context).size.width * 0.7,
                                               )
                                             ],
                                           )
@@ -165,13 +132,11 @@ class _OrderListState extends State<OrderList> {
                                   ],
                                 ),
                                 Spacer(),
-                                snapshot.data![index].status ==
-                                        Constants.orderStatus[1]
+                                snapshot.data![index].status == Constants.orderStatus[1]
                                     ? GestureDetector(
                                         onTap: () {
                                           showConfirmDialog(context, () async {
-                                            dynamic res = await OrderService
-                                                .updateOrderStatus(
+                                            dynamic res = await OrderService.updateOrderStatus(
                                               snapshot.data![index].id,
                                               snapshot.data![index].productId,
                                               true,
@@ -179,18 +144,10 @@ class _OrderListState extends State<OrderList> {
                                             );
                                             if (res is SuccessMessage) {
                                               Navigator.pop(context);
-                                              Navigator.popAndPushNamed(context,
-                                                  AppRoutes.ORDER_MANAGEMENT,
-                                                  arguments: {
-                                                    'title': 'Active Orders',
-                                                    'status':
-                                                        Constants.orderStatus[1]
-                                                  });
-                                              await showCoolAlert(
-                                                  context, true, res.message);
+                                              Navigator.popAndPushNamed(context, AppRoutes.ORDER_MANAGEMENT, arguments: {'title': 'Active Orders', 'status': Constants.orderStatus[1]});
+                                              await showCoolAlert(context, true, res.message);
                                             } else
-                                              await showCoolAlert(
-                                                  context, false, res.message);
+                                              await showCoolAlert(context, false, res.message);
                                           });
                                         },
                                         child: Container(

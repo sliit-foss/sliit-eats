@@ -10,6 +10,7 @@ import 'package:sliit_eats/models/canteen.dart';
 import 'package:sliit_eats/models/category.dart';
 import 'package:sliit_eats/models/product.dart';
 import 'package:sliit_eats/screens/home_screen/components/category_selector.dart';
+import 'package:sliit_eats/screens/home_screen/components/no_category_indicator.dart';
 import 'package:sliit_eats/screens/home_screen/components/product_card.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 import 'package:sliit_eats/screens/widgets/no_data_component.dart';
@@ -236,7 +237,12 @@ class _BrowseTabState extends State<BrowseTab> {
                                     ],
                                   );
                                 } else {
-                                  return LoadingIndicator();
+                                  return Column(
+                                    children: [
+                                      NoCategoryIndicator(),
+                                      Expanded(child: LoadingIndicator()),
+                                    ],
+                                  );
                                 }
                               } else {
                                 return LoadingIndicator();
