@@ -21,7 +21,8 @@ class CategoryManagement extends StatefulWidget {
 }
 
 class _CategoryManagementState extends State<CategoryManagement> {
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      new GlobalKey<RefreshIndicatorState>();
   dynamic progress;
 
   @override
@@ -37,7 +38,10 @@ class _CategoryManagementState extends State<CategoryManagement> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(title: 'Category Management', showBackArrow: true, onBackPressed: () => Navigator.of(context).pop()),
+      appBar: customAppBar(
+          title: 'Category Management',
+          showBackArrow: true,
+          onBackPressed: () => Navigator.of(context).pop()),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -57,7 +61,8 @@ class _CategoryManagementState extends State<CategoryManagement> {
               progress = ProgressHUD.of(context);
               return FutureBuilder(
                 future: CategoryService.getCategories(),
-                builder: (BuildContext context, AsyncSnapshot<List<Category>> snapshot) {
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<Category>> snapshot) {
                   if (snapshot.hasData) {
                     if (snapshot.data!.isNotEmpty) {
                       return Padding(
@@ -82,7 +87,10 @@ class _CategoryManagementState extends State<CategoryManagement> {
                                         return showDialog(
                                             context: context,
                                             builder: (BuildContext context) {
-                                              return AddCategoryModal(modalPurpose: ModalPurpose.ADD, refresh: _refresh);
+                                              return AddCategoryModal(
+                                                  modalPurpose:
+                                                      ModalPurpose.ADD,
+                                                  refresh: _refresh);
                                             });
                                       },
                                     ),
@@ -94,7 +102,8 @@ class _CategoryManagementState extends State<CategoryManagement> {
                                 duration: Duration(milliseconds: 200),
                                 width: MediaQuery.of(context).size.width,
                                 child: Container(
-                                  margin: EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 10),
+                                  margin: EdgeInsets.only(
+                                      left: 20, top: 10, right: 20, bottom: 10),
                                   width: double.infinity,
                                   height: 60,
                                   decoration: BoxDecoration(
@@ -108,7 +117,8 @@ class _CategoryManagementState extends State<CategoryManagement> {
                                     ),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: AppColors.cardColor.withOpacity(0.2),
+                                        color: AppColors.cardColor
+                                            .withOpacity(0.2),
                                         blurRadius: 12,
                                         offset: Offset(0, 2),
                                       ),
@@ -116,17 +126,23 @@ class _CategoryManagementState extends State<CategoryManagement> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       SizedBox(width: 15),
                                       Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             snapshot.data![index - 1].name,
                                             textAlign: TextAlign.start,
-                                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15),
                                           ),
                                         ],
                                       ),
@@ -139,8 +155,10 @@ class _CategoryManagementState extends State<CategoryManagement> {
                                               return AddCategoryModal(
                                                 modalPurpose: ModalPurpose.EDIT,
                                                 refresh: _refresh,
-                                                id: snapshot.data![index - 1].id,
-                                                name: snapshot.data![index - 1].name,
+                                                id: snapshot
+                                                    .data![index - 1].id,
+                                                name: snapshot
+                                                    .data![index - 1].name,
                                               );
                                             },
                                           );
@@ -159,16 +177,26 @@ class _CategoryManagementState extends State<CategoryManagement> {
                                         ),
                                       ),
                                       GestureDetector(
-                                        onTap: () async {
-                                          progress!.show();
-                                          dynamic res = await CategoryService.deleteCategory(snapshot.data![index - 1].id);
-                                          progress.dismiss();
-                                          if (res.runtimeType == SuccessMessage) {
-                                            await showCoolAlert(context, true, "Category deleted successfully");
-                                            _refresh();
-                                          } else {
-                                            await showCoolAlert(context, false, res.message);
-                                          }
+                                        onTap: () {
+                                          showConfirmDialog(context, () async {
+                                            progress!.show();
+                                            dynamic res = await CategoryService
+                                                .deleteCategory(snapshot
+                                                    .data![index - 1].id);
+                                            progress.dismiss();
+                                            if (res.runtimeType ==
+                                                SuccessMessage) {
+                                              Navigator.pop(context);
+                                              await showCoolAlert(context, true,
+                                                  "Category deleted successfully");
+                                              _refresh();
+                                            } else {
+                                              Navigator.pop(context);
+                                              await showCoolAlert(
+                                                  context, false, res.message,
+                                                  noAutoClose: true);
+                                            }
+                                          });
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(

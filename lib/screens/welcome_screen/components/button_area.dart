@@ -30,7 +30,11 @@ class _ButtonAreaState extends State<ButtonArea> {
               color: AppColors.primary,
               borderRadius: BorderRadius.circular(10),
               boxShadow: <BoxShadow>[
-                BoxShadow(color: AppColors.primary.withAlpha(100), offset: Offset(2, 4), blurRadius: 8, spreadRadius: 2),
+                BoxShadow(
+                    color: AppColors.primary.withAlpha(100),
+                    offset: Offset(2, 4),
+                    blurRadius: 8,
+                    spreadRadius: 2),
               ],
             ),
             child: Center(

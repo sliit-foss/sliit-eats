@@ -18,13 +18,17 @@ import 'routes/routes_generator.dart';
 import 'dart:convert';
 import 'dart:io';
 
+late UserModel currentLoggedInUser;
+
 void main() async {
   Paint.enableDithering = true;
   HttpOverrides.global = new AppHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await Firebase.initializeApp(name: 'temporaryregister', options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+      name: 'temporaryregister',
+      options: DefaultFirebaseOptions.currentPlatform);
   await FCMService.initialize();
   String? appSettings = await CacheService.getAppSettings();
   if (appSettings != null) StateHelpers.appSettings = jsonDecode(appSettings);
@@ -35,16 +39,16 @@ class MyApp extends StatelessWidget {
   Future<bool> checkLoginStatus() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null && user.emailVerified) {
-      UserModel? currentUser = await AuthService.getCurrentUserDetails();
-      if(currentUser!.isActive)
-        return true;
+      currentLoggedInUser = await AuthService.getCurrentUserDetails();
+      if (currentLoggedInUser.isActive) return true;
     }
     return false;
   }
 
-  void toHome(context) async{
+  void toHome(context) async {
     await Future.delayed(Duration(seconds: 1));
-    Navigator.pushReplacementNamed(context, AppRoutes.HOME, arguments: {'selectedTabIndex': 0});
+    Navigator.pushReplacementNamed(context, AppRoutes.HOME,
+        arguments: {'selectedTabIndex': 0});
   }
 
   @override

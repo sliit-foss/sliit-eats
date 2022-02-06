@@ -43,7 +43,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: dotenv.env['SLIIT_EATS_FCM_SENDER_ID']!,
     projectId: dotenv.env['SLIIT_EATS_FIREBASE_PROJECT_ID']!,
     storageBucket: dotenv.env['SLIIT_EATS_FIREBASE_BUCKET']!,
-    iosClientId: '867257560155-2qf101m57t3anp5thggdlth3ie03hole.apps.googleusercontent.com',
+    iosClientId:
+        '867257560155-2qf101m57t3anp5thggdlth3ie03hole.apps.googleusercontent.com',
     iosBundleId: 'com.example.sliitEats',
   );
 }

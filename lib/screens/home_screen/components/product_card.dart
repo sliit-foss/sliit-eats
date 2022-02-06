@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliit_eats/helpers/colors.dart';
+import 'package:sliit_eats/models/product.dart';
 import 'package:sliit_eats/routes/app_routes.dart';
 import 'package:sliit_eats/screens/product/components/product_order_modal.dart';
 import 'package:sliit_eats/screens/widgets/custom_card.dart';
 
 class ProductCard extends StatefulWidget {
-  const ProductCard({Key? key}) : super(key: key);
+  const ProductCard({Key? key, required this.thisProduct}) : super(key: key);
+  final Product thisProduct;
 
   @override
   _ProductCardState createState() => _ProductCardState();
@@ -17,7 +18,8 @@ class _ProductCardState extends State<ProductCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, AppRoutes.PRODUCT_DETAIL, arguments: {'product_id': 'safdafafd'});
+        Navigator.pushNamed(context, AppRoutes.PRODUCT_DETAIL,
+            arguments: {'product_id': widget.thisProduct.id});
       },
       child: CustomCard(
         color: AppColors.cardColor,
@@ -28,12 +30,12 @@ class _ProductCardState extends State<ProductCard> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(5),
                 child: Hero(
-                  tag: 'safdafafd',
+                  tag: widget.thisProduct.name,
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.4,
                     height: 90,
-                    child: Image(
-                      image: AssetImage("assets/images/browse/products/photo.jpg"),
+                    child: Image.network(
+                      widget.thisProduct.image,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -44,19 +46,20 @@ class _ProductCardState extends State<ProductCard> {
                 children: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        " Coffee",
+                        widget.thisProduct.name,
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 13,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                         ),
                       ),
                       Text(
-                        '\$ 2.00',
+                        'Rs. ${widget.thisProduct.unitPrice.toStringAsFixed(2)}',
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 15,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                         ),
@@ -64,29 +67,81 @@ class _ProductCardState extends State<ProductCard> {
                     ],
                   ),
                   Spacer(),
-                  GestureDetector(
-                    onTap: () async {
-                      return showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return ProductOrderModal(name: 'Coffee', price: 2.00);
-                          });
-                    },
-                    child: Container(
-                      height: 50,
-                      width: 35,
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Icon(
-                        FontAwesomeIcons.plus,
+                  Column(
+                    children: widget.thisProduct.unitsLeft == 0
+                        ? [
+                            Text(
+                              'OUT',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.red,
+                              ),
+                            ),
+                            Text(
+                              'of stock',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ]
+                        : [
+                            Text(
+                              '${widget.thisProduct.unitsLeft}',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                              'left',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                  ),
+                ],
+              ),
+              GestureDetector(
+                onTap: () async {
+                  if (widget.thisProduct.unitsLeft != 0)
+                    return showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ProductOrderModal(
+                            name: widget.thisProduct.name,
+                            price: widget.thisProduct.unitPrice.toDouble(),
+                            unitsLeft: widget.thisProduct.unitsLeft,
+                          );
+                        });
+                },
+                child: Container(
+                  height: 30,
+                  width: MediaQuery.of(context).size.width * 0.4,
+                  decoration: BoxDecoration(
+                    color: widget.thisProduct.unitsLeft == 0
+                        ? Colors.grey[500]
+                        : AppColors.primary,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Reserve',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
                         color: Colors.white,
-                        size: 16,
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
             ],
           ),
@@ -95,4 +150,3 @@ class _ProductCardState extends State<ProductCard> {
     );
   }
 }
-
