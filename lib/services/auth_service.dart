@@ -24,7 +24,7 @@ class AuthService {
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
       User? user = userCredential.user;
       currentLoggedInUser = await AuthService.getCurrentUserDetails();
-      if (!currentLoggedInUser!.isActive)
+      if (!currentLoggedInUser.isActive)
         return ErrorMessage('Your account has been deactivated');
       if (!user!.emailVerified) {
         await user.sendEmailVerification();
