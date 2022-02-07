@@ -64,7 +64,7 @@ class _UserManagementState extends State<UserManagement> {
                   if (snapshot.hasData) {
                     if (snapshot.data!.isNotEmpty) {
                       return Padding(
-                        padding: const EdgeInsets.fromLTRB(0,10,0,0),
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                         child: ListView.builder(
                           itemCount: snapshot.data!.length + 1,
                           itemBuilder: (BuildContext context, int index) {
@@ -146,13 +146,13 @@ class _UserManagementState extends State<UserManagement> {
                                       ),
                                       Spacer(),
                                       GestureDetector(
-                                        onTap: () async{
-                                          if(user.uid != snapshot.data![index - 1].userId){
+                                        onTap: () async {
+                                          if (user.uid != snapshot.data![index - 1].userId) {
                                             progress!.show();
                                             dynamic res = await UserService.updateActiveStatus(snapshot.data![index - 1].userId, !snapshot.data![index - 1].isActive);
                                             progress.dismiss();
                                             if (res.runtimeType == SuccessMessage) {
-                                              await showCoolAlert(context, true, 'User ${!snapshot.data![index - 1].isActive ? 'activated': 'deactivated'} successfully');
+                                              await showCoolAlert(context, true, 'User ${!snapshot.data![index - 1].isActive ? 'activated' : 'deactivated'} successfully');
                                               _refresh();
                                             } else {
                                               await showCoolAlert(context, false, res.message);
@@ -161,7 +161,11 @@ class _UserManagementState extends State<UserManagement> {
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            color: user.uid == snapshot.data![index - 1].userId ? Colors.white.withOpacity(0.2) : snapshot.data![index - 1].isActive ? Colors.greenAccent : Colors.red,
+                                            color: user.uid == snapshot.data![index - 1].userId
+                                                ? Colors.white.withOpacity(0.2)
+                                                : snapshot.data![index - 1].isActive
+                                                    ? Colors.greenAccent
+                                                    : Colors.red,
                                             borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(10),
                                               bottomRight: Radius.circular(10),
@@ -173,7 +177,7 @@ class _UserManagementState extends State<UserManagement> {
                                             padding: const EdgeInsets.all(15.0),
                                             child: Center(
                                                 child: Icon(
-                                                  snapshot.data![index - 1].isActive ? FontAwesomeIcons.userPlus : FontAwesomeIcons.userMinus,
+                                              snapshot.data![index - 1].isActive ? FontAwesomeIcons.userPlus : FontAwesomeIcons.userMinus,
                                               color: Colors.white,
                                               size: 20,
                                             )),

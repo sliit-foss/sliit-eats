@@ -20,7 +20,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
           decoration: InputDecoration(
             filled: true,
             fillColor: Color(0xFFfdfdff),
-            contentPadding: EdgeInsets.all(20),
+            contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
             errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
             hintText: widget.hint,
             hintStyle: TextStyle(
@@ -29,7 +29,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
               color: Colors.black45,
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(5),
               borderSide: BorderSide(
                 color: Colors.transparent,
                 width: 0,

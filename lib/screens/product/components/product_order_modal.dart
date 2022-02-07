@@ -7,13 +7,7 @@ import 'package:sliit_eats/screens/widgets/alert_dialog.dart';
 import 'package:sliit_eats/services/order_service.dart';
 
 class ProductOrderModal extends StatefulWidget {
-  const ProductOrderModal(
-      {Key? key,
-      required this.productId,
-      required this.name,
-      required this.price,
-      required this.unitsLeft})
-      : super(key: key);
+  const ProductOrderModal({Key? key, required this.productId, required this.name, required this.price, required this.unitsLeft}) : super(key: key);
   final String productId;
   final String name;
   final double price;
@@ -51,13 +45,10 @@ class _ProductOrderModalState extends State<ProductOrderModal> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(12.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12.0))),
       contentPadding: EdgeInsets.zero,
       content: Container(
-        height: MediaQuery.of(context).orientation == Orientation.portrait
-            ? 240
-            : MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).orientation == Orientation.portrait ? 240 : MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -127,8 +118,7 @@ class _ProductOrderModalState extends State<ProductOrderModal> {
                       SizedBox(height: 20),
                       GestureDetector(
                         onTap: () async {
-                          dynamic res = await OrderService.create(
-                              widget.productId, quantity);
+                          dynamic res = await OrderService.create(widget.productId, quantity);
                           if (res is SuccessMessage) {
                             Navigator.pop(context);
                             await showCoolAlert(context, true, res.message);
@@ -148,13 +138,7 @@ class _ProductOrderModalState extends State<ProductOrderModal> {
                           decoration: BoxDecoration(
                             color: AppColors.primary,
                             borderRadius: BorderRadius.all(Radius.circular(5)),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(
-                                  color: AppColors.primary.withAlpha(100),
-                                  offset: Offset(2, 4),
-                                  blurRadius: 8,
-                                  spreadRadius: 2)
-                            ],
+                            boxShadow: <BoxShadow>[BoxShadow(color: AppColors.primary.withAlpha(100), offset: Offset(2, 4), blurRadius: 8, spreadRadius: 2)],
                           ),
                           child: Text(
                             'Place Order',

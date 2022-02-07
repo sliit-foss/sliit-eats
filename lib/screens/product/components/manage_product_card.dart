@@ -9,9 +9,9 @@ import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 import 'package:sliit_eats/services/category_service.dart';
 
 class ManageProductCard extends StatefulWidget {
-  const ManageProductCard({Key? key, required this.thisProduct})
-      : super(key: key);
+  const ManageProductCard({Key? key, required this.thisProduct, required this.refresh}) : super(key: key);
   final Product thisProduct;
+  final Function refresh;
 
   @override
   _ManageProductCardState createState() => _ManageProductCardState();
@@ -94,14 +94,10 @@ class _ManageProductCardState extends State<ManageProductCard> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(
-                            context, AppRoutes.PRODUCT_DETAIL_MANAGEMENT,
-                            arguments: {'product_id': widget.thisProduct.id});
+                        Navigator.pushNamed(context, AppRoutes.PRODUCT_DETAIL_MANAGEMENT, arguments: {'product_id': widget.thisProduct.id, 'refresh': widget.refresh});
                       },
                       child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: AppColors.primary),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: AppColors.primary),
                         child: Padding(
                           padding: const EdgeInsets.all(8),
                           child: Center(

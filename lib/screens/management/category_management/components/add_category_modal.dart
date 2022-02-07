@@ -42,7 +42,7 @@ class _AddCategoryModalState extends State<AddCategoryModal> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12.0))),
       contentPadding: EdgeInsets.zero,
       content: Container(
-        height: MediaQuery.of(context).orientation == Orientation.portrait ? 400 : MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).orientation == Orientation.portrait ? 275 : MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           gradient: LinearGradient(

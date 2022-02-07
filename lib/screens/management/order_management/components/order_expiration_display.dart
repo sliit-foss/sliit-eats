@@ -6,15 +6,12 @@ import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/helpers/constants.dart';
 
 class OrderExpirationDisplay extends StatelessWidget {
-  const OrderExpirationDisplay({Key? key, required this.createdDateTime})
-      : super(key: key);
+  const OrderExpirationDisplay({Key? key, required this.createdDateTime}) : super(key: key);
   final Timestamp createdDateTime;
 
   @override
   Widget build(BuildContext context) {
-    Duration timePassed = DateTime.now().difference(
-        DateTime.fromMillisecondsSinceEpoch(
-            this.createdDateTime.millisecondsSinceEpoch));
+    Duration timePassed = DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(this.createdDateTime.millisecondsSinceEpoch));
 
     return Padding(
       padding: EdgeInsets.all(5),
@@ -49,9 +46,7 @@ class OrderExpirationDisplay extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  (Constants.expirationPeriod - timePassed.inMinutes)
-                      .toInt()
-                      .toString(),
+                  (Constants.expirationPeriod - timePassed.inMinutes).toInt().toString(),
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
@@ -95,8 +90,7 @@ class SectorPainter extends CustomPainter {
     final paint = Paint();
     paint.style = PaintingStyle.fill;
     paint.color = AppColors.success;
-    final sweepAngle =
-        (minutesLeft / Constants.expirationPeriod) * 360.0 * pi / 180.0;
+    final sweepAngle = (minutesLeft / Constants.expirationPeriod) * 360.0 * pi / 180.0;
 
     canvas.drawArc(rect, -0.5 * pi, sweepAngle, true, paint);
   }
