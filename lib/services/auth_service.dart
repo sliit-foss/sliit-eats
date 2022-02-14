@@ -7,6 +7,7 @@ import 'package:sliit_eats/models/general/sucess_message.dart';
 import 'package:sliit_eats/models/user.dart';
 import 'package:sliit_eats/services/firebase_services/firestore_service.dart';
 import 'package:sliit_eats/services/user_service.dart';
+import '../main.dart';
 
 class AuthService {
 
@@ -22,8 +23,8 @@ class AuthService {
     try {
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
       User? user = userCredential.user;
-      UserModel? currentUser = await getCurrentUserDetails();
-      if (!currentUser!.isActive)
+      currentLoggedInUser = await AuthService.getCurrentUserDetails();
+      if (!currentLoggedInUser.isActive)
         return ErrorMessage('Your account has been deactivated');
       if (!user!.emailVerified) {
         await user.sendEmailVerification();

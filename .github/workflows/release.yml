@@ -17,11 +17,6 @@ jobs:
       ENCODED_STRING: ${{ secrets.SLIIT_EATS_KEY_JKS }}
       SLIIT_EATS_KEY_PASSWORD: ${{ secrets.SLIIT_EATS_KEY_PASSWORD }}
       SLIIT_EATS_ALIAS_PASSWORD: ${{ secrets.SLIIT_EATS_ALIAS_PASSWORD }}
-      SLIIT_EATS_FIREBASE_API_KEY: ${{ secrets.SLIIT_EATS_FIREBASE_API_KEY }}
-      SLIIT_EATS_FIREBASE_APP_ID: ${{ secrets.SLIIT_EATS_FIREBASE_APP_ID }}
-      SLIIT_EATS_FIREBASE_PROJECT_ID: ${{ secrets.SLIIT_EATS_FIREBASE_PROJECT_ID }}
-      SLIIT_EATS_FIREBASE_BUCKET: ${{ secrets.SLIIT_EATS_FIREBASE_BUCKET }}
-      SLIIT_EATS_FCM_SENDER_ID: ${{ secrets.SLIIT_EATS_FCM_SENDER_ID }}
     steps:
       - name: Decode Key
         run: |
@@ -39,11 +34,11 @@ jobs:
       - name: Create env file
         run: |
           touch .env
-          echo SLIIT_EATS_FIREBASE_API_KEY=SLIIT_EATS_FIREBASE_API_KEY >> .env
-          echo SLIIT_EATS_FIREBASE_APP_ID=SLIIT_EATS_FIREBASE_APP_ID >> .env
-          echo SLIIT_EATS_FIREBASE_PROJECT_ID=SLIIT_EATS_FIREBASE_PROJECT_ID >> .env
-          echo SLIIT_EATS_FIREBASE_BUCKET=SLIIT_EATS_FIREBASE_BUCKET >> .env
-          echo SLIIT_EATS_FCM_SENDER_ID=SLIIT_EATS_FCM_SENDER_ID >> .env
+          echo SLIIT_EATS_FIREBASE_API_KEY=${{ secrets.SLIIT_EATS_FIREBASE_API_KEY }} >> .env
+          echo SLIIT_EATS_FIREBASE_APP_ID=${{ secrets.SLIIT_EATS_FIREBASE_APP_ID }} >> .env
+          echo SLIIT_EATS_FIREBASE_PROJECT_ID=${{ secrets.SLIIT_EATS_FIREBASE_PROJECT_ID }} >> .env
+          echo SLIIT_EATS_FIREBASE_BUCKET=${{ secrets.SLIIT_EATS_FIREBASE_BUCKET }} >> .env
+          echo SLIIT_EATS_FCM_SENDER_ID=${{ secrets.SLIIT_EATS_FCM_SENDER_ID }} >> .env
           cat .env
       - run: flutter build apk --release
       - uses: actions/upload-artifact@v2
