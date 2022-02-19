@@ -9,7 +9,7 @@ An application for canteen management and food ordering at the Sri Lanka Institu
 
 ## Getting Started
 
-- Run flutter pub get to install dependencies
+- Run flutter pub get to install dependancies
 - Run flutter build apk --debug for debug build
 - Run flutter build apk --release for release build
 
