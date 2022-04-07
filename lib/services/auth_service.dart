@@ -36,6 +36,7 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') return ErrorMessage('No user found for that email');
       if (e.code == 'wrong-password') return ErrorMessage('Invalid password');
+      if (e.code == 'invalid-email') return ErrorMessage('The email address is badly formatted');
       return ErrorMessage(Constants.errorMessages['default']!);
     }
   }
