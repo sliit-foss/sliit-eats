@@ -13,7 +13,25 @@ class AuthScreen extends StatefulWidget {
   _AuthScreenState createState() => _AuthScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(
+      vsync: this,
+      initialIndex: 0,
+      length: 2,
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
+  }
+
   Tab _buildTab(String title) {
     return Tab(
       child: Column(
@@ -32,6 +50,10 @@ class _AuthScreenState extends State<AuthScreen> {
         ],
       ),
     );
+  }
+
+  void setTabIndex(int index) {
+    _tabController.index = index;
   }
 
   @override
@@ -89,30 +111,31 @@ class _AuthScreenState extends State<AuthScreen> {
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
-                              child: DefaultTabController(
-                                length: 2,
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      height: 60,
-                                      child: TabBar(
-                                        indicator: BoxDecoration(
-                                          color: AppColors.primary,
-                                        ),
-                                        tabs: [
-                                          _buildTab("Sign In"),
-                                          _buildTab("Sign Up"),
-                                        ],
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 60,
+                                    child: TabBar(
+                                      controller: _tabController,
+                                      indicator: BoxDecoration(
+                                        color: AppColors.primary,
                                       ),
+                                      tabs: [
+                                        _buildTab("Sign In"),
+                                        _buildTab("Sign Up"),
+                                      ],
                                     ),
-                                    Expanded(
-                                      child: TabBarView(children: [
+                                  ),
+                                  Expanded(
+                                    child: TabBarView(
+                                      controller: _tabController,
+                                      children: [
                                         Login(progress: progress),
-                                        SignUp(progress: progress),
-                                      ]),
-                                    )
-                                  ],
-                                ),
+                                        SignUp(progress: progress, setTabIndex: setTabIndex),
+                                      ],
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
                           ),

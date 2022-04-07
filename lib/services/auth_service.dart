@@ -10,12 +10,12 @@ import 'package:sliit_eats/services/user_service.dart';
 import '../main.dart';
 
 class AuthService {
-
   static Future<dynamic>? getCurrentUserDetails() async {
     User? user = FirebaseAuth.instance.currentUser;
-    List<dynamic> filters = [{'name': 'id', 'value': user!.uid}];
+    List<dynamic> filters = [
+      {'name': 'id', 'value': user!.uid}
+    ];
     final responseDoc = await FirestoreService.read('users', filters, limit: 1);
-    print(responseDoc);
     return UserModel.fromDocumentSnapshot(responseDoc);
   }
 
@@ -24,19 +24,17 @@ class AuthService {
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
       User? user = userCredential.user;
       currentLoggedInUser = await AuthService.getCurrentUserDetails();
-      if (!currentLoggedInUser.isActive)
-        return ErrorMessage('Your account has been deactivated');
+      if (!currentLoggedInUser.isActive) return ErrorMessage('Your account has been deactivated');
       if (!user!.emailVerified) {
         await user.sendEmailVerification();
         return ErrorMessage('Please verify your email');
       }
-      String? firebaseToken= await FirebaseMessaging.instance.getToken();
+      String? firebaseToken = await FirebaseMessaging.instance.getToken();
       await UserService.updateFCMToken(user.uid, firebaseToken!);
       return SuccessMessage("Signed in Successfully");
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') return ErrorMessage('No user found for that email');
-      if (e.code == 'wrong-password') return ErrorMessage('Invalid password');
-      if (e.code == 'invalid-email') return ErrorMessage('The email address is badly formatted');
+      return ErrorMessage(e.message!);
+    } catch (e) {
       return ErrorMessage(Constants.errorMessages['default']!);
     }
   }
@@ -53,14 +51,11 @@ class AuthService {
       User? user = userCredential.user;
       await user!.updateDisplayName(name);
       await user.sendEmailVerification();
-      return await FirestoreService.write('users', {'id': user.uid, 'username': name, 'email': email, 'user_type': userType, 'is_admin': isAdmin, 'canteen_id': canteenId, 'is_active' : true },
+      return await FirestoreService.write('users', {'id': user.uid, 'username': name, 'email': email, 'user_type': userType, 'is_admin': isAdmin, 'canteen_id': canteenId, 'is_active': true},
           'Signed up successfully. Please verify your email to activate your account');
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') return ErrorMessage('The password provided is too weak');
-      if (e.code == 'email-already-in-use') return ErrorMessage('The account already exists for that email');
-      return ErrorMessage(Constants.errorMessages['default']!);
+      return ErrorMessage(e.message!);
     } catch (e) {
-      print(e);
       return ErrorMessage(Constants.errorMessages['default']!);
     }
   }
@@ -72,13 +67,13 @@ class AuthService {
   static Future<dynamic>? updatePassword(String password) async {
     dynamic res;
     User? user = FirebaseAuth.instance.currentUser;
-    await user!.updatePassword(password).then((val){
+    await user!.updatePassword(password).then((val) {
       res = SuccessMessage('Password updated successfully');
-    }).catchError((err){
+    }).catchError((err) {
       print(err.code);
       if (err.code == 'weak-password') {
         res = ErrorMessage('The password provided is too weak');
-      }else{
+      } else {
         res = ErrorMessage(Constants.errorMessages['default']!);
       }
     });

@@ -145,7 +145,7 @@ class _BrowseTabState extends State<BrowseTab> {
                                                     child: Wrap(
                                                       spacing: 15.0, // gap between adjacent chips
                                                       runSpacing: 12.0, // gap between lines
-                                                      children: snapshot.data!.map((product) => ProductCard(thisProduct: product)).toList().cast<Widget>(),
+                                                      children: snapshot.data!.map((product) => ProductCard(thisProduct: product, refresh: _filterProducts)).toList().cast<Widget>(),
                                                     ),
                                                   ),
                                                 );

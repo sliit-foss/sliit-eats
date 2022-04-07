@@ -8,8 +8,9 @@ import 'package:sliit_eats/screens/widgets/entry_field.dart';
 import 'package:sliit_eats/services/auth_service.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({Key? key, required this.progress}) : super(key: key);
+  const SignUp({Key? key, required this.progress, required this.setTabIndex}) : super(key: key);
   final dynamic progress;
+  final Function setTabIndex;
 
   @override
   _SignUpState createState() => _SignUpState();
@@ -105,8 +106,7 @@ class _SignUpState extends State<SignUp> {
                           userType);
                       widget.progress.dismiss();
                       if (res.runtimeType == SuccessMessage) {
-                        Navigator.pushReplacementNamed(
-                            context, '/login');
+                        widget.setTabIndex(0);
                         await showCoolAlert(
                             context, true, res.message,
                             noAutoClose: true);

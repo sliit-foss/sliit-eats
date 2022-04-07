@@ -84,7 +84,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                           child: BackdropFilter(
                                             filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
                                             child: Container(
-                                              height: 130,
+                                              height: 140,
                                               width: MediaQuery.of(context).size.width,
                                               decoration: BoxDecoration(
                                                 color: Colors.black45,
@@ -96,30 +96,38 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    Text(
-                                                      thisProduct.name,
-                                                      style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600, color: Colors.white, letterSpacing: 2),
+                                                    Padding(
+                                                      padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                                                      child: Text(
+                                                        thisProduct.name,
+                                                        style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600, color: Colors.white, letterSpacing: 2),
+                                                      ),
                                                     ),
                                                     thisProduct.unitsLeft > 0
-                                                        ? Text(
-                                                            "${thisProduct.unitsLeft} left",
-                                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white, letterSpacing: 2),
+                                                        ? Padding(
+                                                            padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                                                            child: Text(
+                                                              "${thisProduct.unitsLeft} left",
+                                                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white, letterSpacing: 2),
+                                                            ),
                                                           )
-                                                        : Text(
-                                                            "OUT of stock",
-                                                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.red[600], letterSpacing: 2),
+                                                        : Padding(
+                                                            padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                                                            child: Text(
+                                                              "OUT of stock",
+                                                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.red[600], letterSpacing: 2),
+                                                            ),
                                                           ),
                                                     SizedBox(
                                                       height: 10,
                                                     ),
                                                     Container(
-                                                      height: 30,
+                                                      height: 35,
                                                       decoration: BoxDecoration(
-                                                        color: Colors.grey[850],
+                                                        color: Colors.grey[900],
                                                         borderRadius: BorderRadius.circular(100),
                                                       ),
-                                                      child: Padding(
-                                                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                                      child: Center(
                                                         child: Text(
                                                           canteenName,
                                                           style: TextStyle(
@@ -215,6 +223,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                   name: thisProduct.name,
                                                   price: thisProduct.unitPrice.toDouble(),
                                                   unitsLeft: thisProduct.unitsLeft,
+                                                  refresh: _refresh,
                                                 );
                                               });
                                         })
