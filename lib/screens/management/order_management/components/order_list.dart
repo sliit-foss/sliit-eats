@@ -5,7 +5,6 @@ import 'package:sliit_eats/helpers/constants.dart';
 import 'package:sliit_eats/models/general/success_message.dart';
 import 'package:sliit_eats/models/order.dart';
 import 'package:sliit_eats/models/product.dart';
-import 'package:sliit_eats/routes/app_routes.dart';
 import 'package:sliit_eats/screens/widgets/alert_dialog.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';
 import 'package:sliit_eats/screens/widgets/no_data_component.dart';
@@ -52,10 +51,11 @@ class _OrderListState extends State<OrderList> {
                         return AnimatedContainer(
                           duration: Duration(milliseconds: 200),
                           width: MediaQuery.of(context).size.width,
+                          margin: EdgeInsets.fromLTRB(0, 0, 0, index == snapshot.data!.length -1 ? 20 :0),
                           child: Container(
                             margin: EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 10),
                             width: double.infinity,
-                            height: 100,
+                            height: 115,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
@@ -78,58 +78,61 @@ class _OrderListState extends State<OrderList> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 SizedBox(width: 15),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'ID : ${snapshot.data![index].id}',
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(color: AppColors.success, fontWeight: FontWeight.bold, fontSize: 15),
-                                    ),
-                                    FutureBuilder(
-                                        future: ProductService.getProductById(snapshot.data![index].productId),
-                                        builder: (BuildContext context, AsyncSnapshot productSnapshot) {
-                                          if (productSnapshot.hasData) {
-                                            Product thisProduct = productSnapshot.data;
-                                            return Text(
-                                              '${thisProduct.name}    X    ${snapshot.data![index].quantity}',
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'ID : ${snapshot.data![index].id}',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(color: AppColors.success, fontWeight: FontWeight.bold, fontSize: 15),
+                                      ),
+                                      FutureBuilder(
+                                          future: ProductService.getProductById(snapshot.data![index].productId),
+                                          builder: (BuildContext context, AsyncSnapshot productSnapshot) {
+                                            if (productSnapshot.hasData) {
+                                              Product thisProduct = productSnapshot.data;
+                                              return Text(
+                                                '${thisProduct.name}    X    ${snapshot.data![index].quantity}',
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
+                                              );
+                                            } else
+                                              return SizedBox();
+                                          }),
+                                      widget.isAdminView
+                                          ? Text(
+                                              snapshot.data![index].username,
                                               textAlign: TextAlign.start,
-                                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
-                                            );
-                                          } else
-                                            return SizedBox();
-                                        }),
-                                    widget.isAdminView
-                                        ? Text(
-                                            snapshot.data![index].username,
-                                            textAlign: TextAlign.start,
-                                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
-                                          )
-                                        : Container(),
-                                    Text(
-                                      '${TimeOfDay.fromDateTime(DateTime.fromMillisecondsSinceEpoch(snapshot.data![index].createdAt.millisecondsSinceEpoch)).format(context)}  |  ${snapshot.data![index].createdAt.toDate().toLocal().toString().substring(0, 10)}',
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
-                                    ),
-                                    Spacer(),
-                                    minutesPassed.inMinutes <= 60.0
-                                        ? Stack(
-                                            children: [
-                                              Container(
-                                                color: Colors.grey[600],
-                                                height: 5.0,
-                                                width: MediaQuery.of(context).size.width * 0.7,
-                                              ),
-                                              Container(
-                                                color: AppColors.success,
-                                                height: 5.0,
-                                                width: (minutesPassed.inMinutes / Constants.expirationPeriod) * MediaQuery.of(context).size.width * 0.7,
-                                              )
-                                            ],
-                                          )
-                                        : SizedBox()
-                                  ],
+                                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                                            )
+                                          : Container(),
+                                      Text(
+                                        '${TimeOfDay.fromDateTime(DateTime.fromMillisecondsSinceEpoch(snapshot.data![index].createdAt.millisecondsSinceEpoch)).format(context)}  |  ${snapshot.data![index].createdAt.toDate().toLocal().toString().substring(0, 10)}',
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                                      ),
+                                      Spacer(),
+                                      minutesPassed.inMinutes <= 60.0
+                                          ? Stack(
+                                              children: [
+                                                Container(
+                                                  color: Colors.grey[600],
+                                                  height: 5.0,
+                                                  width: MediaQuery.of(context).size.width * 0.7,
+                                                ),
+                                                Container(
+                                                  color: AppColors.success,
+                                                  height: 5.0,
+                                                  width: (minutesPassed.inMinutes / Constants.expirationPeriod) * MediaQuery.of(context).size.width * 0.7,
+                                                )
+                                              ],
+                                            )
+                                          : SizedBox()
+                                    ],
+                                  ),
                                 ),
                                 Spacer(),
                                 snapshot.data![index].status == Constants.orderStatus[1]
@@ -143,9 +146,9 @@ class _OrderListState extends State<OrderList> {
                                               snapshot.data![index].quantity,
                                             );
                                             if (res is SuccessMessage) {
-                                              Navigator.pop(context);
-                                              Navigator.popAndPushNamed(context, AppRoutes.ORDER_MANAGEMENT, arguments: {'title': 'Active Orders', 'status': Constants.orderStatus[1]});
                                               await showCoolAlert(context, true, res.message);
+                                              _refresh();
+                                              Navigator.pop(context);
                                             } else
                                               await showCoolAlert(context, false, res.message);
                                           });
