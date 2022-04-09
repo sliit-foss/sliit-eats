@@ -40,8 +40,7 @@ class ProductService {
 
   static Future<dynamic>? updateProduct(Product updatedProduct) async {
     final res = await filterProducts("all", "all", updatedProduct.name);
-    if (res.length>0 && res[0].id != updatedProduct.id)
-        return ErrorMessage('A product by this name already exists');
+    if (res.length > 0 && res[0].id != updatedProduct.id) return ErrorMessage('A product by this name already exists');
     List<dynamic> filters = [
       {'name': 'id', 'value': updatedProduct.id}
     ];
