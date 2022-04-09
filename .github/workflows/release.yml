@@ -17,6 +17,7 @@ jobs:
       ENCODED_STRING: ${{ secrets.SLIIT_EATS_KEY_JKS }}
       SLIIT_EATS_KEY_PASSWORD: ${{ secrets.SLIIT_EATS_KEY_PASSWORD }}
       SLIIT_EATS_ALIAS_PASSWORD: ${{ secrets.SLIIT_EATS_ALIAS_PASSWORD }}
+      APP_ENV: STAGING
     steps:
       - name: Decode Key
         run: |
