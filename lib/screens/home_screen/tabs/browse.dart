@@ -26,8 +26,7 @@ class BrowseTab extends StatefulWidget {
 }
 
 class _BrowseTabState extends State<BrowseTab> {
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
   String selectedCategory = 'all';
   String selectedCanteen = '';
   dynamic progress;
@@ -42,8 +41,7 @@ class _BrowseTabState extends State<BrowseTab> {
   }
 
   void _filterProducts() async {
-    await ProductService.filterProducts(selectedCanteen, selectedCategory, '')
-        .then((products) => {_productList.add(products)});
+    await ProductService.filterProducts(selectedCanteen, selectedCategory, '').then((products) => {_productList.add(products)});
   }
 
   Future<dynamic> _refresh() async {
@@ -85,14 +83,13 @@ class _BrowseTabState extends State<BrowseTab> {
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(5),
                       child: Image(
-                        image:
-                            AssetImage("assets/images/browse/image$index.png"),
+                        image: AssetImage("assets/images/browse/image$index.png"),
                         fit: BoxFit.cover,
                       ),
                     );
                   },
                   options: CarouselOptions(
-                    height: MediaQuery.of(context).size.height * 0.18,
+                    height: MediaQuery.of(context).size.height * 0.16,
                     aspectRatio: 2 / 1,
                     reverse: false,
                     autoPlay: true,
@@ -104,19 +101,17 @@ class _BrowseTabState extends State<BrowseTab> {
                     pauseAutoPlayOnManualNavigate: true,
                     enlargeCenterPage: false,
                     onPageChanged: (index, reason) {},
-                    viewportFraction: 0.72,
+                    viewportFraction: 0.67,
                   ),
                 ),
                 Expanded(
                   child: FutureBuilder(
                     future: CanteenService.getCanteens(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<Canteen>> canteenSnapshot) {
+                    builder: (BuildContext context, AsyncSnapshot<List<Canteen>> canteenSnapshot) {
                       if (canteenSnapshot.hasData) {
                         if (canteenSnapshot.data!.isNotEmpty) {
                           if (canteenSnapshot.data![0].id != "all") {
-                            canteenSnapshot.data!.insert(
-                                0, Canteen(id: 'all', name: 'All Canteens'));
+                            canteenSnapshot.data!.insert(0, Canteen(id: 'all', name: 'All Canteens'));
                           }
                           if (firstLoad) {
                             firstLoad = false;
@@ -125,14 +120,11 @@ class _BrowseTabState extends State<BrowseTab> {
                           }
                           return FutureBuilder(
                             future: CategoryService.getCategories(),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<List<Category>>
-                                    categorySnapshot) {
+                            builder: (BuildContext context, AsyncSnapshot<List<Category>> categorySnapshot) {
                               if (categorySnapshot.hasData) {
                                 if (categorySnapshot.data!.isNotEmpty) {
                                   if (categorySnapshot.data![0].id != 'all') {
-                                    categorySnapshot.data!.insert(
-                                        0, Category(id: 'all', name: 'All'));
+                                    categorySnapshot.data!.insert(0, Category(id: 'all', name: 'All'));
                                   }
                                   return Column(
                                     children: [
@@ -145,51 +137,34 @@ class _BrowseTabState extends State<BrowseTab> {
                                       ),
                                       StreamBuilder(
                                           stream: _productList.stream,
-                                          builder: (BuildContext context,
-                                              AsyncSnapshot<List<Product>>
-                                                  snapshot) {
+                                          builder: (BuildContext context, AsyncSnapshot<List<Product>> snapshot) {
                                             if (snapshot.hasData) {
                                               if (snapshot.data!.isNotEmpty) {
                                                 return Expanded(
                                                   child: SingleChildScrollView(
                                                     child: Wrap(
-                                                      spacing:
-                                                          15.0, // gap between adjacent chips
-                                                      runSpacing:
-                                                          12.0, // gap between lines
-                                                      children: snapshot.data!
-                                                          .map((product) =>
-                                                              ProductCard(
-                                                                  thisProduct:
-                                                                      product))
-                                                          .toList()
-                                                          .cast<Widget>(),
+                                                      spacing: 15.0, // gap between adjacent chips
+                                                      runSpacing: 12.0, // gap between lines
+                                                      children: snapshot.data!.map((product) => ProductCard(thisProduct: product, refresh: _filterProducts)).toList().cast<Widget>(),
                                                     ),
                                                   ),
                                                 );
                                               } else {
-                                                return Expanded(
-                                                    child: NoDataComponent());
+                                                return Expanded(child: NoDataComponent());
                                               }
                                             } else {
-                                              return Expanded(
-                                                  child: LoadingIndicator());
+                                              return Expanded(child: LoadingIndicator());
                                             }
                                           }),
+                                      SizedBox(height: 20,),
                                       FormField<String>(
-                                        builder:
-                                            (FormFieldState<String> state) {
+                                        builder: (FormFieldState<String> state) {
                                           return InputDecorator(
                                             decoration: InputDecoration(
                                               filled: true,
-                                              fillColor:
-                                                  Colors.white.withOpacity(0.1),
-                                              contentPadding:
-                                                  EdgeInsets.fromLTRB(
-                                                      20, 10, 20, 10),
-                                              errorStyle: TextStyle(
-                                                  color: Colors.redAccent,
-                                                  fontSize: 16.0),
+                                              fillColor: Colors.white.withOpacity(0.1),
+                                              contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                                              errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
                                               // hintText: "All Canteens",
                                               hintStyle: TextStyle(
                                                 fontSize: 16,
@@ -208,22 +183,15 @@ class _BrowseTabState extends State<BrowseTab> {
                                                   });
                                                   _filterProducts();
                                                 },
-                                                dropdownColor:
-                                                    AppColors.cardColor,
-                                                items: canteenSnapshot.data!
-                                                    .map<
-                                                            DropdownMenuItem<
-                                                                String>>(
-                                                        (Canteen canteen) {
-                                                  return DropdownMenuItem<
-                                                      String>(
+                                                dropdownColor: AppColors.cardColor,
+                                                items: canteenSnapshot.data!.map<DropdownMenuItem<String>>((Canteen canteen) {
+                                                  return DropdownMenuItem<String>(
                                                     value: canteen.id,
                                                     child: Text(
                                                       canteen.name,
                                                       style: TextStyle(
                                                         fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.w500,
+                                                        fontWeight: FontWeight.w500,
                                                         color: Colors.white,
                                                       ),
                                                     ),

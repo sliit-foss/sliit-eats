@@ -15,8 +15,8 @@ class _BannerContentState extends State<BannerContent>
   int currentPage = 0;
 
   List<String> slideImagePaths = [
-    "assets/animations/welcome_screen/hot.json",
     "assets/animations/welcome_screen/crunchy.json",
+    "assets/animations/welcome_screen/hot.json",
     "assets/animations/welcome_screen/cold.json",
   ];
 

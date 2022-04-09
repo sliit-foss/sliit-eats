@@ -6,8 +6,9 @@ import 'package:sliit_eats/screens/product/components/product_order_modal.dart';
 import 'package:sliit_eats/screens/widgets/custom_card.dart';
 
 class ProductCard extends StatefulWidget {
-  const ProductCard({Key? key, required this.thisProduct}) : super(key: key);
+  const ProductCard({Key? key, required this.thisProduct, required this.refresh}) : super(key: key);
   final Product thisProduct;
+  final Function refresh;
 
   @override
   _ProductCardState createState() => _ProductCardState();
@@ -18,8 +19,7 @@ class _ProductCardState extends State<ProductCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, AppRoutes.PRODUCT_DETAIL,
-            arguments: {'product_id': widget.thisProduct.id});
+        Navigator.pushNamed(context, AppRoutes.PRODUCT_DETAIL, arguments: {'product_id': widget.thisProduct.id});
       },
       child: CustomCard(
         color: AppColors.cardColor,
@@ -43,9 +43,10 @@ class _ProductCardState extends State<ProductCard> {
               ),
               SizedBox(height: 8),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -91,17 +92,20 @@ class _ProductCardState extends State<ProductCard> {
                             Text(
                               '${widget.thisProduct.unitsLeft}',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.white,
                               ),
                             ),
-                            Text(
-                              'left',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0,0,0,5),
+                              child: Text(
+                                'left',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ],
@@ -119,6 +123,7 @@ class _ProductCardState extends State<ProductCard> {
                             name: widget.thisProduct.name,
                             price: widget.thisProduct.unitPrice.toDouble(),
                             unitsLeft: widget.thisProduct.unitsLeft,
+                            refresh: widget.refresh,
                           );
                         });
                 },
@@ -126,9 +131,7 @@ class _ProductCardState extends State<ProductCard> {
                   height: 30,
                   width: MediaQuery.of(context).size.width * 0.4,
                   decoration: BoxDecoration(
-                    color: widget.thisProduct.unitsLeft == 0
-                        ? Colors.grey[500]
-                        : AppColors.primary,
+                    color: widget.thisProduct.unitsLeft == 0 ? Colors.grey[500] : AppColors.primary,
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Center(

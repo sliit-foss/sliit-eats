@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RoundedButton extends StatefulWidget {
@@ -37,6 +38,7 @@ class _RoundedButtonState extends State<RoundedButton> {
         ),
         child: Text(
           widget.text,
+          textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 15),
         ),
       ),

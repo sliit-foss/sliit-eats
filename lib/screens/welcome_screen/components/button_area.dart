@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
+import 'package:lottie/lottie.dart';
 import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/routes/app_routes.dart';
 
@@ -17,14 +19,14 @@ class _ButtonAreaState extends State<ButtonArea> {
         padding: const EdgeInsets.fromLTRB(0, 50, 0, 10),
         child: GestureDetector(
           onTap: () {
-            Navigator.pushReplacementNamed(context, AppRoutes.SIGNUP);
+            Navigator.pushReplacementNamed(context, AppRoutes.AUTH);
           },
           child: Container(
             width: MediaQuery.of(context).orientation == Orientation.portrait
                 ? MediaQuery.of(context).size.width * 0.6
                 : MediaQuery.of(context).size.width * 0.3,
             height: MediaQuery.of(context).orientation == Orientation.portrait
-                ? MediaQuery.of(context).size.height * 0.07
+                ? MediaQuery.of(context).size.height * 0.065
                 : MediaQuery.of(context).size.height * 0.14,
             decoration: BoxDecoration(
               color: AppColors.primary,
@@ -37,51 +39,32 @@ class _ButtonAreaState extends State<ButtonArea> {
                     spreadRadius: 2),
               ],
             ),
-            child: Center(
-              child: Text(
-                "Register",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Transform.rotate(
+                  angle: -90 * math.pi / 180,
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    child: Lottie.asset(
+                      'assets/animations/welcome_screen/arrow-right.json',
+                    ),
+                  ),
                 ),
-              ),
+                SizedBox(width: 5),
+                Text(
+                  "Get Started",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(width: 25)
+              ],
             ),
           ),
-        ),
-      ),
-      Container(
-        margin: EdgeInsets.fromLTRB(0, 15, 0, 20),
-        padding: EdgeInsets.all(15),
-        alignment: Alignment.bottomCenter,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Already have an account ?',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.pushReplacementNamed(context, AppRoutes.LOGIN);
-              },
-              child: Text(
-                'Sign In',
-                style: TextStyle(
-                  color: AppColors.primary,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     ]);

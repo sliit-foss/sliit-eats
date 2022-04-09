@@ -31,6 +31,7 @@ class _ManageProductCardState extends State<ManageProductCard> {
                 String categoryName = snapshot.data![0].name;
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(5),
@@ -38,6 +39,7 @@ class _ManageProductCardState extends State<ManageProductCard> {
                         tag: widget.thisProduct.name,
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.3,
+                          height: MediaQuery.of(context).size.width * 0.25,
                           child: Image.network(
                             widget.thisProduct.image,
                             fit: BoxFit.cover,
@@ -47,20 +49,20 @@ class _ManageProductCardState extends State<ManageProductCard> {
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           widget.thisProduct.name,
                           style: TextStyle(
-                            fontSize: 17,
+                            fontSize: 15,
                             fontWeight: FontWeight.w600,
                             color: Colors.white,
                           ),
                         ),
-                        SizedBox(height: 4),
                         Text(
                           'Rs. ${widget.thisProduct.unitPrice.toStringAsFixed(2)}',
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 15,
                             fontWeight: FontWeight.w600,
                             color: Colors.white,
                           ),
@@ -69,7 +71,7 @@ class _ManageProductCardState extends State<ManageProductCard> {
                             ? Text(
                                 'OUT of stock',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w800,
                                   color: AppColors.fail,
                                 ),
@@ -77,7 +79,7 @@ class _ManageProductCardState extends State<ManageProductCard> {
                             : Text(
                                 '${widget.thisProduct.unitsLeft} in stock',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.success,
                                 ),
@@ -85,7 +87,7 @@ class _ManageProductCardState extends State<ManageProductCard> {
                         Text(
                           categoryName.toUpperCase(),
                           style: TextStyle(
-                            fontSize: 17,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                             color: AppColors.primary,
                           ),
@@ -94,17 +96,17 @@ class _ManageProductCardState extends State<ManageProductCard> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.PRODUCT_DETAIL_MANAGEMENT, arguments: {'product_id': widget.thisProduct.id, 'refresh': widget.refresh});
+                        Navigator.pushNamed(context, AppRoutes.PRODUCT_ADD_UPDATE, arguments: {'product_id': widget.thisProduct.id, 'refresh': widget.refresh});
                       },
                       child: Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: AppColors.primary),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: AppColors.primary),
                         child: Padding(
                           padding: const EdgeInsets.all(8),
                           child: Center(
                               child: Icon(
                             FontAwesomeIcons.edit,
                             color: Colors.white,
-                            size: 22,
+                            size: 20,
                           )),
                         ),
                       ),

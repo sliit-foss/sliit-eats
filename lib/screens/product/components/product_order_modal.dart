@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliit_eats/helpers/colors.dart';
-import 'package:sliit_eats/models/general/sucess_message.dart';
+import 'package:sliit_eats/models/general/success_message.dart';
 import 'package:sliit_eats/screens/widgets/alert_dialog.dart';
 import 'package:sliit_eats/services/order_service.dart';
 
 class ProductOrderModal extends StatefulWidget {
-  const ProductOrderModal({Key? key, required this.productId, required this.name, required this.price, required this.unitsLeft}) : super(key: key);
+  const ProductOrderModal({Key? key, required this.productId, required this.name, required this.price, required this.unitsLeft, required this.refresh}) : super(key: key);
   final String productId;
   final String name;
   final double price;
   final int unitsLeft;
+  final Function refresh;
 
   @override
   _ProductOrderModalState createState() => _ProductOrderModalState();
@@ -20,6 +21,7 @@ class ProductOrderModal extends StatefulWidget {
 class _ProductOrderModalState extends State<ProductOrderModal> {
   dynamic progress;
   int quantity = 1;
+  bool loading = false;
 
   @override
   void initState() {
@@ -118,17 +120,22 @@ class _ProductOrderModalState extends State<ProductOrderModal> {
                       SizedBox(height: 20),
                       GestureDetector(
                         onTap: () async {
-                          dynamic res = await OrderService.create(widget.productId, quantity);
-                          if (res is SuccessMessage) {
-                            Navigator.pop(context);
-                            await showCoolAlert(context, true, res.message);
-                          } else {
-                            await showCoolAlert(
-                              context,
-                              false,
-                              res.message,
-                              noAutoClose: true,
-                            );
+                          if (!loading) {
+                            loading = true;
+                            dynamic res = await OrderService.create(widget.productId, quantity);
+                            if (res is SuccessMessage) {
+                              await showCoolAlert(context, true, res.message);
+                              Navigator.pop(context);
+                              widget.refresh();
+                            } else {
+                              await showCoolAlert(
+                                context,
+                                false,
+                                res.message,
+                                noAutoClose: true,
+                              );
+                            }
+                            loading = false;
                           }
                         },
                         child: Container(
