@@ -82,7 +82,7 @@ class _ProductManagementState extends State<ProductManagement> {
                                       onPressed: () {
                                         Navigator.pushNamed(
                                           context,
-                                          AppRoutes.PRODUCT_DETAIL_NEW,
+                                          AppRoutes.PRODUCT_ADD_UPDATE,
                                           arguments: {'refresh': _refresh},
                                         );
                                       },
@@ -99,7 +99,7 @@ class _ProductManagementState extends State<ProductManagement> {
                                 child: Container(
                                   margin: EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 10),
                                   width: double.infinity,
-                                  height: 130,
+                                  height: 110,
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [

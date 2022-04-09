@@ -38,7 +38,7 @@ class _CategorySelectorState extends State<CategorySelector> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                          padding: const EdgeInsets.fromLTRB(15, 8, 15, 8),
                           child: Center(
                             child: Text(
                               category.name,

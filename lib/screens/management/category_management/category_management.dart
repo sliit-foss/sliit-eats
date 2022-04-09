@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/models/category.dart';
 import 'package:sliit_eats/models/general/enums.dart';
-import 'package:sliit_eats/models/general/sucess_message.dart';
+import 'package:sliit_eats/models/general/success_message.dart';
 import 'package:sliit_eats/screens/widgets/alert_dialog.dart';
 import 'package:sliit_eats/screens/widgets/custom_appbar.dart';
 import 'package:sliit_eats/screens/widgets/loading_screen.dart';

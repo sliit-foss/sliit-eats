@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/models/general/enums.dart';
-import 'package:sliit_eats/models/general/sucess_message.dart';
+import 'package:sliit_eats/models/general/success_message.dart';
 import 'package:sliit_eats/screens/widgets/alert_dialog.dart';
 import 'package:sliit_eats/screens/widgets/entry_field.dart';
 import 'package:sliit_eats/services/category_service.dart';

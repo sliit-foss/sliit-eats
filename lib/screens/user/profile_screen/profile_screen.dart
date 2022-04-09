@@ -220,7 +220,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     GestureDetector(
                       onTap: () async {
                         await AuthService.signOut();
-                        Navigator.pushReplacementNamed(context, AppRoutes.LOGIN);
+                        Navigator.pushReplacementNamed(context, AppRoutes.AUTH);
                       },
                       child: InfoCard(
                         title: "Sign Out",

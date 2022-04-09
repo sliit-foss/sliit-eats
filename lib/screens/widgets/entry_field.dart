@@ -26,7 +26,7 @@ class EntryField extends StatelessWidget {
               hintStyle: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: Colors.white54,
+                color: Colors.black54,
               ),
               isDense: true,
               contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -44,19 +44,19 @@ class EntryField extends StatelessWidget {
                   width: 0,
                 ),
               ),
-              fillColor: AppColors.cardColor,
+              fillColor: Colors.white.withOpacity(0.85),
               filled: true,
               prefixIcon: prefixIcon != null
                   ? Icon(
                       prefixIcon,
-                      color: Colors.white,
+                      color: Colors.black,
                     )
                   : null,
             ),
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
-              color: Colors.white,
+              color: Colors.black,
             ),
           )
         ],

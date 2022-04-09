@@ -73,6 +73,8 @@ flutter:
     - assets/animations/modals/
     - assets/animations/welcome_screen/
     - assets/animations/home_screen/
+    - assets/animations/login_screen/
+    - assets/animations/products/
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
