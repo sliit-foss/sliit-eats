@@ -5,6 +5,7 @@ import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/helpers/constants.dart';
 import 'package:sliit_eats/routes/app_routes.dart';
 import 'package:sliit_eats/screens/home_screen/components/option_card.dart';
+import 'package:sliit_eats/services/order_service.dart';
 
 class ManagementTab extends StatefulWidget {
   const ManagementTab({Key? key}) : super(key: key);
@@ -18,9 +19,38 @@ class _ManagementTabState extends State<ManagementTab> {
       new GlobalKey<RefreshIndicatorState>();
   dynamic progress;
 
+  int activeOrderCount = 0;
+  int servedOrderCount = 0;
+
+  void initState(){
+    super.initState();
+    _fetchActiveOrderCount();
+    _fetchServedOrderCount();
+  }
+
   Future<dynamic> _refresh() async {
     setState(() {});
     return false;
+  }
+
+  void _fetchActiveOrderCount() async {
+    dynamic res = await OrderService.getOrders(filters:  [
+      {'name': 'status', 'value': Constants.orderStatus[1]}
+    ]);
+    if (res != null)
+      setState(() {
+        activeOrderCount = res.length;
+      });
+  }
+
+  void _fetchServedOrderCount() async {
+    dynamic res = await OrderService.getOrders(filters:  [
+      {'name': 'status', 'value': Constants.orderStatus[2]}
+    ]);
+    if (res != null)
+      setState(() {
+        servedOrderCount = res.length;
+      });
   }
 
   @override
@@ -107,7 +137,7 @@ class _ManagementTabState extends State<ManagementTab> {
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           child: OptionCard(
-                              title: "0",
+                              title: "$activeOrderCount",
                               subtitle: "Active Orders",
                               icon: null),
                         ),
@@ -124,7 +154,7 @@ class _ManagementTabState extends State<ManagementTab> {
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           child: OptionCard(
-                              title: "0",
+                              title: "$servedOrderCount",
                               subtitle: "Served Orders",
                               icon: null),
                         ),

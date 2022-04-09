@@ -3,9 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class FCMService {
-
-  static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+  static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   static const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'high_importance_channel',
@@ -15,8 +13,7 @@ class FCMService {
   );
   static Future initialize() async {
     if (Platform.isIOS) {
-      NotificationSettings settings =
-      await FirebaseMessaging.instance.requestPermission(
+      NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
         alert: true,
         announcement: false,
         badge: true,
@@ -47,7 +44,6 @@ class FCMService {
       );
       await listener();
     }
-
   }
 
   static Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -55,7 +51,7 @@ class FCMService {
   }
 
   static listener() async {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async{
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       var initializationSettingsAndroid = AndroidInitializationSettings("ic_launcher");
       var initializationSettingsIOS = new IOSInitializationSettings();
       var initializationSettings = new InitializationSettings(
@@ -68,24 +64,15 @@ class FCMService {
       if (message.notification != null) {
         print('Message also contained a notification: ${message.notification}');
 
-        const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
+        const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
             'high_importance_channel', 'High Importance Notifications', 'This channel is used for important notifications',
-            importance: Importance.max,
-            priority: Priority.high,
-            showWhen: false);
+            importance: Importance.max, priority: Priority.high, showWhen: false);
 
-        const NotificationDetails platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
-        await flutterLocalNotificationsPlugin.show(
-            0, message.notification!.title, message.notification!.body, platformChannelSpecifics,
-            payload: 'item x');
-
+        const NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
+        await flutterLocalNotificationsPlugin.show(0, message.notification!.title, message.notification!.body, platformChannelSpecifics, payload: 'item x');
       }
     });
 
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
   }
-  
 }
