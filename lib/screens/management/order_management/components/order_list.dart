@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/helpers/constants.dart';
-import 'package:sliit_eats/models/general/sucess_message.dart';
+import 'package:sliit_eats/models/general/success_message.dart';
 import 'package:sliit_eats/models/order.dart';
 import 'package:sliit_eats/models/product.dart';
 import 'package:sliit_eats/routes/app_routes.dart';

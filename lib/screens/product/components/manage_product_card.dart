@@ -96,7 +96,7 @@ class _ManageProductCardState extends State<ManageProductCard> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, AppRoutes.PRODUCT_DETAIL_MANAGEMENT, arguments: {'product_id': widget.thisProduct.id, 'refresh': widget.refresh});
+                        Navigator.pushNamed(context, AppRoutes.PRODUCT_ADD_UPDATE, arguments: {'product_id': widget.thisProduct.id, 'refresh': widget.refresh});
                       },
                       child: Container(
                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: AppColors.primary),

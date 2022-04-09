@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sliit_eats/helpers/constants.dart';
 import 'package:sliit_eats/main.dart';
 import 'package:sliit_eats/models/general/error_message.dart';
-import 'package:sliit_eats/models/general/sucess_message.dart';
+import 'package:sliit_eats/models/general/success_message.dart';
 import 'package:sliit_eats/models/order.dart';
 import 'package:sliit_eats/models/user.dart';
 import 'package:sliit_eats/services/firebase_services/firestore_service.dart';

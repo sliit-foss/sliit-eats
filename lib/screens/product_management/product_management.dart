@@ -82,7 +82,7 @@ class _ProductManagementState extends State<ProductManagement> {
                                       onPressed: () {
                                         Navigator.pushNamed(
                                           context,
-                                          AppRoutes.PRODUCT_DETAIL_NEW,
+                                          AppRoutes.PRODUCT_ADD_UPDATE,
                                           arguments: {'refresh': _refresh},
                                         );
                                       },
