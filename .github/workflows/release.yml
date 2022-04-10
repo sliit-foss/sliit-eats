@@ -42,6 +42,7 @@ jobs:
           echo SLIIT_EATS_FCM_SENDER_ID=${{ secrets.SLIIT_EATS_FCM_SENDER_ID }} >> .env
           echo SLIIT_EATS_SERVER_URL=${{ secrets.SLIIT_EATS_SERVER_URL }} >> .env
           cat .env
+      - run: flutter upgrade
       - run: flutter build apk --release
       - uses: actions/upload-artifact@v2
         with:
