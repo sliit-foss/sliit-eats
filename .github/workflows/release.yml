@@ -30,7 +30,7 @@ jobs:
           java-version: '12.x'
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '2.8.1'
+          flutter-version: '2.10.4'
           channel: 'stable'
       - name: Create env file
         run: |
@@ -40,6 +40,7 @@ jobs:
           echo SLIIT_EATS_FIREBASE_PROJECT_ID=${{ secrets.SLIIT_EATS_FIREBASE_PROJECT_ID }} >> .env
           echo SLIIT_EATS_FIREBASE_BUCKET=${{ secrets.SLIIT_EATS_FIREBASE_BUCKET }} >> .env
           echo SLIIT_EATS_FCM_SENDER_ID=${{ secrets.SLIIT_EATS_FCM_SENDER_ID }} >> .env
+          echo SLIIT_EATS_SERVER_URL=${{ secrets.SLIIT_EATS_SERVER_URL }} >> .env
           cat .env
       - run: flutter build apk --release
       - uses: actions/upload-artifact@v2

@@ -3,12 +3,13 @@ import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliit_eats/helpers/colors.dart';
 import 'package:sliit_eats/models/general/success_message.dart';
+import 'package:sliit_eats/models/product.dart';
 import 'package:sliit_eats/screens/widgets/alert_dialog.dart';
 import 'package:sliit_eats/services/order_service.dart';
 
 class ProductOrderModal extends StatefulWidget {
-  const ProductOrderModal({Key? key, required this.productId, required this.name, required this.price, required this.unitsLeft, required this.refresh}) : super(key: key);
-  final String productId;
+  const ProductOrderModal({Key? key, required this.product, required this.name, required this.price, required this.unitsLeft, required this.refresh}) : super(key: key);
+  final Product product;
   final String name;
   final double price;
   final int unitsLeft;
@@ -122,7 +123,7 @@ class _ProductOrderModalState extends State<ProductOrderModal> {
                         onTap: () async {
                           if (!loading) {
                             loading = true;
-                            dynamic res = await OrderService.create(widget.productId, quantity);
+                            dynamic res = await OrderService.create(widget.product, quantity);
                             if (res is SuccessMessage) {
                               await showCoolAlert(context, true, res.message);
                               Navigator.pop(context);

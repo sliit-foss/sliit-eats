@@ -15,6 +15,15 @@ class UserService {
     return (responseDocs as List).map((responseDoc) => UserModel.fromDocumentSnapshot(responseDoc)).toList();
   }
 
+  static Future<List<UserModel>>? getCanteenUsers(String canteenId) async {
+    List<dynamic> filters = [
+      {'name': 'canteen_id', 'value': canteenId},
+      {'name': 'is_active', 'value': true}
+    ];
+    final responseDocs = await FirestoreService.read('users', filters);
+    return (responseDocs as List).map((responseDoc) => UserModel.fromDocumentSnapshot(responseDoc)).toList();
+  }
+
   static Future<UserModel?> getUserById(String id) async {
     List<dynamic> filters = [
       {'name': 'id', 'value': id}

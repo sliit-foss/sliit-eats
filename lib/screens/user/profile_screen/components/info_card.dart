@@ -3,8 +3,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sliit_eats/helpers/colors.dart';
 
 class InfoCard extends StatelessWidget {
-  const InfoCard({Key? key, required this.title, this.progress, required this.borderRadius, required this.showArrow, this.icon = null, this.iconColor = null, this.onArrowTap}) : super(key: key);
+  const InfoCard({Key? key, required this.title, this.subtitle, this.progress, required this.borderRadius, required this.showArrow, this.icon = null, this.iconColor = null, this.onArrowTap})
+      : super(key: key);
   final String title;
+  final String? subtitle;
   final dynamic progress;
   final BorderRadius borderRadius;
   final bool showArrow;
@@ -34,13 +36,29 @@ class InfoCard extends StatelessWidget {
                 : Container(),
             Padding(
               padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                  subtitle != null
+                      ? Text(
+                          subtitle!,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                        )
+                      : Container(),
+                ],
               ),
             ),
             Spacer(),

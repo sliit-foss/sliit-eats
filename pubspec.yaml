@@ -47,6 +47,8 @@ dependencies:
   url_launcher:
   cool_alert:
     path: ./packages/flutter_cool_alert-master/
+  enhanced_http:
+    path: ./packages/enhanced-http/
   image_picker: ^0.8.4+1
 
 dev_dependencies:
