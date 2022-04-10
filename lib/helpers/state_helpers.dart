@@ -1,4 +1,6 @@
 class StateHelpers {
   //settings
-  static Map<String,dynamic> appSettings = {};
+  static Map<String,dynamic> appSettings = {
+    'notifications': true,
+  };
 }

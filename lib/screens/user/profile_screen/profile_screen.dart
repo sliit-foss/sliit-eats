@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sliit_eats/helpers/cache_service.dart';
 import 'package:sliit_eats/helpers/colors.dart';
+import 'package:sliit_eats/helpers/state_helpers.dart';
 import 'package:sliit_eats/routes/app_routes.dart';
 import 'package:sliit_eats/screens/user/profile_screen/components/change_password_modal.dart';
 import 'package:sliit_eats/services/auth_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'components/info_card.dart';
 
 class ProfileSettings extends StatefulWidget {
@@ -141,10 +146,11 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                             Switch(
                               onChanged: (bool) {
                                 setState(() {
-                                  switchValue = !switchValue;
+                                  StateHelpers.appSettings['notifications'] = bool;
+                                  CacheService.savePref('appSettings', jsonEncode(StateHelpers.appSettings));
                                 });
                               },
-                              value: switchValue,
+                              value: StateHelpers.appSettings['notifications'] ?? true,
                               activeColor: AppColors.primary,
                               activeTrackColor: AppColors.primary.withOpacity(0.3),
                               inactiveThumbColor: AppColors.primary,
@@ -157,13 +163,18 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     SizedBox(
                       height: 4,
                     ),
-                    InfoCard(title: "Change Password", borderRadius: BorderRadius.zero, showArrow: true, onArrowTap: (){
-                      return showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                        return ChangePasswordModal();
-                      });
-                    },),
+                    InfoCard(
+                      title: "Change Password",
+                      borderRadius: BorderRadius.zero,
+                      showArrow: true,
+                      onArrowTap: () {
+                        return showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return ChangePasswordModal();
+                            });
+                      },
+                    ),
                     SizedBox(
                       height: 4,
                     ),
@@ -171,48 +182,14 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     SizedBox(
                       height: 4,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.cardColor,
-                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Row(
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Updates",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Text(
-                                  "App fixes and new features",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Spacer(),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                              child: Icon(
-                                FontAwesomeIcons.arrowRight,
-                                color: AppColors.primary,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    InfoCard(
+                      title: "Updates",
+                      subtitle: "App fixes and new features",
+                      borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
+                      showArrow: true,
+                      onArrowTap: () async {
+                        await launch('https://github.com/sliit-foss/sliit-eats/releases');
+                      },
                     ),
                     SizedBox(
                       height: 15,

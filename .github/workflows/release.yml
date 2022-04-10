@@ -40,6 +40,7 @@ jobs:
           echo SLIIT_EATS_FIREBASE_PROJECT_ID=${{ secrets.SLIIT_EATS_FIREBASE_PROJECT_ID }} >> .env
           echo SLIIT_EATS_FIREBASE_BUCKET=${{ secrets.SLIIT_EATS_FIREBASE_BUCKET }} >> .env
           echo SLIIT_EATS_FCM_SENDER_ID=${{ secrets.SLIIT_EATS_FCM_SENDER_ID }} >> .env
+          echo SLIIT_EATS_SERVER_URL=${{ secrets.SLIIT_EATS_SERVER_URL }} >> .env
           cat .env
       - run: flutter build apk --release
       - uses: actions/upload-artifact@v2

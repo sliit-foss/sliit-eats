@@ -144,6 +144,8 @@ class _OrderListState extends State<OrderList> {
                                               snapshot.data![index].productId,
                                               true,
                                               snapshot.data![index].quantity,
+                                              orderUserId: snapshot.data![index].userId,
+                                              orderProductId: snapshot.data![index].productId,
                                             );
                                             if (res is SuccessMessage) {
                                               await showCoolAlert(context, true, res.message);
