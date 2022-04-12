@@ -44,14 +44,16 @@ dependencies:
   page_transition: ^2.0.4
   flutter_dotenv: ^5.0.2
   carousel_slider: ^4.0.0
+  image_picker: ^0.8.4+1
   url_launcher:
   cool_alert:
-    path: ./packages/flutter_cool_alert-master/
+    git:
+      url: https://github.com/Akalanka47000/flutter_cool_alert.git
+      ref: master
   enhanced_http:
     git:
       url: https://github.com/sliit-foss/enhanced_http.git
       ref: main
-  image_picker: ^0.8.4+1
 
 dev_dependencies:
   flutter_test:
