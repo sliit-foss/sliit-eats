@@ -48,7 +48,9 @@ dependencies:
   cool_alert:
     path: ./packages/flutter_cool_alert-master/
   enhanced_http:
-    path: ./packages/enhanced-http/
+    git:
+      url: https://github.com/sliit-foss/enhanced_http.git
+      ref: main
   image_picker: ^0.8.4+1
 
 dev_dependencies:
