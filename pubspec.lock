@@ -81,9 +81,11 @@ packages:
   cool_alert:
     dependency: "direct main"
     description:
-      path: "packages/flutter_cool_alert-master"
-      relative: true
-    source: path
+      path: "."
+      ref: master
+      resolved-ref: "2b58670a51e51a631726048811159a15c5431a4a"
+      url: "https://github.com/Akalanka47000/flutter_cool_alert.git"
+    source: git
     version: "1.1.0"
   cross_file:
     dependency: transitive
