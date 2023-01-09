@@ -33,6 +33,7 @@ dependencies:
   firebase_core: ^1.11.0
   firebase_auth: ^3.3.5
   cloud_firestore: ^3.1.6
+  enhanced_http: 2.0.0
   firebase_storage: ^10.2.5
   firebase_messaging: ^11.2.5
   flutter_local_notifications: ^5.0.0+4
@@ -50,10 +51,6 @@ dependencies:
     git:
       url: https://github.com/Akalanka47000/flutter_cool_alert.git
       ref: master
-  enhanced_http:
-    git:
-      url: https://github.com/sliit-foss/enhanced_http.git
-      ref: main
 
 dev_dependencies:
   flutter_test:

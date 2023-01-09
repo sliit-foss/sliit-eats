@@ -43,7 +43,6 @@ class OrderService {
       List<String?> deviceTokens = canteenUsers!.map((e) => e.fcmToken).toList();
       EnhancedHttp.post(
           path: '/send-notification',
-          successStatusCode: 200,
           payload: {"title": "Order Placed", "body": "Order placed for product ${product.name} by customer ${currentLoggedInUser.username} ( Quantity x $quantity )", "device_tokens": deviceTokens});
       return res;
     }
@@ -59,7 +58,7 @@ class OrderService {
       if (res is SuccessMessage) {
         UserModel? orderUser = await UserService.getUserById(orderUserId);
         Product? orderProduct = await ProductService.getProductById(orderProductId);
-        EnhancedHttp.post(path: '/send-notification', successStatusCode: 200, payload: {
+        EnhancedHttp.post(path: '/send-notification', payload: {
           "title": "Order Complete",
           "body": "Your order for product ${orderProduct!.name} has been completed.",
           "device_tokens": [orderUser!.fcmToken]

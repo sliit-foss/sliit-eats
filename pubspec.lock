@@ -111,12 +111,10 @@ packages:
   enhanced_http:
     dependency: "direct main"
     description:
-      path: "."
-      ref: main
-      resolved-ref: a255c9d241e2a2ddbf3cea0b40caa26f3d7c35f4
-      url: "https://github.com/sliit-foss/enhanced_http.git"
-    source: git
-    version: "1.0.0"
+      name: enhanced_http
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   fake_async:
     dependency: transitive
     description:
