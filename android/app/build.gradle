@@ -47,8 +47,8 @@ android {
         versionName flutterVersionName
     }
 
-//        Comment this section to build locally
-//        =====================================
+    //        Comment this section to build locally
+    //        =====================================
 
     signingConfigs {
         release {
@@ -68,6 +68,8 @@ android {
             }
         }
     }
+    
+    //        =====================================
 
     buildTypes {
         release {
